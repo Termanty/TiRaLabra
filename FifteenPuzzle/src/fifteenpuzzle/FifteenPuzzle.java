@@ -6,7 +6,7 @@ package fifteenpuzzle;
 
 /**
  *
- * @author termanty
+ * @author Tero Mäntylä
  */
 public class FifteenPuzzle {
 
@@ -14,6 +14,6 @@ public class FifteenPuzzle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
     }
 }
