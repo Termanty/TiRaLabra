@@ -17,6 +17,8 @@ public class FifteenPuzzle {
     
     public static void main(String[] args) {
         Puzzle peli = new Puzzle();
+        
+        System.out.println(peli);
         peli.suffle();
         System.out.println(peli);         
     }
