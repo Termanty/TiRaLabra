@@ -1,33 +1,22 @@
 package fifteenpuzzle;
 
 /**
- *
- * @author termanty
+ * Puzzle Class
+ * @author Tero Mäntylä
  */
 
 import java.util.Random;
 
 public class Puzzle {
-    private final byte[][] IN_ORDER = {{ 1,  2,  3,  4},
-                                       { 5,  6,  7,  8},
-                                       { 9, 10, 11, 12},
-                                       {13, 14, 15,  0}};
-    
-    private byte[][] puzzle;
+    private byte[][] puzzle = {{ 1,  2,  3,  4},
+                               { 5,  6,  7,  8},
+                               { 9, 10, 11, 12},
+                               {13, 14, 15,  0}};
+    private int length = 4;
+    private int higth = 4;   
 
-    public Puzzle() {
-        this.puzzle = new byte[IN_ORDER.length][IN_ORDER[0].length];
-    }
     
-    
-    
-    public byte[][] rightOrder(){
-        returnOrder();
-        return puzzle;
-    }
-    
-    public byte[][] giveRandom() {
-        returnOrder();
+    public void suffle() {
         int[] locEmptyBlock = {3, 3};
         int amountOfRandomMoves = 1000;
         if (Math.random() < 0.5) {
@@ -35,8 +24,7 @@ public class Puzzle {
         }
         for (int i = 0; i < amountOfRandomMoves; i++) {
             locEmptyBlock = moveOnePlateRandomDirection(locEmptyBlock[0], locEmptyBlock[1]);
-        }      
-        return puzzle;
+        }
     }
     
     private int[] moveOnePlateRandomDirection(int x, int y) {
@@ -69,24 +57,18 @@ public class Puzzle {
         return new int[]{moveX + x, moveY + y};
     }
 
-    private void returnOrder() {
-        for (int i = 0; i < IN_ORDER.length; i++) {
-            for (int j = 0; j < IN_ORDER[i].length; j++) {
-                puzzle[i][j] = IN_ORDER[i][j];
-            }     
-        }
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < puzzle.length; i++) {
             for (int j = 0; j < puzzle.length; j++) {
-                System.out.format("%3d", puzzle[i][j]); 
+                sb.append(" ");
+                if (puzzle[i][j] < 10) sb.append(" ");
+                sb.append(puzzle[i][j]); 
             }
-            System.out.println("");
+            sb.append("\n");
         }
-        return super.toString();
+        return sb.toString();
     }
     
     
