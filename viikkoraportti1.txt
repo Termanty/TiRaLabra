@@ -1,0 +1,19 @@
+Ensimmäisen viikon raportti
+
+ti 7.5.
+Harjoitustyön aloitus henkilökohtaisella haastattelulla.
+Projektin luonti GitHubiin ja sen kloonaus laitoksen kotihakemistoon.
+Ohjeiden mukaista repo harjoittelua. Committeja, pushausta ja pullausta.
+Dokumenttikansion ja määrittelydokumentin luonti sekä lisäys gitin seurattavaksi.
+
+käytetty aika: 3h
+
+
+ke 8.5.
+FifteenPuzzle projektin luonti NetBeansiin ja sen lisäys gitin seurattavaksi.
+Projektin koodauksen aloitus. Puzzle-luoka ja toiminnallisuus palapelin sekoitukseen.
+Illalla koodin refaktorointia ja toimintojen uudelleen järjestelyä.
+Aloitin määrittelydokumentin kirjoittamisen ja materiaalin haalimisen sitä varten.
+Lähinnä etsin vähän linkkejä aiheesta ja mietin yleisiä faktoja 15-Puzzleen liittyen.
+
+käytetty aika: 5h 
