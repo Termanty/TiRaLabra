@@ -7,6 +7,8 @@ package fifteenpuzzle;
  * 
  * @author Tero Mäntylä
  */
+
+
 public class FifteenPuzzle {
  
     /**
@@ -16,8 +18,7 @@ public class FifteenPuzzle {
     public static void main(String[] args) {
         Puzzle peli = new Puzzle();
         peli.suffle();
-        System.out.println(peli);
-               
+        System.out.println(peli);         
     }
 
 }
