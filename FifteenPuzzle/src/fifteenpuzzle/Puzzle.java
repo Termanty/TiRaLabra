@@ -7,16 +7,46 @@ package fifteenpuzzle;
 
 import java.util.Random;
 
+
 public class Puzzle {
-    private byte[][] puzzle = {{ 1,  2,  3,  4},
-                               { 5,  6,  7,  8},
-                               { 9, 10, 11, 12},
-                               {13, 14, 15,  0}};
-    private int length = 4;
-    private int higth = 4;
+    
+    private byte[][] puzzle;
+    private int length;
+    private int higth;
     private int emptyX;
     private int emptyY;
 
+   
+ /**
+ * Constructors and assisting method intializePuzzle() for creating
+ * puzzle which numbers are in right order.
+ */
+    
+    public Puzzle() {
+        this.length = 4;
+        this.higth = 4;
+        intializePuzzle();
+    }
+
+    public Puzzle(int length, int higth) {
+        this.length = length;
+        this.higth = higth;
+        intializePuzzle();
+    }
+    
+    private void intializePuzzle() {
+        byte num = 1;
+        puzzle = new byte[higth][length];
+        for (int i = 0; i < higth; i++) {
+            for (int j = 0; j < length; j++) {
+                puzzle[i][j] = num++;     
+            }
+        }
+        emptyX = length - 1;
+        emptyY = higth - 1;
+        puzzle[emptyY][emptyX] = 0;
+    }
+    
     
  /**
  * Methods up, down, right, left "slides" number to empty hole (swaps with 0 number).
@@ -26,7 +56,7 @@ public class Puzzle {
  */
     
     public boolean up() {
-        if (emptyY > 1) {
+        if (emptyY > 0) {
             slide(0, -1);
             return true;
         }
@@ -42,7 +72,7 @@ public class Puzzle {
     }
     
     public boolean right() {
-        if (emptyX > 1) {
+        if (emptyX > 0) {
             slide(-1, 0);
             return true;
         }
@@ -70,48 +100,50 @@ public class Puzzle {
         emptyX += dx;
         emptyY += dy;
     }  
+  
+    
+ /**
+ * Suffle method does given amount of Random moves to suffle the puzzle.
+ * If no argument is given there will be done ether 1000 or 1001 moves.
+ * This because with only even or odd amount of the moves you can't get
+ * all the permutations of the suffle.
+ */     
     
     public void suffle() {
-        int[] locEmptyBlock = {3, 3};
         int amountOfRandomMoves = 1000;
         if (Math.random() < 0.5) {
             amountOfRandomMoves++;
         }
-        for (int i = 0; i < amountOfRandomMoves; i++) {
-            locEmptyBlock = moveOnePlateRandomDirection(locEmptyBlock[0], locEmptyBlock[1]);
-        }
+        suffle(amountOfRandomMoves);
     }
     
-    private int[] moveOnePlateRandomDirection(int x, int y) {
-        int moveX;
-        int moveY;
-        
-        do {
-            moveX = 0;
-            moveY = 0;
+    public void suffle(int numberOfMoves) {
+        for (int i = 0; i < numberOfMoves; i++) {
+            moveRandomDirection();
+        }   
+    }
+    
+    private void moveRandomDirection() {
+        while (true) {
             int move = (int) (Math.random() * 4);
             switch (move) {
                 case 0:
-                    moveX = 1;
+                    if (up()) return;
                     break;
                 case 1:
-                    moveX = -1;
+                    if (down()) return;
                     break;
                 case 2:
-                    moveY = 1;
+                    if (right()) return;
                     break;
                 case 3:
-                    moveY = -1;
+                    if (left()) return;
                     break;
             }   
-        } while (!(moveX + x >= 0 && moveX + x <= 3 && moveY + y >= 0 && moveY + y <= 3));
-        
-        puzzle[y][x] = puzzle[moveY + y][moveX + x];
-        puzzle[moveY + y][moveX + x] = 0;
-        
-        return new int[]{moveX + x, moveY + y};
+        } 
     }
 
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
