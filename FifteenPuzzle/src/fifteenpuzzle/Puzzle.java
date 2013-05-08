@@ -13,8 +13,63 @@ public class Puzzle {
                                { 9, 10, 11, 12},
                                {13, 14, 15,  0}};
     private int length = 4;
-    private int higth = 4;   
+    private int higth = 4;
+    private int emptyX;
+    private int emptyY;
 
+    
+ /**
+ * Methods up, down, right, left "slides" number to empty hole (swaps with 0 number).
+ * Method name indicates the direction from empty hole to find the sliding number.
+ * If movement was done methods return TRUE. If the movent is impossible return value 
+ * will be FALSE.
+ */
+    
+    public boolean up() {
+        if (emptyY > 1) {
+            slide(0, -1);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean down() {
+        if (emptyY < higth - 1) {
+            slide(0, +1);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean right() {
+        if (emptyX > 1) {
+            slide(-1, 0);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean left() {
+        if (emptyX < length - 1) {
+            slide(+1, 0);
+            return true;
+        }
+        return false;
+    }
+    
+    
+ /**
+ * Slide method swaps empty place (0) and number.
+ * Arguments gives the direction of the number from empty place.
+ * example: dx = 0, dy = +1 means number under the empty place.
+ */
+    
+    private void slide(int dx, int dy) {
+        puzzle[emptyY][emptyX] = puzzle[emptyY + dy][emptyX + dx];
+        puzzle[emptyY + dy][emptyX + dx] = 0;
+        emptyX += dx;
+        emptyY += dy;
+    }  
     
     public void suffle() {
         int[] locEmptyBlock = {3, 3};
