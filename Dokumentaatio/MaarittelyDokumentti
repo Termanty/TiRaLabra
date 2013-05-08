@@ -1,9 +1,32 @@
+*** Määrittelydokumentti ***
+
+15-Puzzle -ongelman ratkaisu. Tietoa aiheesta http://en.wikipedia.org/wiki/15_puzzle.
+
+
+* Mitä algoritmeja ja tietorakenteita toteutat työssäsi
+
+Tarkoituksena on käyttää algoritmia, joka palauttaa lyhimmän mahdollisen siirtosarjan, jolla palapelin palat saadaan oikeille paikoilleen. Ajattelin käyttää tähän iteratiivisesti syventyvää A*:ä eli IDA*:ä. Haasteena tulee olemaan sopivan heuristiikan löytäminen, jolla arvioidaan 'etäisyyttä' valmiiseen palapeliin. Luultavasti tulen kokeilemaan useampaa erilaista heuristiikkaa. Ensimmäinen mieleen tuleva vaihtoehto on laskea kuinka monta palaa on oikealla paikalla. Yksi tapa voisi olla arvioida Manhattan-etäisyyttä palikan oikeaan paikkaan.
+
+
+* Mitä ongelmaa ratkaiset ja miksi valitsit kyseiset algoritmit/tietorakenteet
+
+
+* Mitä syötteitä ohjelma saa ja miten näitä käytetään
+
+
+
+
+* Tavoitteena olevat aika- ja tilavaativuudet (m.m. O-analyysi)
+
+Aika vaativuus IDA*:e on O(2^n) ja tilavaativuus on O(n).
+
+
+
+
+* Lähteet
+ http://heuristicswiki.wikispaces.com/IDA*
+ http://en.wikipedia.org/wiki/IDA*
+
  
- Mitä algoritmeja ja tietorakenteita toteutat työssäsi
- Mitä ongelmaa ratkaiset ja miksi valitsit kyseiset algoritmit/tietorakenteet
- Mitä syötteitä ohjelma saa ja miten näitä käytetään
- Tavoitteena olevat aika- ja tilavaativuudet (m.m. O-analyysi)
- Lähteet
- 
- 
+@ Tero Mäntylä 8.5.2013
  
