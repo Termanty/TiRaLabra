@@ -147,8 +147,8 @@ public class Puzzle {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < puzzle.length; i++) {
-            for (int j = 0; j < puzzle.length; j++) {
+        for (int i = 0; i < higth; i++) {
+            for (int j = 0; j < length; j++) {
                 sb.append(" ");
                 if (puzzle[i][j] < 10) sb.append(" ");
                 sb.append(puzzle[i][j]); 

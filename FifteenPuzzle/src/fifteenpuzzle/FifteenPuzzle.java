@@ -16,7 +16,7 @@ public class FifteenPuzzle {
      */   
     
     public static void main(String[] args) {
-        Puzzle peli = new Puzzle();
+        Puzzle peli = new Puzzle(3,6);
         
         System.out.println(peli);
         peli.suffle();
