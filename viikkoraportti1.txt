@@ -1,19 +1,41 @@
-Ensimm�isen viikon raportti
-
+﻿Ensimmäisen viikon raportti 
+7.-10.5.2013
+Tero Mäntylä
+Käytetty aikaa 14 tuntia.
+-----------------------
 ti 7.5.
-Harjoitusty�n aloitus henkil�kohtaisella haastattelulla.
+Harjoitustyön aloitus henkilökohtaisella haastattelulla. 
 Projektin luonti GitHubiin ja sen kloonaus laitoksen kotihakemistoon.
 Ohjeiden mukaista repo harjoittelua. Committeja, pushausta ja pullausta.
-Dokumenttikansion ja m��rittelydokumentin luonti sek� lis�ys gitin seurattavaksi.
+Vaikka näitä oltiin syksyllä hieman harjoiteltu versionhallinnan kurssilla,
+niin ohjeita piti lukea ja muistella miten git oikein toimii.
+Dokumenttikansion ja määrittelydokumentin luonti sekä lisäys gittin seurattavaksi.
 
-k�ytetty aika: 3h
-
-
+käytetty aika: 3h
+-----------------------
 ke 8.5.
-FifteenPuzzle projektin luonti NetBeansiin ja sen lis�ys gitin seurattavaksi.
+FifteenPuzzle projektin luonti NetBeansiin ja sen lisäys gittin seurattavaksi.
 Projektin koodauksen aloitus. Puzzle-luoka ja toiminnallisuus palapelin sekoitukseen.
-Illalla koodin refaktorointia ja toimintojen uudelleen j�rjestely�.
-Aloitin m��rittelydokumentin kirjoittamisen ja materiaalin haalimisen sit� varten.
-L�hinn� etsin v�h�n linkkej� aiheesta ja mietin yleisi� faktoja 15-Puzzleen liittyen.
+Ensimmäinen yllätys tuli sekoituksen kanssa kun tehtyjen siirtojen määrällä on väliä
+mihin ruutuihin voi tai ei voi päästä. Enemmän aiheesta Määrittelydokumentissa.
+Illalla koodin refaktorointia ja toimintojen uudelleen järjestelyä.
+Aloitin määrittelydokumentin kirjoittamisen ja materiaalin haalimisen sitä varten.
+Lähinnä etsin vähän linkkejä aiheesta ja mietin yleisiä faktoja 15-Puzzleen liittyen.
 
-k�ytetty aika: 5h 
+käytetty aika: 5h 
+-----------------------
+to 9.5.
+
+Illalla lueskelin aiheeseen liittyvää materiaalia netistä. Hyvät heuristiikat näyttää
+olevan työläitä tehdä, joten en kyllä ehdi koodaamaan ratkaisua joka löytäisi
+lyhimmän käästösarjan järkevässä ajassa vaikeimin ratkaistaville permutaatioille.
+
+käytetty aika: 3 h
+-----------------------
+pe 10.5.
+
+Määrittelydokumentin kirjoitus palautus kuntoon. Valmis klo 23.00.
+Ainakin oppin että näiden kirjoittamiseen tuhraantuu helposti paljon aikaa.
+
+käytetty aika: 3 h
+-----------------------
