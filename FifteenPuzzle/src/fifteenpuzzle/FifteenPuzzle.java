@@ -16,11 +16,15 @@ public class FifteenPuzzle {
      */   
     
     public static void main(String[] args) {
-        Puzzle peli = new Puzzle(3,6);
+        Puzzle peli = new Puzzle();
         
         System.out.println(peli);
-        peli.suffle();
-        System.out.println(peli);         
+        peli.suffle(6);
+        System.out.println(peli);
+        BruteForce bf = new BruteForce(peli);
+        bf.solve(10);
+        System.out.println(peli);
+        
     }
 
 }
