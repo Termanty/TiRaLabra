@@ -1,0 +1,13 @@
+Ensimmäisen viikon raportti
+11.-17.5.2013
+Tero Mäntylä
+Käytetty aikaa XX tuntia.
+
+---------------------------
+la-su 11.-12.5.
+Viikonloppuna kirjoittelin jonkinlaisen bruteforce ratkaisijan harjoitustyöhön.
+Ihan raaka bruteforce käytti koko hakupuun läpikäyntiin rekursiosyvyteen 15
+aikaaa n. 4 sekunttia. Undo mahdollisuuden poistaminen kasvatti tehokkuutta niin
+paljon että samassa ajassa rekursio syvyys 22 tuli mahdolliseksi.
+
+
