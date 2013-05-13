@@ -15,6 +15,7 @@ public class Puzzle {
     private int higth;
     private int emptyX;
     private int emptyY;
+    public byte lastMove = 0;
 
    
  /**
@@ -46,6 +47,20 @@ public class Puzzle {
         emptyY = higth - 1;
         puzzle[emptyY][emptyX] = 0;
     }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getHigth() {
+        return higth;
+    }
+
+    public byte[][] getPuzzle() {
+        return puzzle;
+    }
+    
+    
     
     
  /**
@@ -95,7 +110,8 @@ public class Puzzle {
  */
     
     private void slide(int dx, int dy) {
-        puzzle[emptyY][emptyX] = puzzle[emptyY + dy][emptyX + dx];
+        lastMove = puzzle[emptyY + dy][emptyX + dx];               
+        puzzle[emptyY][emptyX] = lastMove;
         puzzle[emptyY + dy][emptyX + dx] = 0;
         emptyX += dx;
         emptyY += dy;
@@ -141,6 +157,23 @@ public class Puzzle {
                     break;
             }   
         } 
+    }
+    
+    public boolean isReady() {
+        byte num = 1;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < higth; j++) {
+                if (i == length - 1 && j == higth - 1) {
+                    if (puzzle[i][j] != 0) {
+                        return false;
+                    }
+                } else if (puzzle[i][j] != num) {
+                    return false;
+                }
+                num++;
+            }
+        }
+        return true;
     }
 
     
