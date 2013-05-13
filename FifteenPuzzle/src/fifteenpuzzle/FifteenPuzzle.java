@@ -19,10 +19,17 @@ public class FifteenPuzzle {
         Puzzle peli = new Puzzle();
         
         System.out.println(peli);
-        peli.suffle(6);
+        peli.suffle(100);
         System.out.println(peli);
         BruteForce bf = new BruteForce(peli);
-        bf.solve(10);
+        IdaStar idaStar = new IdaStar(peli);
+//        
+//        System.out.println(peli.lastMove);
+//        System.out.println(idaStar.manhattanDistance());
+//        System.out.println(idaStar.changeMD(-1, 0));
+        
+        idaStar.findPath();
+//        bf.solve(15);
         System.out.println(peli);
         
     }

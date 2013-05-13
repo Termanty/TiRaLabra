@@ -13,9 +13,10 @@ public class Puzzle {
     private byte[][] puzzle;
     private int length;
     private int higth;
+    private byte empty;
     private int emptyX;
     private int emptyY;
-    public byte lastMove = 0;
+    public byte lastMove;
 
    
  /**
@@ -36,16 +37,17 @@ public class Puzzle {
     }
     
     private void intializePuzzle() {
-        byte num = 1;
+        byte num = 0;
         puzzle = new byte[higth][length];
         for (int i = 0; i < higth; i++) {
             for (int j = 0; j < length; j++) {
-                puzzle[i][j] = num++;     
+                puzzle[i][j] = ++num;     
             }
         }
+        empty = num;
+        lastMove = num;
         emptyX = length - 1;
         emptyY = higth - 1;
-        puzzle[emptyY][emptyX] = 0;
     }
 
     public int getLength() {
@@ -59,6 +61,36 @@ public class Puzzle {
     public byte[][] getPuzzle() {
         return puzzle;
     }
+
+    public byte getEmpty() {
+        return empty;
+    }
+
+    public int getEmptyX() {
+        return emptyX;
+    }
+
+    public int getEmptyY() {
+        return emptyY;
+    } 
+    
+    public byte getNumber(int i, int j) {
+        return puzzle[i][j];
+    }
+    
+    public int[] getCoordinates(int find) {
+        int coordinates[] = new int[2];
+        int num = 1;
+        for (int i = 0; i < higth; i++) {
+            for (int j = 0; j < length; j++) {
+                if (find == puzzle[i][j]) {
+                    coordinates[0] = i;
+                    coordinates[1] = j;
+                }  
+            }
+        }
+        return coordinates;
+    }
     
     
     
@@ -66,7 +98,7 @@ public class Puzzle {
  /**
  * Methods up, down, right, left "slides" number to empty hole (swaps with 0 number).
  * Method name indicates the direction from empty hole to find the sliding number.
- * If movement was done methods return TRUE. If the movent is impossible return value 
+ * If movement was done methods return TRUE. If the movement is impossible return value 
  * will be FALSE.
  */
     
@@ -104,7 +136,7 @@ public class Puzzle {
     
     
  /**
- * Slide method swaps empty place (0) and number.
+ * Slide method swaps empty place and number.
  * Arguments gives the direction of the number from empty place.
  * example: dx = 0, dy = +1 means number under the empty place.
  */
@@ -112,7 +144,7 @@ public class Puzzle {
     private void slide(int dx, int dy) {
         lastMove = puzzle[emptyY + dy][emptyX + dx];               
         puzzle[emptyY][emptyX] = lastMove;
-        puzzle[emptyY + dy][emptyX + dx] = 0;
+        puzzle[emptyY + dy][emptyX + dx] = empty;
         emptyX += dx;
         emptyY += dy;
     }  
@@ -161,13 +193,9 @@ public class Puzzle {
     
     public boolean isReady() {
         byte num = 1;
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < higth; j++) {
-                if (i == length - 1 && j == higth - 1) {
-                    if (puzzle[i][j] != 0) {
-                        return false;
-                    }
-                } else if (puzzle[i][j] != num) {
+        for (int i = 0; i < higth; i++) {
+            for (int j = 0; j < length; j++) {
+                if (puzzle[i][j] != num) {
                     return false;
                 }
                 num++;
@@ -183,8 +211,14 @@ public class Puzzle {
         for (int i = 0; i < higth; i++) {
             for (int j = 0; j < length; j++) {
                 sb.append(" ");
-                if (puzzle[i][j] < 10) sb.append(" ");
-                sb.append(puzzle[i][j]); 
+                if (puzzle[i][j] < 10) {
+                    sb.append(" ");
+                }
+                if (puzzle[i][j] == empty) {
+                    sb.append("..");
+                } else {
+                    sb.append(puzzle[i][j]);
+                }
             }
             sb.append("\n");
         }

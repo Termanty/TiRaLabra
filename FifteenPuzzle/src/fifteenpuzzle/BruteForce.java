@@ -69,23 +69,5 @@ public class BruteForce {
             puzzle.right();
         }
     }
-
-    private boolean complete() {
-        byte num = 1;
-        for (int i = 0; i < p.length; i++) {
-            for (int j = 0; j < p[i].length; j++) {
-                if (i == p.length - 1 && j == p[i].length - 1) {
-                    if (p[i][j] != 0) {
-                        return false;
-                    }
-                } else if (p[i][j] != num) {
-                    return false;
-                }
-                num++;
-            }
-        }
-        return true;
-    }
-    
     
 }
