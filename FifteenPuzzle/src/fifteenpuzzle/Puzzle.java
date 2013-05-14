@@ -91,6 +91,22 @@ public class Puzzle {
         }
         return coordinates;
     }
+
+    public void setPuzzle(byte[] order) {
+        int n = 0;
+        for (int i = 0; i < higth; i++) {
+            for (int j = 0; j < length; j++) {
+                puzzle[i][j] = order[n];
+                if (order[n] == empty) {
+                    emptyX = j;
+                    emptyY = i;
+                }
+                n++;
+            }
+        }  
+    }
+    
+    
     
     
     
@@ -151,13 +167,13 @@ public class Puzzle {
   
     
  /**
- * Suffle method does given amount of Random moves to suffle the puzzle.
+ * Shuffle method does given amount of Random moves to shuffle the puzzle.
  * If no argument is given there will be done ether 1000 or 1001 moves.
  * This because with only even or odd amount of the moves you can't get
- * all the permutations of the suffle.
+ * all the permutations of the shuffle.
  */     
     
-    public void suffle() {
+    public void shuffle() {
         int amountOfRandomMoves = 1000;
         if (Math.random() < 0.5) {
             amountOfRandomMoves++;
