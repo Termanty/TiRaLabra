@@ -60,6 +60,6 @@ käytetty aika: 4 h
 
 ke 15.5.
 Aloitin testien kirjoittamisen Puzzle luokalle. 
-käytetty aika: 4 h
+käytetty aika: 5 h
 
 
