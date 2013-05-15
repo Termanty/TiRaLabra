@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
 
 public class PuzzleClassTest {
     private Puzzle p;
+    private byte[] test1 = {14,4,6,16,8,11,15,9,12,3,5,1,2,10,7,13}; // 61 siirtoa
+    private byte[] test2 = {14,15,11,10,2,3,6,13,12,5,16,4,7,8,9,1}; // 62 siirtoa
     
     public PuzzleClassTest() {
         p = new Puzzle();
@@ -56,7 +58,7 @@ public class PuzzleClassTest {
             byte numberInCell = 1;
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
-                    assertEquals("Problem: "+rows+"*"+cols+"-Puzzle is not in right order:", puzzle[row][col], numberInCell);
+                    assertEquals("Problem: "+rows+"*"+cols+"-Puzzle is not in right order:", numberInCell, puzzle[row][col]);
                     numberInCell++;
                 }
             }
@@ -68,8 +70,7 @@ public class PuzzleClassTest {
     
     @Test
     public void getNumberInCell_methodReturnsRightValue() {
-        int[] expected = {2,3}; 
-        assertArrayEquals("Method returned wrong cordinate for number 12: ",expected, p.getCordinates(12));
+        assertArrayEquals("Method returned wrong cordinate for number 12: ", new int[]{2,3}, p.getCordinates(12));
     }
     
     @Test
@@ -79,21 +80,58 @@ public class PuzzleClassTest {
     
     @Test
     public void setPuzzle_methodChangesPuzzleAndEmptyRowColVariables() {
-        Puzzle p1 = new Puzzle();
-        byte[] test = {14,4,6,16,8,11,15,9,12,3,5,1,2,10,7,13};
-        p1.setPuzzle(test);
-        assertEquals("emptyRow has wrong value! "+test.toString(), p1.getEmptyRow(), 0);     
-        assertEquals("emptyCol has wrong value! "+test.toString(), p1.getEmptyCol(), 3);
+        Puzzle p1 = testCase(test1); 
+        assertEquals("emptyRow has wrong value! "+test1.toString(), p1.getEmptyRow(), 0);     
+        assertEquals("emptyCol has wrong value! "+test1.toString(), p1.getEmptyCol(), 3);
         int index = 0;
         for (int row = 0; row < p1.getNumberOfRows(); row++) {
             for (int col = 0; col < p1.getNumberOfColumns(); col++) {
-                assertEquals("Puzzle has wrong value in row "+row+" col "+col, test[index] , p1.getNumberInCell(row, col));
+                assertEquals("Puzzle has wrong value in row "+row+" col "+col, test1[index], p1.getNumberInCell(row, col));
                 index++;
             }  
         }   
     }
     
+    @Test
+    public void up_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
+       Puzzle p1 = testCase(test2);
+       assertTrue("Return false but shoud return true", p1.up());
+       assertEquals("emptyRow has wrong value! "+test2.toString(), 1, p1.getEmptyRow());
+       assertEquals("emptyCol has wrong value! "+test2.toString(), 2, p1.getEmptyCol());
+       assertEquals("Puzzle has wrong value in row 2 col 3", 6 , p1.getNumberInCell(2, 2));
+    }
     
-   
+    @Test
+    public void down_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
+       Puzzle p1 = testCase(test2);
+       assertTrue("Return false but shoud return true", p1.down());
+       assertEquals("emptyRow has wrong value! "+test2.toString(), 3, p1.getEmptyRow());
+       assertEquals("emptyCol has wrong value! "+test2.toString(), 2, p1.getEmptyCol());
+       assertEquals("Puzzle has wrong value in row 2 col 3", 9 , p1.getNumberInCell(2, 2));
+    }
+    
+    @Test
+    public void right_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
+       Puzzle p1 = testCase(test2);
+       assertTrue("Return false but shoud return true", p1.right());
+       assertEquals("emptyRow has wrong value! "+test2.toString(), 2, p1.getEmptyRow());
+       assertEquals("emptyCol has wrong value! "+test2.toString(), 1, p1.getEmptyCol());
+       assertEquals("Puzzle has wrong value in row 2 col 3", 5 , p1.getNumberInCell(2, 2));  
+    }
+    
+    @Test
+    public void left_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
+       Puzzle p1 = testCase(test2);
+       assertTrue("Return false but shoud return true", p1.left());
+       assertEquals("emptyRow has wrong value! "+test2.toString(), 2, p1.getEmptyRow());
+       assertEquals("emptyCol has wrong value! "+test2.toString(), 3, p1.getEmptyCol());
+       assertEquals("Puzzle has wrong value in row 2 col 3", 4 , p1.getNumberInCell(2, 2));  
+    }
+    
+    private Puzzle testCase(byte[] test) {
+        Puzzle p1 = new Puzzle();
+        p1.setPuzzle(test);
+        return p1;
+    }
     
 }

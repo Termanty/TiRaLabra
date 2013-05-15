@@ -79,6 +79,10 @@ public class Puzzle {
     public int getEmptyRow() {
         return emptyInRow;
     } 
+
+    public byte getLastMove() {
+        return lastMove;
+    }
     
     public byte getNumberInCell(int row, int col) {
         return puzzle[row][col];
@@ -113,9 +117,8 @@ public class Puzzle {
     
     
  /**
- * Methods up, down, right, left "slides" number to empty hole (swaps with Empty number).
- * Method name indicates the direction from empty hole to find the sliding number.
- * If movement was done methods return TRUE. If the movement is impossible return value 
+ * Methods up, down, right, left swap empty place with the number in pointed direction.
+ * If movement was doable methods return TRUE. If the movement is impossible return value 
  * will be FALSE.
  */
     
@@ -162,9 +165,9 @@ public class Puzzle {
         lastMove = puzzle[emptyInRow + dRow][emptyInCol + dCol];               
         puzzle[emptyInRow][emptyInCol] = lastMove;
         puzzle[emptyInRow + dRow][emptyInCol + dCol] = EMPTY;
-        emptyInCol += dCol;
         emptyInRow += dRow;
-    }  
+        emptyInCol += dCol;    
+    }
   
     
  /**
