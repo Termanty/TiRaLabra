@@ -16,13 +16,13 @@ public class FifteenPuzzle {
      */   
     
     public static void main(String[] args) {
-        Puzzle peli = new Puzzle();                           
+        Puzzle peli = new Puzzle(3,4);                           
         
         peli.shuffle();     
-        peli.setPuzzle(esim1);            
+//        peli.setPuzzle(esim1);            
         System.out.println(peli);
         
-        BruteForce bf = new BruteForce(peli);
+//        BruteForce bf = new BruteForce(peli);
         IdaStar idaStar = new IdaStar(peli);    
         
         idaStar.findPath();

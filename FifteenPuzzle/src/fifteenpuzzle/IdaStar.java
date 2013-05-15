@@ -15,12 +15,12 @@ public class IdaStar {
     private byte[] answer;
     private int limit;
     private final int ROWS;
-    private final int COLLUMNS;
+    private final int COLUMNS;
 
     public IdaStar(Puzzle puzzle) {
         this.puzzle = puzzle;
-        this.ROWS = puzzle.getHigth();
-        this.COLLUMNS = puzzle.getLength();
+        this.ROWS = puzzle.getNumberOfRows();
+        this.COLUMNS = puzzle.getNumberOfColumns();
     }
     
     public String findPath() {
@@ -58,46 +58,46 @@ public class IdaStar {
         }
 
         if (!found && lastMove != 1 && puzzle.up()) {
-            search(depth + 1, path, 0, md + changeMD(0, -1));
+            search(depth + 1, path, 0, md + changeMD(-1, 0));
             puzzle.down();
         }
         if (!found && lastMove != 0 && puzzle.down()) {
-            search(depth + 1, path, 1, md + changeMD(0, 1));
+            search(depth + 1, path, 1, md + changeMD(1, 0));
             puzzle.up();
         }
         if (!found && lastMove != 3 && puzzle.right()) {
-            search(depth + 1, path, 2, md + changeMD(-1, 0));
+            search(depth + 1, path, 2, md + changeMD(0, -1));
             puzzle.left();
         }
         if (!found && lastMove != 2 && puzzle.left()) {
-            search(depth + 1, path, 3, md + changeMD(1, 0));
+            search(depth + 1, path, 3, md + changeMD(0, 1));
             puzzle.right();
         }
     }
     
     public int manhattanDistance() {
         int sumOfMDs = 0;
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLLUMNS; j++) {
-                int num = puzzle.getNumber(i, j);
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+                int num = puzzle.getNumberInCell(row, column);
                 if (num == puzzle.getEmpty()) {
                     continue;
                 }
-                int[] cordinates = puzzle.getCoordinates(num);
+                int[] cordinates = puzzle.getCordinates(num);
                 sumOfMDs += Math.abs(cordinates[0] - (num - 1) / ROWS);
-                sumOfMDs += Math.abs(cordinates[1] - (num - 1) % COLLUMNS);
+                sumOfMDs += Math.abs(cordinates[1] - (num - 1) % COLUMNS);
             }
         }
         return sumOfMDs;
     }
     
-    public int changeMD(int dRow, int dCollumn) {
-        if (dCollumn == 0) {
-            int rowTargetPos = (puzzle.lastMove - 1) % COLLUMNS;
-            return Math.abs(puzzle.getEmptyX() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyX() - rowTargetPos);
+    public int changeMD(int dRow, int dColumn) {
+        if (dColumn == 0) {
+            int rowTargetPos = (puzzle.lastMove - 1) / ROWS;
+            return Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);
         } else {
-            int colTargetPos = (puzzle.lastMove - 1) / ROWS;
-            return Math.abs(puzzle.getEmptyY() - dCollumn - colTargetPos) - Math.abs(puzzle.getEmptyY() - colTargetPos);
+            int colTargetPos = (puzzle.lastMove - 1) % COLUMNS;
+            return Math.abs(puzzle.getEmptyCol() - dColumn - colTargetPos) - Math.abs(puzzle.getEmptyCol() - colTargetPos);
         }
     }
     
@@ -105,8 +105,8 @@ public class IdaStar {
         int linearConflict = 0;
         for (int row = 0; row < ROWS; row++) {
             int max = -1;
-            for (int collumn = 0; collumn < COLLUMNS; collumn++) {
-                int num = puzzle.getNumber(row, collumn);
+            for (int column = 0; column < COLUMNS; column++) {
+                int num = puzzle.getNumberInCell(row, column);
                 if (num != puzzle.getEmpty() && (num - 1) / ROWS == row) {
                     if (num > max) {
                         max = num;
@@ -116,11 +116,11 @@ public class IdaStar {
                 }
             }
         }
-        for (int collumn = 0; collumn < COLLUMNS; collumn++) {
+        for (int collumn = 0; collumn < COLUMNS; collumn++) {
             int max = -1;
             for (int row = 0; row < ROWS; row++) {
-                int num = puzzle.getNumber(row, collumn);
-                if (num != puzzle.getEmpty() && (num - 1) % COLLUMNS == collumn) {
+                int num = puzzle.getNumberInCell(row, collumn);
+                if (num != puzzle.getEmpty() && (num - 1) % COLUMNS == collumn) {
                     if (num > max) {
                         max = num;
                     } else {
@@ -141,22 +141,22 @@ public class IdaStar {
     
     private boolean needToChangeLinearConflict(int dRow, int dCollumn) {
         int num = puzzle.lastMove - 1;
-        int rowTargetPos = (puzzle.lastMove - 1) % COLLUMNS;
+        int rowTargetPos = (puzzle.lastMove - 1) % COLUMNS;
         int colTargetPos = (puzzle.lastMove - 1) / ROWS;
         
         
-        if (num / ROWS == puzzle.getEmptyY()) {
+        if (num / ROWS == puzzle.getEmptyRow()) {
             return true;
         }
-        if (num % COLLUMNS == puzzle.getEmptyX()) {
+        if (num % COLUMNS == puzzle.getEmptyCol()) {
             return true;
         }
         if (dRow == 0) {
-            if (num % COLLUMNS == puzzle.getEmptyX() + dRow) {
+            if (num % COLUMNS == puzzle.getEmptyCol() + dRow) {
                 return true;
             }
         } else {
-            if (num / ROWS == puzzle.getEmptyY() + dRow) {
+            if (num / ROWS == puzzle.getEmptyRow() + dRow) {
                 return true;
             }   
         }

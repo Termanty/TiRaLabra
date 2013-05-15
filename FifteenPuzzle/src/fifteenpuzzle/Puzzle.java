@@ -11,51 +11,57 @@ import java.util.Random;
 public class Puzzle {
     
     private byte[][] puzzle;
-    private int length;
-    private int higth;
-    private byte empty;
-    private int emptyX;
-    private int emptyY;
+    private final int ROWS;
+    private final int COLUMNS;
+    
+    private final byte EMPTY;
+    private int emptyInRow;
+    private int emptyInCol;
+    
     public byte lastMove;
 
    
  /**
- * Constructors and assisting method intializePuzzle() for creating
+ * Constructors and 
+ * assisting method intializePuzzle() for creating
  * puzzle which numbers are in right order.
  */
     
     public Puzzle() {
-        this.length = 4;
-        this.higth = 4;
-        intializePuzzle();
+        this(4, 4);
     }
 
-    public Puzzle(int length, int higth) {
-        this.length = length;
-        this.higth = higth;
+    public Puzzle(int rows, int collumns) {
+        this.COLUMNS = collumns;
+        this.ROWS = rows;
+        this.EMPTY = (byte)(ROWS*COLUMNS);
         intializePuzzle();
     }
     
     private void intializePuzzle() {
-        byte num = 0;
-        puzzle = new byte[higth][length];
-        for (int i = 0; i < higth; i++) {
-            for (int j = 0; j < length; j++) {
-                puzzle[i][j] = ++num;     
+        byte numberInCell = 1;
+        puzzle = new byte[ROWS][COLUMNS];
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                puzzle[row][col] = numberInCell++;     
             }
         }
-        empty = num;
-        lastMove = num;
-        emptyX = length - 1;
-        emptyY = higth - 1;
+        lastMove = -1;
+        emptyInCol = COLUMNS - 1;
+        emptyInRow = ROWS - 1;
+    }
+    
+    
+ /**
+  * Getters and Setters
+  */
+
+    public int getNumberOfColumns() {
+        return COLUMNS;
     }
 
-    public int getLength() {
-        return length;
-    }
-
-    public int getHigth() {
-        return higth;
+    public int getNumberOfRows() {
+        return ROWS;
     }
 
     public byte[][] getPuzzle() {
@@ -63,88 +69,83 @@ public class Puzzle {
     }
 
     public byte getEmpty() {
-        return empty;
+        return EMPTY;
     }
 
-    public int getEmptyX() {
-        return emptyX;
+    public int getEmptyCol() {
+        return emptyInCol;
     }
 
-    public int getEmptyY() {
-        return emptyY;
+    public int getEmptyRow() {
+        return emptyInRow;
     } 
     
-    public byte getNumber(int i, int j) {
-        return puzzle[i][j];
+    public byte getNumberInCell(int row, int col) {
+        return puzzle[row][col];
     }
     
-    public int[] getCoordinates(int find) {
-        int coordinates[] = new int[2];
-        int num = 1;
-        for (int i = 0; i < higth; i++) {
-            for (int j = 0; j < length; j++) {
-                if (find == puzzle[i][j]) {
-                    coordinates[0] = i;
-                    coordinates[1] = j;
+    public int[] getCordinates(int find) {
+        int cordinates[] = new int[2];
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (find == puzzle[row][col]) {
+                    cordinates[0] = row;
+                    cordinates[1] = col;
                 }  
             }
         }
-        return coordinates;
+        return cordinates;
     }
 
-    public void setPuzzle(byte[] order) {
-        int n = 0;
-        for (int i = 0; i < higth; i++) {
-            for (int j = 0; j < length; j++) {
-                puzzle[i][j] = order[n];
-                if (order[n] == empty) {
-                    emptyX = j;
-                    emptyY = i;
+    public void setPuzzle(byte[] newSequence) {
+        int index = 0;
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                puzzle[row][col] = newSequence[index];
+                if (newSequence[index] == EMPTY) {
+                    emptyInCol = col;
+                    emptyInRow = row;
                 }
-                n++;
+                index++;
             }
         }  
-    }
-    
-    
-    
-    
+    }  
     
     
  /**
- * Methods up, down, right, left "slides" number to empty hole (swaps with 0 number).
+ * Methods up, down, right, left "slides" number to empty hole (swaps with Empty number).
  * Method name indicates the direction from empty hole to find the sliding number.
  * If movement was done methods return TRUE. If the movement is impossible return value 
  * will be FALSE.
  */
     
     public boolean up() {
-        if (emptyY > 0) {
-            slide(0, -1);
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean down() {
-        if (emptyY < higth - 1) {
-            slide(0, +1);
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean right() {
-        if (emptyX > 0) {
+        if (emptyInRow > 0) {
             slide(-1, 0);
             return true;
         }
         return false;
     }
     
-    public boolean left() {
-        if (emptyX < length - 1) {
+    public boolean down() {
+        if (emptyInRow < ROWS - 1) {
             slide(+1, 0);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean right() {
+        if (emptyInCol > 0) {
+            slide(0, -1);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean left() {
+        if (emptyInCol < COLUMNS - 1) {
+            slide(0, +1);
             return true;
         }
         return false;
@@ -154,15 +155,15 @@ public class Puzzle {
  /**
  * Slide method swaps empty place and number.
  * Arguments gives the direction of the number from empty place.
- * example: dx = 0, dy = +1 means number under the empty place.
+ * example: dCol = 0, dRow = +1 means number under the empty place.
  */
     
-    private void slide(int dx, int dy) {
-        lastMove = puzzle[emptyY + dy][emptyX + dx];               
-        puzzle[emptyY][emptyX] = lastMove;
-        puzzle[emptyY + dy][emptyX + dx] = empty;
-        emptyX += dx;
-        emptyY += dy;
+    private void slide(int dRow, int dCol) {
+        lastMove = puzzle[emptyInRow + dRow][emptyInCol + dCol];               
+        puzzle[emptyInRow][emptyInCol] = lastMove;
+        puzzle[emptyInRow + dRow][emptyInCol + dCol] = EMPTY;
+        emptyInCol += dCol;
+        emptyInRow += dRow;
     }  
   
     
@@ -208,13 +209,13 @@ public class Puzzle {
     }
     
     public boolean isReady() {
-        byte num = 1;
-        for (int i = 0; i < higth; i++) {
-            for (int j = 0; j < length; j++) {
-                if (puzzle[i][j] != num) {
+        byte numberInCell = 1;
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if (puzzle[row][col] != numberInCell) {
                     return false;
                 }
-                num++;
+                numberInCell++;
             }
         }
         return true;
@@ -224,16 +225,16 @@ public class Puzzle {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < higth; i++) {
-            for (int j = 0; j < length; j++) {
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
                 sb.append(" ");
-                if (puzzle[i][j] < 10) {
+                if (puzzle[row][col] < 10) {
                     sb.append(" ");
                 }
-                if (puzzle[i][j] == empty) {
+                if (puzzle[row][col] == EMPTY) {
                     sb.append("..");
                 } else {
-                    sb.append(puzzle[i][j]);
+                    sb.append(puzzle[row][col]);
                 }
             }
             sb.append("\n");
