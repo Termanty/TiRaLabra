@@ -1,7 +1,6 @@
-﻿Ensimmäisen ja toisen viikon raportti 
-7.-17.5.2013
+﻿Ensimmäisen ja toisen viikon raportti 7.-17.5.2013
+
 Tero Mäntylä
-Käytetty aikaa 14 tuntia.
 
 ti 7.5.
 Harjoitustyön aloitus henkilökohtaisella haastattelulla. 
@@ -43,10 +42,11 @@ käytetty aika: 4 h
 ma 13.5.
 Toteutin IDA* luokan ja siihen Manhattan etäisyyttä laskevan heuristiinkan.
 Ohjelman nopeus parani selkeästi.
-Testitapaus   	14  4  6 ..
-             	 8 11 15  9
- 	   	12  3  5  1
-  		 2 10  7 13
+Testitapaus		
+	14  4  6 ..
+	8 11 15  9
+	12  3  5  1
+	2 10  7 13
 vaatii 61 siirtoa. Tämä ratkeaa n. 2 minuutissa.
 käytetty aika: 6 h
 
@@ -56,10 +56,31 @@ etäisyyttä vaan vain muutos edellisen tilanteeseen. Huima parannus ajassa.
 Eilisen päivän testitapaus ratkeaa 7 sekunnissa.
 Linear conflic -heuristiikan lisäys. Nykyisellä toteuksella se vain hidastaa toimintaa.
 Pyrin muuttamaan sitä niin että lasketaan vain muutosta niinkuin Manhattaninkin kanssa.
+Linear conflict ei tässä palautuksessa ole vielä käytössä.
 käytetty aika: 4 h
 
 ke 15.5.
 Aloitin testien kirjoittamisen Puzzle luokalle. 
-käytetty aika: 5 h
+käytetty aika: 6 h
+
+to 16.5.
+Testien kirjoittamista.
+Ainakin tästä oppii että testien kirjoittamisessa on melkoinen työ.
+käytetty aika: 6 h
+
+Käytetty aikaa yhteensä 50 tunti.
+
+Mitä seuraavaksi?
+- Toteuttaa toimiva linear conflict, joka oikeasti nopeuttaa laskentaa.
+- Limitin kasvatus kahdella jokaisella iteraatiolla.
+	Alkutilanteesta on helppo päätellä onko ratkaisussa parillinen vai pariton määrä siirtoja.
+	Muutoksen pitäisi puolittaa ajoaika.
+- Tehdä parempi sekoittaja. Kaikki vaihtoehdot eivät nyt ole yhtä todennäköisiä.
+Mahdollisia muita vaitoehtoja:
+- A* ratkaisija olisi ihan opettavaista toteuttaa ja saisi hyvän vertailukohdan.
+- Walking Distance heuristiikan toteuttaminen IDA*:een. 
+	Menetelmää käyttää esilaskettua pattern databasea. Näitä on muitakin vaihtoehtoja.
+
+
 
 
