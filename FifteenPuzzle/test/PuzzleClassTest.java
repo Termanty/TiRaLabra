@@ -15,17 +15,18 @@ import static org.junit.Assert.*;
  */
 
 public class PuzzleClassTest {  
+    
     private Puzzle p;
-    private byte[] test1 = {14,4,6,16,8,11,15,9,12,3,5,1,2,10,7,13}; // 61 siirtoa
-    private byte[] test2 = {14,15,11,10,2,3,6,13,12,5,16,4,7,8,9,1}; // 62 siirtoa
+    private byte[] test1 = {14,4,6,16,8,11,15,9,12,3,5,1,2,10,7,13}; 
+    private byte[] test2 = {14,15,11,10,2,3,6,13,12,5,16,4,7,8,9,1};
     private byte[] test3 = {5,1,3,4,9,2,7,8,16,6,10,12,13,14,11,15};
     private byte[] test4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
     private byte[] test5 = {5,2,16,3,7,1,15,4,9,6,10,11,13,8,14,12};
-    
-    
+        
     public PuzzleClassTest() {
         p = new Puzzle();
     }
+    
     
  /**
  * Tests for Constructor checks that all class variables have right values.
@@ -145,27 +146,27 @@ public class PuzzleClassTest {
     }
     
     @Test
-    public void right_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
+    public void left_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
         assertTrue("Returns false but should return true", p1.left());
         movementTest(p1, 2, 1, 5, 2, 2);        
     }
     
     @Test
-    public void right_methodReturnsFalseWhenSwapIsUndoable() {
+    public void left_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test3);
         assertFalse("Returns true but should return false", p1.left());
     }
     
     @Test
-    public void left_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
+    public void right_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
         assertTrue("Returns false but should return true", p1.right());
         movementTest(p1, 2, 3, 4, 2, 2);
     }
     
     @Test
-    public void left_methodReturnsFalseWhenSwapIsUndoable() {
+    public void right_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test1);
         assertFalse("Returns true but should return false", p1.right());
     }
@@ -255,5 +256,4 @@ public class PuzzleClassTest {
         assertEquals("emptyCol has wrong value! "+test2.toString(), emptyCol, p1.getEmptyCol());
         assertEquals("Puzzle has wrong value in row 2 col 3: ",num , p1.getNumberInCell(numRow, numCol));  
     }
-
 }

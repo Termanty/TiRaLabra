@@ -11,11 +11,7 @@ import java.util.Arrays;
  */
 
 
-public class FifteenPuzzle {
- 
-    /**
-     * @param args the command line arguments
-     */   
+public class FifteenPuzzle {  
     
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4,4);                           
@@ -28,7 +24,7 @@ public class FifteenPuzzle {
         
         // Finds optimal solusotion for permutation.
         IdaStar idaStar = new IdaStar(p);   
-        byte[] solution = idaStar.findPath();
+        byte[] solution = idaStar.findSolution();
         
         // Prints results
         System.out.println("");

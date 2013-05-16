@@ -43,7 +43,7 @@ public class IdaStar {
         return runningTime;
     }
     
-    public byte[] findPath() {
+    public byte[] findSolution() {
         found = false;
         ManhattanDistance = manhattanDistance();
         LinearConflict = linearConflict();
@@ -177,6 +177,4 @@ public class IdaStar {
         }
         return false;
     }
-    
-    
 }
