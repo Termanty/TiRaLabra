@@ -14,14 +14,14 @@ import static org.junit.Assert.*;
  * @author Tero Mäntylä
  */
 
-public class PuzzleClassTest {
+public class PuzzleClassTest {  
     private Puzzle p;
     private byte[] test1 = {14,4,6,16,8,11,15,9,12,3,5,1,2,10,7,13}; // 61 siirtoa
     private byte[] test2 = {14,15,11,10,2,3,6,13,12,5,16,4,7,8,9,1}; // 62 siirtoa
     private byte[] test3 = {5,1,3,4,9,2,7,8,16,6,10,12,13,14,11,15};
     private byte[] test4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
     private byte[] test5 = {5,2,16,3,7,1,15,4,9,6,10,11,13,8,14,12};
-
+    
     
     public PuzzleClassTest() {
         p = new Puzzle();
@@ -147,27 +147,27 @@ public class PuzzleClassTest {
     @Test
     public void right_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
-        assertTrue("Returns false but should return true", p1.right());
+        assertTrue("Returns false but should return true", p1.left());
         movementTest(p1, 2, 1, 5, 2, 2);        
     }
     
     @Test
     public void right_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test3);
-        assertFalse("Returns true but should return false", p1.right());
+        assertFalse("Returns true but should return false", p1.left());
     }
     
     @Test
     public void left_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
-        assertTrue("Returns false but should return true", p1.left());
+        assertTrue("Returns false but should return true", p1.right());
         movementTest(p1, 2, 3, 4, 2, 2);
     }
     
     @Test
     public void left_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test1);
-        assertFalse("Returns true but should return false", p1.left());
+        assertFalse("Returns true but should return false", p1.right());
     }
     
     @Test
@@ -186,16 +186,16 @@ public class PuzzleClassTest {
                         assertEquals("Down movement gave wrong return value: ",p1.getEmptyRow() < p1.getNumberOfRows() - 1, p1.down());
                         break;
                     case 2:
-                        assertEquals("Right movement gave wrong return value: ",p1.getEmptyCol() > 0, p1.right());
+                        assertEquals("Right movement gave wrong return value: ",p1.getEmptyCol() > 0, p1.left());
                         break;
                     case 3:
-                        assertEquals("Left movement gave wrong return value: ",p1.getEmptyCol() < p1.getNumberOfColumns() - 1, p1.left());
+                        assertEquals("Left movement gave wrong return value: ",p1.getEmptyCol() < p1.getNumberOfColumns() - 1, p1.right());
                         break;
                 }   
             }   
         }
         Puzzle p1 = testCase(test1);
-        assertFalse("Returns true but should return false.", p1.left());
+        assertFalse("Returns true but should return false.", p1.right());
     }
     
 

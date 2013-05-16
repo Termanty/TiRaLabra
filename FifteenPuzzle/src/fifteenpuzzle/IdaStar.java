@@ -10,38 +10,56 @@ import java.util.Arrays;
  */
 
 public class IdaStar {
-    private boolean found;
-    private Puzzle puzzle; 
-    private byte[] answer;
-    private int limit;
+    
+    private Puzzle puzzle;
     private final int ROWS;
     private final int COLUMNS;
-
+    
+    private boolean found;
+    private byte[] optimalSolution;
+    private int limit;
+    
+    private int ManhattanDistance;
+    private int LinearConflict;
+    private long runningTime;
+    
+  
+    
     public IdaStar(Puzzle puzzle) {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
     }
-    
-    public String findPath() {
-        found = false;
-        int md = manhattanDistance();
-        int linearConflict = linearConflict();
-        limit = md;
-        System.out.println("MD at beginning: " + md);
-        System.out.println("Linear conflict: " + linearConflict);
-        while (!found) { 
-            search(0, new byte[100], -1, md);
-            limit++;
-        }
-        return null;
+
+    public int getManhattanDistance() {
+        return ManhattanDistance;
+    }
+
+    public int getLinearConflict() {
+        return LinearConflict;
+    }
+
+    public long getRunningTime() {
+        return runningTime;
     }
     
-    public void search(int depth, byte[] path, int lastMove, int md) {
-//        System.out.println("Limit "+ limit);
-//        System.out.println("md "+md);
-//        System.out.println("MD "+manhattanDistance());
-//        System.out.println("");
+    public byte[] findPath() {
+        found = false;
+        ManhattanDistance = manhattanDistance();
+        LinearConflict = linearConflict();
+        limit = ManhattanDistance;
+        long timeAtStar = System.currentTimeMillis();
+        while (!found) { 
+            System.out.print("limit " + limit + " ... ");
+            search(0, new byte[100], -1, ManhattanDistance);
+            limit++;
+            System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
+        }
+        runningTime = System.currentTimeMillis() - timeAtStar;
+        return optimalSolution;
+    }
+    
+    private void search(int depth, byte[] path, int lastMove, int md) {
         if (depth + md > limit) {
             return;
         }
@@ -49,10 +67,7 @@ public class IdaStar {
         path[depth] = puzzle.lastMove;
 
         if (puzzle.isReady()) {
-            System.out.println("final limit: " + limit);
-            System.out.println("final depth: " + depth +"\n");
-            answer = Arrays.copyOfRange(path, 1, depth + 1);
-            System.out.println(Arrays.toString(answer)+"\n");
+            optimalSolution = Arrays.copyOfRange(path, 1, depth + 1);
             found = true;
             return;
         }
@@ -65,17 +80,17 @@ public class IdaStar {
             search(depth + 1, path, 1, md + changeMD(1, 0));
             puzzle.up();
         }
-        if (!found && lastMove != 3 && puzzle.right()) {
+        if (!found && lastMove != 3 && puzzle.left()) {
             search(depth + 1, path, 2, md + changeMD(0, -1));
-            puzzle.left();
-        }
-        if (!found && lastMove != 2 && puzzle.left()) {
-            search(depth + 1, path, 3, md + changeMD(0, 1));
             puzzle.right();
+        }
+        if (!found && lastMove != 2 && puzzle.right()) {
+            search(depth + 1, path, 3, md + changeMD(0, 1));
+            puzzle.left();
         }
     }
     
-    public int manhattanDistance() {
+    private int manhattanDistance() {
         int sumOfMDs = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
@@ -91,7 +106,7 @@ public class IdaStar {
         return sumOfMDs;
     }
     
-    public int changeMD(int dRow, int dColumn) {
+    private int changeMD(int dRow, int dColumn) {
         if (dColumn == 0) {
             int rowTargetPos = (puzzle.lastMove - 1) / ROWS;
             return Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);

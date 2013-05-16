@@ -60,13 +60,13 @@ public class BruteForce {
             search(depth + 1, path, 1);
             puzzle.up();
         }
-        if (!found && lastMove != 3 &&  puzzle.right()) {
+        if (!found && lastMove != 3 &&  puzzle.left()) {
             search(depth + 1, path, 2);
-            puzzle.left();
-        }
-        if (!found && lastMove != 2 &&  puzzle.left()) {
-            search(depth + 1, path, 3);
             puzzle.right();
+        }
+        if (!found && lastMove != 2 &&  puzzle.right()) {
+            search(depth + 1, path, 3);
+            puzzle.left();
         }
     }
     

@@ -138,7 +138,7 @@ public class Puzzle {
         return false;
     }
     
-    public boolean right() {
+    public boolean left() {
         if (emptyInCol > 0) {
             slide(0, -1);
             return true;
@@ -146,7 +146,7 @@ public class Puzzle {
         return false;
     }
     
-    public boolean left() {
+    public boolean right() {
         if (emptyInCol < COLUMNS - 1) {
             slide(0, +1);
             return true;
@@ -172,9 +172,11 @@ public class Puzzle {
     
  /**
  * Shuffle method does given amount of Random moves to shuffle the puzzle.
- * If no argument is given there will be done ether 1000 or 1001 moves.
+ * If no argument is given there will be done either 1000 or 1001 moves.
  * This because with only even or odd amount of the moves you can't get
  * all the permutations of the shuffle.
+ * Assisting method moveRandomDirection() try as long as accepted random move
+ * is found and done.
  */     
     
     public void shuffle() {
@@ -182,10 +184,10 @@ public class Puzzle {
         if (Math.random() < 0.5) {
             amountOfRandomMoves++;
         }
-        suffle(amountOfRandomMoves);
+        shuffle(amountOfRandomMoves);
     }
     
-    public void suffle(int numberOfMoves) {
+    public void shuffle(int numberOfMoves) {
         for (int i = 0; i < numberOfMoves; i++) {
             moveRandomDirection();
         }   
@@ -196,20 +198,34 @@ public class Puzzle {
             int move = (int) (Math.random() * 4);
             switch (move) {
                 case 0:
-                    if (up()) return;
+                    if (up()) {
+                        return;
+                    }
                     break;
                 case 1:
-                    if (down()) return;
+                    if (down()) {
+                        return;
+                    }
                     break;
                 case 2:
-                    if (right()) return;
+                    if (left()) {
+                        return;
+                    }
                     break;
                 case 3:
-                    if (left()) return;
+                    if (right()) {
+                        return;
+                    }
                     break;
-            }   
-        } 
+            }
+        }
     }
+    
+    
+ /**
+ * isReady() method checks if puzzle is solved.
+ * If puzzle is solved it returns true otherwise false;
+ */
     
     public boolean isReady() {
         byte numberInCell = 1;
@@ -223,7 +239,11 @@ public class Puzzle {
         }
         return true;
     }
-
+    
+    
+ /**
+ * toString() method makes String presentation of the puzzle.
+ */   
     
     @Override
     public String toString() {
@@ -243,7 +263,5 @@ public class Puzzle {
             sb.append("\n");
         }
         return sb.toString();
-    }
-    
-    
+    }  
 }
