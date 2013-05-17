@@ -19,8 +19,8 @@ public class IdaStar {
     private byte[] optimalSolution;
     private int limit;
     
-    private int ManhattanDistance;
-    private int LinearConflict;
+    private int md;
+    private int lc;
     private long runningTime;
     
   
@@ -32,11 +32,11 @@ public class IdaStar {
     }
 
     public int getManhattanDistance() {
-        return ManhattanDistance;
+        return md;
     }
 
     public int getLinearConflict() {
-        return LinearConflict;
+        return lc;
     }
 
     public long getRunningTime() {
@@ -45,21 +45,28 @@ public class IdaStar {
     
     public byte[] findSolution() {
         found = false;
-        ManhattanDistance = manhattanDistance();
-        LinearConflict = linearConflict();
-        limit = ManhattanDistance;
+        
+        md = manhattanDistance();
+        lc = linearConflict();
+        
+        limit = md + evenOrOddsolutionExtra();;
+        
         long timeAtStar = System.currentTimeMillis();
+        
         while (!found) { 
             System.out.print("limit " + limit + " ... ");
-            search(0, new byte[100], -1, ManhattanDistance);
-            limit++;
+            search(0, new byte[100], -1, md);
+            limit += 2;
             System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
         }
+        
         runningTime = System.currentTimeMillis() - timeAtStar;
+        
         return optimalSolution;
     }
     
     private void search(int depth, byte[] path, int lastMove, int md) {
+        
         if (depth + md > limit) {
             return;
         }
@@ -71,19 +78,19 @@ public class IdaStar {
             found = true;
             return;
         }
-
+        
         if (!found && lastMove != 1 && puzzle.up()) {
             search(depth + 1, path, 0, md + changeMD(-1, 0));
             puzzle.down();
-        }
+        }      
         if (!found && lastMove != 0 && puzzle.down()) {
             search(depth + 1, path, 1, md + changeMD(1, 0));
             puzzle.up();
-        }
+        }        
         if (!found && lastMove != 3 && puzzle.left()) {
             search(depth + 1, path, 2, md + changeMD(0, -1));
             puzzle.right();
-        }
+        }        
         if (!found && lastMove != 2 && puzzle.right()) {
             search(depth + 1, path, 3, md + changeMD(0, 1));
             puzzle.left();
@@ -147,34 +154,75 @@ public class IdaStar {
         return linearConflict;
     }
     
-    private int changeLinearConflict(int dRow, int dCollumn) {
-        if (needToChangeLinearConflict(dRow, dCollumn)) {
-            return linearConflict();
+    private int updateLinearConflict(int lastMove) {      
+        if (lastMove < 2) {
+            int numOwnRow = (puzzle.lastMove - 1) / 4;
+            if (puzzle.getEmptyRow() == numOwnRow) {
+                                
+            } else {
+                if (lastMove == 0) {
+                    if (puzzle.getEmptyRow() + 1 == numOwnRow) {
+                        
+                    }
+                } else {
+                    if (puzzle.getEmptyRow() - 1== numOwnRow) {
+                        
+                    }
+                }
+            }
+               
+        } else {
+            int numOwnCol = (puzzle.lastMove - 1) % 4;
+            if (puzzle.getEmptyCol() == numOwnCol) {
+                
+            } else {
+                if (lastMove == 2) {
+                    if (puzzle.getEmptyCol() + 1 == numOwnCol) {
+                        
+                    }
+                } else {
+                    if (puzzle.getEmptyCol() - 1== numOwnCol) {
+                        
+                    }
+                }
+            }
+            
         }
         return 0;
     }
     
-    private boolean needToChangeLinearConflict(int dRow, int dCollumn) {
-        int num = puzzle.lastMove - 1;
-        int rowTargetPos = (puzzle.lastMove - 1) % COLUMNS;
-        int colTargetPos = (puzzle.lastMove - 1) / ROWS;
-        
-        
-        if (num / ROWS == puzzle.getEmptyRow()) {
-            return true;
-        }
-        if (num % COLUMNS == puzzle.getEmptyCol()) {
-            return true;
-        }
-        if (dRow == 0) {
-            if (num % COLUMNS == puzzle.getEmptyCol() + dRow) {
+    
+    private int changeRow(int row, int old, int new) {
+        return 0;
+    }
+    
+    private boolean evenSolution() {
+        if (puzzle.getEmptyRow() % 2 == 0) {
+            if (puzzle.getEmptyCol() % 2 == 0) {
                 return true;
+            } else {
+                return false;
             }
         } else {
-            if (num / ROWS == puzzle.getEmptyRow() + dRow) {
+            if (puzzle.getEmptyCol() % 2 == 0) {
+                return false;
+            } else {
                 return true;
-            }   
+            }
         }
-        return false;
+    }
+
+    private int evenOrOddsolutionExtra() {
+        int extra = 0;
+        if (evenSolution()) {
+            if (md % 2 != 0) {
+                extra++;
+            }
+        } else {
+            if (md % 2 == 0) {
+                extra++;
+            }
+        }
+        return extra;
     }
 }
