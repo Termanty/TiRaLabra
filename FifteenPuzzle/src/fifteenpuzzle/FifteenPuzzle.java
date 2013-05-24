@@ -17,7 +17,7 @@ public class FifteenPuzzle {
         Puzzle p = new Puzzle(4,4);                           
          
         p.shuffle(); 
-        p.setPuzzle(esim5);
+//        p.setPuzzle(esim5);
         
         System.out.println("\nPermutation at the beginning of search:\n");
         System.out.println(p);   

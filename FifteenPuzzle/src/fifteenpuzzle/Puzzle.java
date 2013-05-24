@@ -20,25 +20,37 @@ public class Puzzle {
     
     public byte lastMove;
 
-   
- /**
- * Constructors and 
- * assisting method intializePuzzle() for creating
- * puzzle which numbers are in right order.
- */
+    /**
+     * Description of constructor
+     * This constructor creates 4*4 puzzle
+     */
     
     public Puzzle() {
         this(4, 4);
     }
+    
+    
+    /**
+     * Description of constructor
+     *
+     * @param rows number of rows in puzzle
+     * @param columns number of columns in puzzle
+     */
 
-    public Puzzle(int rows, int collumns) {
-        this.COLUMNS = collumns;
+    public Puzzle(int rows, int columns) {
+        this.COLUMNS = columns;
         this.ROWS = rows;
         this.EMPTY = (byte)(ROWS*COLUMNS);
-        intializePuzzle();
+        initializePuzzle();
     }
     
-    private void intializePuzzle() {
+    
+    /**
+     * Description of initializePuzzle() 
+     * Method creates table with numbers 1 to size of puzzle.
+     */
+    
+    private void initializePuzzle() {
         byte numberInCell = 1;
         puzzle = new byte[ROWS][COLUMNS];
         for (int row = 0; row < ROWS; row++) {
@@ -52,47 +64,108 @@ public class Puzzle {
     }
     
     
- /**
-  * Getters and Setters
-  */
+    /**
+     * Description of getNumberOfColumns()
+     *
+    * @return           number of columns in puzzle
+     */
 
     public int getNumberOfColumns() {
         return COLUMNS;
     }
+    
+    
+    /**
+     * Description of getNumberOfRows()
+     *
+     * @return          number of rows in puzzle
+     */
 
     public int getNumberOfRows() {
         return ROWS;
     }
+    
+
+    /**
+     * Description of getPuzzle()
+     *
+     * @return          gives puzzle in byte[][] form
+     */
 
     public byte[][] getPuzzle() {
         return puzzle;
     }
+    
+    
+    /**
+     * Description of getEmpty()
+     *
+    * @return           gives number which present empty place in puzzle
+     */
 
     public byte getEmpty() {
         return EMPTY;
     }
+    
+    
+    /**
+     * Description of getEmptyCol()
+     *
+     * @return          gives vertical position of empty place in puzzle 
+     */
 
     public int getEmptyCol() {
         return emptyInCol;
     }
+    
+    
+    /**
+     * Description of getEmptyRow()
+     *
+     * @return          gives horizontal position of empty place in puzzle 
+     */
 
     public int getEmptyRow() {
         return emptyInRow;
-    } 
+    }
+    
+    
+    /**
+     * Description of getLastMove()
+     *
+     * @return          gives number which has been most recently moved
+     */
 
     public byte getLastMove() {
         return lastMove;
     }
     
+    
+    /**
+     * Description of getNumberInCell()
+     * 
+     * @param row   
+     * @param col
+     * @return          gives number which is positioned to asked row and column
+     */
+    
     public byte getNumberInCell(int row, int col) {
         return puzzle[row][col];
     }
     
-    public int[] getCordinates(int find) {
+    
+    /**
+     * Description of getCordinates()
+     *
+     * @param num       
+     * @return          gives array which contains row and column cordinate of search number
+     */
+    
+    public int[] getCordinates(int num) {
         int cordinates[] = new int[2];
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                if (find == puzzle[row][col]) {
+                if (num == puzzle[row][col]) {
                     cordinates[0] = row;
                     cordinates[1] = col;
                 }  
@@ -100,6 +173,14 @@ public class Puzzle {
         }
         return cordinates;
     }
+    
+    
+    /**
+     * Description of setPuzzle(byte[] newSequence)
+     * Initializes puzzle with given order
+     *
+     * @param newSequence
+     */
 
     public void setPuzzle(byte[] newSequence) {
         int index = 0;
@@ -116,11 +197,12 @@ public class Puzzle {
     }  
     
     
- /**
- * Methods up, down, right, left swap empty place with the number in pointed direction.
- * If movement was doable methods return TRUE. If the movement is impossible return value 
- * will be FALSE.
- */
+    /**
+     * Description of up()
+     * method 'slides' number above empty place down.
+     *
+     * @return              true if movement was done otherwise false
+     */
     
     public boolean up() {
         if (emptyInRow > 0) {
@@ -130,6 +212,14 @@ public class Puzzle {
         return false;
     }
     
+    
+    /**
+     * Description of down()
+     * method 'slides' number above empty place up.
+     *
+     * @return              true if movement was done otherwise false
+     */
+    
     public boolean down() {
         if (emptyInRow < ROWS - 1) {
             slide(+1, 0);
@@ -138,6 +228,14 @@ public class Puzzle {
         return false;
     }
     
+    
+    /**
+     * Description of left()
+     * method 'slides' number above empty place right.
+     *
+     * @return              true if movement was done otherwise false
+     */
+    
     public boolean left() {
         if (emptyInCol > 0) {
             slide(0, -1);
@@ -145,6 +243,14 @@ public class Puzzle {
         }
         return false;
     }
+    
+    
+    /**
+     * Description of right()
+     * method 'slides' number above empty place left.
+     *
+     * @return              true if movement was done otherwise false
+     */
     
     public boolean right() {
         if (emptyInCol < COLUMNS - 1) {
@@ -155,11 +261,15 @@ public class Puzzle {
     }
     
     
- /**
- * Slide method swaps empty place and number.
- * Arguments gives the direction of the number from empty place.
- * example: dCol = 0, dRow = +1 means number under the empty place.
- */
+    /**
+     * Description of slide(int dRow, int dCol).
+     * Slide method swaps empty place and number. 
+     * Arguments gives the direction of the number from empty place.
+     * example: dCol = 0, dRow = +1 means number under the empty place.
+     *
+     * @param dRow
+     * @param dCol
+     */
     
     private void slide(int dRow, int dCol) {
         lastMove = puzzle[emptyInRow + dRow][emptyInCol + dCol];               
@@ -170,14 +280,13 @@ public class Puzzle {
     }
   
     
- /**
- * Shuffle method does given amount of Random moves to shuffle the puzzle.
- * If no argument is given there will be done either 1000 or 1001 moves.
- * This because with only even or odd amount of the moves you can't get
- * all the permutations of the shuffle.
- * Assisting method moveRandomDirection() try as long as accepted random move
- * is found and done.
- */     
+    /**
+     * Description of shuffle().
+     * Shuffle method does random moves to shuffle the puzzle. 
+     * It will be do either 1000 or 1001 moves. 
+     * This because with only even or odd amount of the moves you can't get
+     * all the permutations of the shuffle. 
+     */    
     
     public void shuffle() {
         int amountOfRandomMoves = 1000;
@@ -187,11 +296,26 @@ public class Puzzle {
         shuffle(amountOfRandomMoves);
     }
     
+    
+    /**
+     * Description of shuffle(int numberOfMoves).
+     * Shuffle method does given amount of random moves to shuffle the puzzle. 
+     * 
+     * @param numberOfMoves
+     */
+    
     public void shuffle(int numberOfMoves) {
         for (int i = 0; i < numberOfMoves; i++) {
             moveRandomDirection();
         }   
     }
+    
+    
+    /**
+     * Description of moveRandomDirection().
+     * This assisting method try as long as accepted 
+     * random move is found and done
+     */
     
     private void moveRandomDirection() {
         while (true) {
@@ -222,10 +346,12 @@ public class Puzzle {
     }
     
     
- /**
- * isReady() method checks if puzzle is solved.
- * If puzzle is solved it returns true otherwise false;
- */
+    /**
+     * Description of isReady().  
+     * method checks if puzzle is solved.
+     * 
+     * @return      true if puzzle is solved otherwise false
+     */
     
     public boolean isReady() {
         byte numberInCell = 1;
@@ -241,9 +367,11 @@ public class Puzzle {
     }
     
     
- /**
- * toString() method makes String presentation of the puzzle.
- */   
+    /**
+     * Description of toString().  
+     * 
+     * @return      string presentation of the puzzle
+     */
     
     @Override
     public String toString() {
