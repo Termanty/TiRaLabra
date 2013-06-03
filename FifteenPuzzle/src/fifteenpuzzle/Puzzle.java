@@ -5,6 +5,7 @@ package fifteenpuzzle;
  * @author Tero Mäntylä
  */
 
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -28,7 +29,7 @@ public class Puzzle {
     public Puzzle() {
         this(4, 4);
     }
-    
+
     
     /**
      * Description of constructor
@@ -391,5 +392,17 @@ public class Puzzle {
             sb.append("\n");
         }
         return sb.toString();
-    }  
+    } 
+    
+    
+    /**
+     * Description of hashCode().  
+     * 
+     * @return      string presentation of the puzzle
+     */
+    
+    @Override
+    public int hashCode() {
+            return Arrays.deepHashCode(this.puzzle);
+    }
 }
