@@ -145,7 +145,7 @@ public class Puzzle {
     /**
      * Description of getNumberInCell()
      * 
-     * @param row   
+     * @param row       
      * @param col
      * @return          gives number which is positioned to asked row and column
      */
@@ -180,9 +180,8 @@ public class Puzzle {
      * Description of setPuzzle(byte[] newSequence)
      * Initializes puzzle with given order
      *
-     * @param newSequence
+     * @param newSequence       puzzle permutation in byte[] form
      */
-
     public void setPuzzle(byte[] newSequence) {
         int index = 0;
         for (int row = 0; row < ROWS; row++) {
@@ -195,7 +194,23 @@ public class Puzzle {
                 index++;
             }
         }  
-    }  
+    }
+    
+    
+    /**
+     * Description of setPuzzle(byte[][] newSequence)
+     * Initializes puzzle with given order
+     *
+     * @param newSequence       puzzle permutation in byte[][] form
+     */
+    public void setPuzzle(byte[][] newSequence) {
+        int index = 0;
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                puzzle[row][col] = newSequence[row][col];
+            }
+        }  
+    }
     
     
     /**

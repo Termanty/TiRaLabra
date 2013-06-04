@@ -1,5 +1,6 @@
 package fifteenpuzzle;
 
+import fifteenpuzzle.efficiencyTests.AverageRunTime;
 import fifteenpuzzle.efficiencyTests.HeapComparison;
 import java.util.Arrays;
 
@@ -17,13 +18,16 @@ public class FifteenPuzzle {
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4,4);                           
          
-        p.shuffle(); 
+        p.shuffle(2); 
+        System.out.println(p);
 //        p.setPuzzle(esim5);
         
         
-        new HeapComparison().run();
+//        new HeapComparison().run();
+//        new AverageRunTime().run();
         
-        
+        Astar aStar = new Astar(p);
+        aStar.findSolution();
         
         
 //        System.out.println("\nPermutation at the beginning of search:\n");

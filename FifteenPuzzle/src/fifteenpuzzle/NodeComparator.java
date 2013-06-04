@@ -22,6 +22,6 @@ public class NodeComparator implements Comparator<Node> {
     
     @Override
     public int compare(Node o1, Node o2) {
-        return o1.getManDist() - o2.getManDist();
+        return o1.getCost() - o2.getCost();
     }  
 }

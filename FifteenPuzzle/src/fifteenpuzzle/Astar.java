@@ -18,12 +18,15 @@ public class Astar {
     
     private Puzzle puzzle;
     private PriorityQueue<Node> heap;
+    private HashSet<Node> visited = new HashSet();
     private final int ROWS;
     private final int COLUMNS;
     
     private byte[] optimalSolution;
     
     long runningTime;
+    
+    private Node ready = new Node(new Puzzle(), 0);
     
     
     
@@ -58,55 +61,91 @@ public class Astar {
 //        12 alkuun[v] = alkuun[
     
     
+    private Node u;
     
     /**
      * Description of findSolution().
      * 
      * @return          byte[] array containing sequence to solve puzzle
      */
-    
-    public byte[] findSolution() {
-        HashSet<Node> visited = new HashSet();
+    public byte[] findSolution() {    
+        long start = System.currentTimeMillis();
         
-        int md = manhattanDistance();
-        
-        
-        long timeAtStar = System.currentTimeMillis();
-        
-        heap.add(new Node(puzzle, md));
-        
-        while (md > 0) { 
+        u = new Node(puzzle, manDist());
+        heap.add(u); 
+        while (true) { 
+            u = heap.poll();
+//            visited.add(u);
             
+            System.out.println(u.getCost());
+            
+            if (u.getPuzzle().isReady()) {
+                break;
+            }
+            
+            Puzzle pu = u.getPuzzle();
+            emptyUp(pu, u.getCost() + 1 + changeMD(-1, 0));
+            emptyDown(pu, u.getCost() + 1 + changeMD(+1, 0));
+            emptyLeft(pu, u.getCost() + 1 + changeMD(0, -1));
+            emptyRight(pu, u.getCost() + 1 + changeMD(0, +1));
         }
         
-        runningTime = System.currentTimeMillis() - timeAtStar;
-        
+        runningTime = System.currentTimeMillis() - start;
+        System.out.println(u.getPuzzle().toString());
         return optimalSolution;
     }
     
     
+    private void emptyUp(Puzzle pu, int cost) {
+        if (pu.up()) {
+            addToHeap(pu, cost);
+            pu.down();
+        }
+    }
     
     
+    private void emptyDown(Puzzle pu, int cost) {
+        if (pu.down()) {
+            addToHeap(pu, cost);
+            pu.up();
+        }
+    }
     
     
+    private void emptyLeft(Puzzle pu, int cost) {
+        if (pu.left()) {
+            addToHeap(pu, cost);
+            pu.right();
+        }
+    }
     
     
+    private void emptyRight(Puzzle pu, int cost) {
+        if (pu.right()) {
+            addToHeap(pu, cost);
+            pu.left();
+        }  
+    }
     
     
+    private void addToHeap(Puzzle pu, int cost) {
+        Puzzle pv = copy(pu);
+        Node v = new Node(pv, cost);
+//        if (!visited.contains(v)) {
+            heap.add(v);
+//        }
+        v.setPath(u);
+    }
     
     
+    private Puzzle copy(Puzzle old) {
+        Puzzle copy = new Puzzle();
+        copy.setPuzzle(old.getPuzzle());
+        return copy;
+    }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
     
     
     
@@ -114,13 +153,13 @@ public class Astar {
     
     
     /**
-     * Description of manhattanDistance().
-     * method calculates sum of every numbers distance to their own place.
+     * Description of manDist().
+     * method calculates sum of Manhattan distances of the every
+     * number in the puzzle to their own place.
      * 
-     * @return          Manhattan distance
+     * @return          sum of Manhattan distances
      */
-    
-    private int manhattanDistance() {
+    private int manDist() {
         int sumOfMDs = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
@@ -144,8 +183,7 @@ public class Astar {
      * @param dRow
      * @param dColumn 
      * @return          change
-     */
-    
+     */   
     private int changeMD(int dRow, int dColumn) {
         if (dColumn == 0) {
             int rowTargetPos = (puzzle.lastMove - 1) / ROWS;

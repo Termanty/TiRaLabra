@@ -8,7 +8,6 @@ import java.util.Arrays;
  * 
  * @author Tero Mäntylä
  */
-
 public class IdaStar {
     
     private Puzzle puzzle;
@@ -28,8 +27,7 @@ public class IdaStar {
      * Description of constructor IdaStar(Puzzle puzzle).
      * 
      * @param puzzle  
-     */
-    
+     */   
     public IdaStar(Puzzle puzzle) {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
@@ -42,7 +40,6 @@ public class IdaStar {
      * 
      * @return      sum of distances of every number to their own place
      */
-
     public int getManhattanDistance() {
         return md;
     }
@@ -53,7 +50,6 @@ public class IdaStar {
      * 
      * @return      amount of conflicts times two in puzzle
      */
-
     public int getLinearConflict() {
         return lc;
     }
@@ -64,7 +60,6 @@ public class IdaStar {
      * 
      * @return      execution time of findSolution method
      */
-
     public long getRunningTime() {
         return runningTime;
     }
@@ -75,8 +70,7 @@ public class IdaStar {
      * 
      * 
      * @return          byte[] array containing sequence to solve puzzle
-     */
-    
+     */   
     public byte[] findSolution() {
         found = false;
         
@@ -88,10 +82,10 @@ public class IdaStar {
         long timeAtStar = System.currentTimeMillis();
         
         while (!found) { 
-            System.out.print("limit " + limit + " ... ");
+//            System.out.print("limit " + limit + " ... ");
             search(0, new byte[100], -1, md);
             limit += 2;
-            System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
+//            System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
         }
         
         runningTime = System.currentTimeMillis() - timeAtStar;
@@ -108,8 +102,7 @@ public class IdaStar {
      * @param path      movements done so far
      * @param lastMove  variable remembers last done movement
      * @param md        Manhattan distance to solution
-     */
-    
+     */   
     private void search(int depth, byte[] path, int lastMove, int md) {
         
         if (depth + md > limit) {
@@ -145,11 +138,11 @@ public class IdaStar {
     
     /**
      * Description of manhattanDistance().
-     * method calculates sum of every numbers distance to their own place.
+     * method calculates sum of Manhattan distances of the every
+     * number in the puzzle to their own place.
      * 
-     * @return          Manhattan distance
-     */
-    
+     * @return          sum of Manhattan distances
+     */    
     private int manhattanDistance() {
         int sumOfMDs = 0;
         for (int row = 0; row < ROWS; row++) {
@@ -174,8 +167,7 @@ public class IdaStar {
      * @param dRow
      * @param dColumn 
      * @return          change
-     */
-    
+     */   
     private int changeMD(int dRow, int dColumn) {
         if (dColumn == 0) {
             int rowTargetPos = (puzzle.lastMove - 1) / ROWS;
@@ -196,7 +188,6 @@ public class IdaStar {
      * 
      * @return          amount of conflicts * 2
      */
-    
     private int linearConflict() {
         int linearConflict = 0;
         for (int row = 0; row < ROWS; row++) {
@@ -238,7 +229,6 @@ public class IdaStar {
      * @param lastMove
      * @return
      */
-    
     private int updateLinearConflict(int lastMove) {      
         if (lastMove < 2) {
             int numOwnRow = (puzzle.lastMove - 1) / 4;
@@ -288,9 +278,7 @@ public class IdaStar {
      * Method finds this out.
      * 
      * @return      +1 if MD and solution are not not both even or odd
-     */
-    
-
+     */    
     private int evenOrOddsolutionExtra() {
         int extra = 0;
         if (evenSolution()) {
@@ -305,14 +293,14 @@ public class IdaStar {
         return extra;
     }
     
+    
     /**
      * Description of evenSolution().
      * method finds out if the amount of the movements to the solution will be 
      * even or odd.
      * 
      * @return      true if solution is even ether false
-     */
-    
+     */    
     private boolean evenSolution() {
         if (puzzle.getEmptyRow() % 2 == 0) {
             if (puzzle.getEmptyCol() % 2 == 0) {

@@ -2,73 +2,71 @@
 package fifteenpuzzle;
 
 /**
- * Heap Class
+ * Heap Class.
+ * Implementation of minimum heap for nodes which contains information of 
+ * certain permutation of puzzle and cost evaluation to solution.
+ * Cost evaluation is used to make comparison. 
  *
  * @author Tero Mäntylä
  */
-
 public class Heap {
     private Node[] heap;
     private int MAX;
     private int size;
-
+  
     
     /**
      * Constructor
      *
      * @param maxSize  the maximum size of the heap.
-     */
-    
+     */   
     public Heap(int maxSize) {
         MAX = maxSize;
         heap = new Node[MAX];
         size = 0;
     }
+   
     
-
     /**
-     * Description of Left
+     * Description of Left.
      *
-     * @param index 
-     * @return 
-     */
-    
+     * @param index     position of node in the heap
+     * @return          position of left child in the heap
+     */    
     private int left(int index) {
         return 2 * index;
     }
     
 
     /**
-     * Description of Right
+     * Description of Right.
      *
-     * @param index 
-     * @return 
-     */
-    
+     * @param index     position of node in the heap
+     * @return          position of right child in the heap
+     */  
     private int right(int index) {
         return (2 * index) + 1;
     }
     
 
     /**
-     * Description of Parent
+     * Description of Parent.
      *
-     * @param index 
-     * @return
-     */
-    
+     * @param index     position of node in the heap
+     * @return          parents position in the heap
+     */   
     private int parent(int index) {
         return index / 2;
     }
 
 
     /**
-     * Description of swap
+     * Description of swap.
+     * Method changes places of two nodes in the heap.
      *
-     * @param index1 
-     * @param index2 
-     */
-    
+     * @param index1    position of node in the heap
+     * @param index2    position of node in the heap
+     */   
     private void swap(int index1, int index2) {
         Node tmp = heap[index1];
         heap[index1] = heap[index2];
@@ -79,13 +77,12 @@ public class Heap {
     /**
      * Description of insert
      *
-     * @param node
-     */
-    
+     * @param node      node for added to the heap
+     */  
     public void insert(Node node) {
         size++;
         int index = size;
-        while (index > 1 && heap[parent(index)].getManDist() > node.getManDist()) {
+        while (index > 1 && heap[parent(index)].getCost() > node.getCost()) {
             heap[index] = heap[parent(index)];
             index = parent(index);
         }
@@ -96,9 +93,8 @@ public class Heap {
     /**
      * Description of removeMin
      *
-     * @return
+     * @return         node with smallest cost.
      */
-    
     public Node removeMin() {
         Node min = heap[1];     
         heap[1] = heap[size];
@@ -113,25 +109,24 @@ public class Heap {
     /**
      * Description of heapify
      *
-     * @param index
-     */
-    
+     * @param index     node which position is checked in the heap
+     */   
     private void heapify(int index) {
         int left = left(index);
         int right = right(index);
         int smallest;
         
         if (right <= size) {
-            if (heap[left].getManDist() < heap[right].getManDist()) {
+            if (heap[left].getCost() < heap[right].getCost()) {
                 smallest = left;
             } else {
                 smallest = right;
             }
-            if (heap[index].getManDist() > heap[smallest].getManDist()) {
+            if (heap[index].getCost() > heap[smallest].getCost()) {
                 swap(index, smallest);
                 heapify(smallest);
             }
-        } else if (left == size && heap[index].getManDist() > heap[left].getManDist()) {
+        } else if (left == size && heap[index].getCost() > heap[left].getCost()) {
             swap(index, left);
         }
     }

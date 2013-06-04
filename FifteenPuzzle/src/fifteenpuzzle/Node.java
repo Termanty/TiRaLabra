@@ -4,21 +4,28 @@ package fifteenpuzzle;
 
 public class Node {
     private Puzzle puzzle;
-    private int ManhattanDistance;
+    private int cost;
+    private Node path;
 
-    public Node(Puzzle puzzle, int ManhattanDistance) {
+    public Node(Puzzle puzzle, int cost) {
         this.puzzle = puzzle;
-        this.ManhattanDistance = ManhattanDistance;
+        this.cost = cost;
     }
 
     public Puzzle getPuzzle() {
         return puzzle;
     }
 
-    public int getManDist() {
-        return ManhattanDistance;
+    public int getCost() {
+        return cost;
+    }
+
+    public Node getPath() {
+        return path;
+    }
+
+    public void setPath(Node path) {
+        this.path = path;
     }
     
-    
-
 }
