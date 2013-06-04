@@ -11,7 +11,6 @@ public class Heap {
     private Node[] heap;
     private int MAX;
     private int size;
-    private int index;
 
     
     /**
@@ -87,6 +86,7 @@ public class Heap {
         size++;
         int index = size;
         while (index > 1 && heap[parent(index)].getManDist() > node.getManDist()) {
+            heap[index] = heap[parent(index)];
             index = parent(index);
         }
         heap[index] = node;
@@ -119,19 +119,19 @@ public class Heap {
     private void heapify(int index) {
         int left = left(index);
         int right = right(index);
-        int largest;
+        int smallest;
         
         if (right <= size) {
-            if (heap[left].getManDist() > heap[right].getManDist()) {
-                largest = left;
+            if (heap[left].getManDist() < heap[right].getManDist()) {
+                smallest = left;
             } else {
-                largest = right;
+                smallest = right;
             }
-            if (heap[left].getManDist() < heap[largest].getManDist()) {
-                swap(index, largest);
-                heapify(largest);
+            if (heap[index].getManDist() > heap[smallest].getManDist()) {
+                swap(index, smallest);
+                heapify(smallest);
             }
-        } else if (left == size && heap[index].getManDist() < heap[left].getManDist()) {
+        } else if (left == size && heap[index].getManDist() > heap[left].getManDist()) {
             swap(index, left);
         }
     }
