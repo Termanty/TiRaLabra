@@ -4,46 +4,72 @@ package fifteenpuzzle.datastructure;
 import java.util.Arrays;
 
 /**
- * MyHashSet Class
+ * MyHashSet Class.
+ * Hash table implementation
  * 
  * @author termanty
  */
 public class MyHashSet {
     private final int SIZE = 1500007;
-    private MyLinkedList[] setTable = new MyLinkedList[SIZE];
-    private int counter = 0;
+    private Node[] hashTable;
+    private int counter;
 
+    /**
+     * Description of constructor
+     * Constructor creates hash table for nodes which are in linked list.
+     */
+    public MyHashSet() {
+        hashTable = new Node[SIZE];
+        counter = 0;
+    }
+    
+    /**
+     * Description of getCounter() 
+     * 
+     * @return          amount of nodes in hash table
+     */  
     public int getCounter() {
         return counter;
     }
     
     
-    
+    /**
+     * Description of insert(Node node) 
+     * 
+     * @param node      node contains one unique permutation of puzzle 
+     */
     public void insert(Node node) {
         int key = Math.abs(Arrays.deepHashCode(node.getPuzzle().getPuzzle()) % SIZE);
-        if (setTable[key] == null) {
-            setTable[key] = new MyLinkedList(node, null);
+        if (hashTable[key] == null) {
+            hashTable[key] = node;
         } else {
-            MyLinkedList tmp = setTable[key];
-            setTable[key] = new MyLinkedList(node, tmp);
+            Node tmp = hashTable[key];
+            hashTable[key] = node;
+            node.setNext(tmp);
         }
         counter++;
     }
     
+    
+    /**
+     * Description of contains(Node node) 
+     * 
+     * @param node      node contains one unique permutation of puzzle.
+     * @return          true if this permutation is already in hash tabla and false if not.
+     */
     public boolean contains(Node node) {
         int key = Math.abs(Arrays.deepHashCode(node.getPuzzle().getPuzzle()) % SIZE);
-        if (setTable[key] == null) {
+        if (hashTable[key] == null) {
             return false;
         }
-        MyLinkedList a = setTable[key];
+        Node a = hashTable[key];
         while (a != null) {
-            if (node.equals(a.getNode())) {
+            if (node.equals(a)) {
                 return true;
             }
             a = a.getNext();
         }
         return false;
     }
-    
-   
+  
 }

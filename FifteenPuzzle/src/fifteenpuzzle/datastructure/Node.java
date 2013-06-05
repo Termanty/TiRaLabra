@@ -9,11 +9,13 @@ public class Node {
     private Puzzle puzzle;
     private int cost;
     private Node path;
+    private Node next;
 
     public Node(Puzzle puzzle, int cost) {
         this.puzzle = puzzle;
         this.cost = cost;
         this.path = null;
+        this.next = null;
     }
 
     public Puzzle getPuzzle() {
@@ -28,15 +30,18 @@ public class Node {
         return path;
     }
 
+    public Node getNext() {
+        return next;
+    }
+
     public void setPath(Node path) {
         this.path = path;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
+    public void setNext(Node next) {
+        this.next = next;
     }
+    
 
     @Override
     public boolean equals(Object obj) {

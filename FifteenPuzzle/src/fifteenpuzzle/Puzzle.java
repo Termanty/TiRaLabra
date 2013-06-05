@@ -21,11 +21,11 @@ public class Puzzle {
     
     public byte lastMove;
 
+    
     /**
      * Description of constructor
      * This constructor creates 4*4 puzzle
      */
-    
     public Puzzle() {
         this(4, 4);
     }
@@ -37,7 +37,6 @@ public class Puzzle {
      * @param rows number of rows in puzzle
      * @param columns number of columns in puzzle
      */
-
     public Puzzle(int rows, int columns) {
         this.COLUMNS = columns;
         this.ROWS = rows;
@@ -49,8 +48,7 @@ public class Puzzle {
     /**
      * Description of initializePuzzle() 
      * Method creates table with numbers 1 to size of puzzle.
-     */
-    
+     */   
     private void initializePuzzle() {
         byte numberInCell = 1;
         puzzle = new byte[ROWS][COLUMNS];
