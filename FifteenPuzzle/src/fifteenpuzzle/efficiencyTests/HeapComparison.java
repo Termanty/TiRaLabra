@@ -1,9 +1,9 @@
 
 package fifteenpuzzle.efficiencyTests;
 
-import fifteenpuzzle.Heap;
-import fifteenpuzzle.Node;
-import fifteenpuzzle.NodeComparator;
+import fifteenpuzzle.datastructure.Heap;
+import fifteenpuzzle.datastructure.Node;
+import fifteenpuzzle.datastructure.NodeComparator;
 import fifteenpuzzle.Puzzle;
 import java.util.PriorityQueue;
 

@@ -1,5 +1,5 @@
 
-package fifteenpuzzle;
+package fifteenpuzzle.datastructure;
 
 /**
  * Heap Class.

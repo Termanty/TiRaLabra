@@ -1,5 +1,6 @@
-package fifteenpuzzle;
+package fifteenpuzzle.searchalgorithm;
 
+import fifteenpuzzle.Puzzle;
 import java.util.Arrays;
 
 /**

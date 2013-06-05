@@ -1,5 +1,6 @@
 package fifteenpuzzle;
 
+import fifteenpuzzle.searchalgorithm.Astar;
 import fifteenpuzzle.efficiencyTests.AverageRunTime;
 import fifteenpuzzle.efficiencyTests.HeapComparison;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ public class FifteenPuzzle {
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4,4);                           
          
-        p.shuffle(2); 
+        p.shuffle(15); 
         System.out.println(p);
 //        p.setPuzzle(esim5);
         

@@ -1,5 +1,5 @@
 
-import fifteenpuzzle.IdaStar;
+import fifteenpuzzle.searchalgorithm.IdaStar;
 import fifteenpuzzle.Puzzle;
 import java.util.Arrays;
 import org.junit.After;

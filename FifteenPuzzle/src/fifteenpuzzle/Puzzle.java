@@ -208,11 +208,25 @@ public class Puzzle {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 puzzle[row][col] = newSequence[row][col];
+                if (newSequence[row][col] == EMPTY) {
+                    emptyInCol = col;
+                    emptyInRow = row;
+                }
             }
         }  
     }
     
     
+    /**
+     * Description of setLastMove(byte lastMove)
+     *
+     * @param lastMove       number which has most recent move.
+     */
+    public void setLastMove(byte lastMove) {
+        this.lastMove = lastMove;
+    }
+
+
     /**
      * Description of up()
      * method 'slides' number above empty place down.
@@ -420,4 +434,21 @@ public class Puzzle {
     public int hashCode() {
             return Arrays.deepHashCode(this.puzzle);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Puzzle other = (Puzzle) obj;
+        if (!Arrays.deepEquals(this.puzzle, other.puzzle)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

@@ -1,6 +1,7 @@
 
-package fifteenpuzzle;
+package fifteenpuzzle.datastructure;
 
+import fifteenpuzzle.datastructure.Node;
 import java.util.Comparator;
 
 /**

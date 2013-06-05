@@ -1,6 +1,10 @@
 
-package fifteenpuzzle;
+package fifteenpuzzle.searchalgorithm;
 
+import fifteenpuzzle.datastructure.Node;
+import fifteenpuzzle.datastructure.NodeComparator;
+import fifteenpuzzle.Puzzle;
+import fifteenpuzzle.datastructure.*;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -16,9 +20,9 @@ public class Astar {
     
 //        Astar(G,w,a,b)
     
-    private Puzzle puzzle;
+    private Puzzle starOrder;
     private PriorityQueue<Node> heap;
-    private HashSet<Node> visited = new HashSet();
+    private MyHashSet visited = new MyHashSet();
     private final int ROWS;
     private final int COLUMNS;
     
@@ -33,7 +37,7 @@ public class Astar {
 //        // G tutkittava verkko, a lähtösolmu, b kohdesolmu ja w kaaripainot kertova funktio
     
     public Astar(Puzzle puzzle) {
-        this.puzzle = puzzle;
+        this.starOrder = puzzle;
         this.heap = new PriorityQueue(1000000, new NodeComparator());
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
@@ -71,23 +75,21 @@ public class Astar {
     public byte[] findSolution() {    
         long start = System.currentTimeMillis();
         
-        u = new Node(puzzle, manDist());
+        u = new Node(starOrder, manDist());
         heap.add(u); 
+        
+        
         while (true) { 
             u = heap.poll();
-//            visited.add(u);
-            
-            System.out.println(u.getCost());
-            
+            visited.insert(u);      
+//            System.out.println(u.getCost());    
             if (u.getPuzzle().isReady()) {
                 break;
-            }
-            
-            Puzzle pu = u.getPuzzle();
-            emptyUp(pu, u.getCost() + 1 + changeMD(-1, 0));
-            emptyDown(pu, u.getCost() + 1 + changeMD(+1, 0));
-            emptyLeft(pu, u.getCost() + 1 + changeMD(0, -1));
-            emptyRight(pu, u.getCost() + 1 + changeMD(0, +1));
+            }  
+            emptyUp();
+            emptyDown();
+            emptyLeft();
+            emptyRight();     
         }
         
         runningTime = System.currentTimeMillis() - start;
@@ -96,44 +98,45 @@ public class Astar {
     }
     
     
-    private void emptyUp(Puzzle pu, int cost) {
-        if (pu.up()) {
-            addToHeap(pu, cost);
-            pu.down();
+    private void emptyUp() {
+        if (u.getPuzzle().up()) {
+            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), -1, 0));
+            u.getPuzzle().down();
         }
     }
     
     
-    private void emptyDown(Puzzle pu, int cost) {
-        if (pu.down()) {
-            addToHeap(pu, cost);
-            pu.up();
+    private void emptyDown() {
+        if (u.getPuzzle().down()) {
+            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), +1, 0));
+            u.getPuzzle().up();
         }
     }
     
     
-    private void emptyLeft(Puzzle pu, int cost) {
-        if (pu.left()) {
-            addToHeap(pu, cost);
-            pu.right();
+    private void emptyLeft() {
+        if (u.getPuzzle().left()) {
+            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), 0, -1));
+            u.getPuzzle().right();
         }
     }
     
     
-    private void emptyRight(Puzzle pu, int cost) {
-        if (pu.right()) {
-            addToHeap(pu, cost);
-            pu.left();
+    private void emptyRight() {
+        if (u.getPuzzle().right()) {
+            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), 0, +1));
+            u.getPuzzle().left();
         }  
     }
     
     
-    private void addToHeap(Puzzle pu, int cost) {
-        Puzzle pv = copy(pu);
+    private void addToHeap(int cost) {
+        Puzzle pv = copy(u.getPuzzle());
+        pv.setLastMove(u.getPuzzle().getEmpty());
         Node v = new Node(pv, cost);
-//        if (!visited.contains(v)) {
+        if (!visited.contains(v)) {
             heap.add(v);
-//        }
+        }
         v.setPath(u);
     }
     
@@ -163,11 +166,11 @@ public class Astar {
         int sumOfMDs = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
-                int num = puzzle.getNumberInCell(row, column);
-                if (num == puzzle.getEmpty()) {
+                int num = starOrder.getNumberInCell(row, column);
+                if (num == starOrder.getEmpty()) {
                     continue;
                 }
-                int[] cordinates = puzzle.getCordinates(num);
+                int[] cordinates = starOrder.getCordinates(num);
                 sumOfMDs += Math.abs(cordinates[0] - (num - 1) / ROWS);
                 sumOfMDs += Math.abs(cordinates[1] - (num - 1) % COLUMNS);
             }
@@ -184,13 +187,13 @@ public class Astar {
      * @param dColumn 
      * @return          change
      */   
-    private int changeMD(int dRow, int dColumn) {
+    private int changeMD(Puzzle p, int dRow, int dColumn) {
         if (dColumn == 0) {
-            int rowTargetPos = (puzzle.lastMove - 1) / ROWS;
-            return Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);
+            int rowTargetPos = (p.lastMove - 1) / ROWS;
+            return Math.abs(p.getEmptyRow() - dRow - rowTargetPos) - Math.abs(p.getEmptyRow() - rowTargetPos);
         } else {
-            int colTargetPos = (puzzle.lastMove - 1) % COLUMNS;
-            return Math.abs(puzzle.getEmptyCol() - dColumn - colTargetPos) - Math.abs(puzzle.getEmptyCol() - colTargetPos);
+            int colTargetPos = (p.lastMove - 1) % COLUMNS;
+            return Math.abs(p.getEmptyCol() - dColumn - colTargetPos) - Math.abs(p.getEmptyCol() - colTargetPos);
         }
     }
     

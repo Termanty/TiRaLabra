@@ -1,7 +1,7 @@
 
 package fifteenpuzzle.efficiencyTests;
 
-import fifteenpuzzle.IdaStar;
+import fifteenpuzzle.searchalgorithm.IdaStar;
 import fifteenpuzzle.Puzzle;
 import java.util.Arrays;
 
