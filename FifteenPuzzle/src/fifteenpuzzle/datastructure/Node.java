@@ -13,6 +13,7 @@ public class Node {
     public Node(Puzzle puzzle, int cost) {
         this.puzzle = puzzle;
         this.cost = cost;
+        this.path = null;
     }
 
     public Puzzle getPuzzle() {

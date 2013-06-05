@@ -5,6 +5,7 @@ import fifteenpuzzle.datastructure.Node;
 import fifteenpuzzle.datastructure.NodeComparator;
 import fifteenpuzzle.Puzzle;
 import fifteenpuzzle.datastructure.*;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -21,51 +22,24 @@ public class Astar {
 //        Astar(G,w,a,b)
     
     private Puzzle starOrder;
-    private PriorityQueue<Node> heap;
+    private MyMinHeap heap;
     private MyHashSet visited = new MyHashSet();
     private final int ROWS;
     private final int COLUMNS;
     
-    private byte[] optimalSolution;
-    
     long runningTime;
     
     private Node ready = new Node(new Puzzle(), 0);
+    private Node u;
     
-    
-    
-//        // G tutkittava verkko, a lähtösolmu, b kohdesolmu ja w kaaripainot kertova funktio
     
     public Astar(Puzzle puzzle) {
         this.starOrder = puzzle;
-        this.heap = new PriorityQueue(1000000, new NodeComparator());
+        this.heap = new MyMinHeap(2000000);
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
     }
-    
-    
-    // INTIATION no need to do. This has to do in real time.
-//        1 for kaikille solmuille v joukossa V
-//        2 alkuun[v] = 1 
-    //          tehtyjen siirtojen määrä
-//        3 loppuun[v] = arvioi suora etäisyys v:stä  b:hen
-    //          manhattan etäisyys perille
-//        4 polku[v] = NIL
-    //       
-//        5 alkuun[a] = 0
-    
-    
-    //  SEARCH
-//        6 S = tyhjä joukko 
-//        7 while ( solmu b ei ole vielä joukossa S )
-//        8 valitse solmu u 2 V \ S, jolle alkuun[v]+loppuun[v] on pienin
-//        9 S = S [ {u}
-//        10 for jokaiselle solmulle v 2 Adj[u] // kaikille u:n vierussolmuille v
-//        11 if alkuun[v] > alkuun[u] + w(u,v)
-//        12 alkuun[v] = alkuun[
-    
-    
-    private Node u;
+
     
     /**
      * Description of findSolution().
@@ -76,25 +50,29 @@ public class Astar {
         long start = System.currentTimeMillis();
         
         u = new Node(starOrder, manDist());
-        heap.add(u); 
+        heap.insert(u); 
         
         
         while (true) { 
-            u = heap.poll();
+            u = heap.removeMin();
             visited.insert(u);      
-//            System.out.println(u.getCost());    
+//            System.out.println(u.getCost()); 
             if (u.getPuzzle().isReady()) {
                 break;
-            }  
+            }
+            byte lastMove = u.getPuzzle().getLastMove();
             emptyUp();
             emptyDown();
             emptyLeft();
-            emptyRight();     
+            emptyRight();
+            u.getPuzzle().lastMove = lastMove;
         }
         
+        System.out.println("visit "+visited.getCounter());
+        
         runningTime = System.currentTimeMillis() - start;
-        System.out.println(u.getPuzzle().toString());
-        return optimalSolution;
+        
+        return solution();
     }
     
     
@@ -132,12 +110,12 @@ public class Astar {
     
     private void addToHeap(int cost) {
         Puzzle pv = copy(u.getPuzzle());
-        pv.setLastMove(u.getPuzzle().getEmpty());
+        pv.setLastMove(u.getPuzzle().getLastMove());
         Node v = new Node(pv, cost);
         if (!visited.contains(v)) {
-            heap.add(v);
+            heap.insert(v);
+            v.setPath(u);
         }
-        v.setPath(u);
     }
     
     
@@ -146,13 +124,7 @@ public class Astar {
         copy.setPuzzle(old.getPuzzle());
         return copy;
     }
-    
-    
- 
-    
-    
-    
-    
+
     
     
     /**
@@ -183,8 +155,8 @@ public class Astar {
      * Description of changeMD(int dRow, int dColumn).
      * method calculates change in  Manhattan distance .
      * 
-     * @param dRow
-     * @param dColumn 
+     * @param dRow      empty places difference of row position to previous one.
+     * @param dColumn   empty places difference of column position to previous one.
      * @return          change
      */   
     private int changeMD(Puzzle p, int dRow, int dColumn) {
@@ -195,6 +167,29 @@ public class Astar {
             int colTargetPos = (p.lastMove - 1) % COLUMNS;
             return Math.abs(p.getEmptyCol() - dColumn - colTargetPos) - Math.abs(p.getEmptyCol() - colTargetPos);
         }
+    }
+
+    private byte[] solution() {
+        int index = 0;
+        byte[] tmp = new byte[100];
+        while(u.getPath() != null) {
+            Node next = u.getPath();
+            int row = u.getPuzzle().getEmptyRow();
+            int col = u.getPuzzle().getEmptyCol();
+            if (next != null) {
+                tmp[index] = next.getPuzzle().getNumberInCell(row, col);
+                u = next;
+                index++;
+            } else {
+                break;
+            }
+        }
+        byte[] path = new byte[index];
+        int j = index;
+        for (int i = 0; i < path.length; i++) {
+            path[i] = tmp[--index]; 
+        }
+        return path;
     }
     
     

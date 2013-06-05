@@ -2,14 +2,14 @@
 package fifteenpuzzle.datastructure;
 
 /**
- * Heap Class.
+ * MyMinHeap Class.
  * Implementation of minimum heap for nodes which contains information of 
  * certain permutation of puzzle and cost evaluation to solution.
  * Cost evaluation is used to make comparison. 
  *
  * @author Tero Mäntylä
  */
-public class Heap {
+public class MyMinHeap {
     private Node[] heap;
     private int MAX;
     private int size;
@@ -20,7 +20,7 @@ public class Heap {
      *
      * @param maxSize  the maximum size of the heap.
      */   
-    public Heap(int maxSize) {
+    public MyMinHeap(int maxSize) {
         MAX = maxSize;
         heap = new Node[MAX];
         size = 0;
@@ -81,6 +81,9 @@ public class Heap {
      */  
     public void insert(Node node) {
         size++;
+        if (size == MAX) {
+            size /= 2;
+        }
         int index = size;
         while (index > 1 && heap[parent(index)].getCost() > node.getCost()) {
             heap[index] = heap[parent(index)];

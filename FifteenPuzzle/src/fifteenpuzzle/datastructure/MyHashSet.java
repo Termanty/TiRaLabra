@@ -1,18 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fifteenpuzzle.datastructure;
 
 import java.util.Arrays;
 
 /**
- *
+ * MyHashSet Class
+ * 
  * @author termanty
  */
 public class MyHashSet {
-    private final int SIZE = 50021;
+    private final int SIZE = 1500007;
     private MyLinkedList[] setTable = new MyLinkedList[SIZE];
+    private int counter = 0;
+
+    public int getCounter() {
+        return counter;
+    }
+    
     
     
     public void insert(Node node) {
@@ -23,6 +27,7 @@ public class MyHashSet {
             MyLinkedList tmp = setTable[key];
             setTable[key] = new MyLinkedList(node, tmp);
         }
+        counter++;
     }
     
     public boolean contains(Node node) {
@@ -35,6 +40,7 @@ public class MyHashSet {
             if (node.equals(a.getNode())) {
                 return true;
             }
+            a = a.getNext();
         }
         return false;
     }

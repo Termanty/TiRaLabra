@@ -1,8 +1,7 @@
 package fifteenpuzzle;
 
-import fifteenpuzzle.searchalgorithm.Astar;
-import fifteenpuzzle.efficiencyTests.AverageRunTime;
-import fifteenpuzzle.efficiencyTests.HeapComparison;
+import fifteenpuzzle.searchalgorithm.*;
+import fifteenpuzzle.efficiencyTests.*;
 import java.util.Arrays;
 
 /**
@@ -19,25 +18,36 @@ public class FifteenPuzzle {
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4,4);                           
          
-        p.shuffle(15); 
+        p.shuffle(); 
         System.out.println(p);
+        
 //        p.setPuzzle(esim5);
         
         
 //        new HeapComparison().run();
 //        new AverageRunTime().run();
         
+        IdaStar idaStar = new IdaStar(p);   
+        byte[] solution = idaStar.findSolution();
+        
+        System.out.println("Running time was " + idaStar.getRunningTime() + " ms");
+        System.out.println("Movement needed for solution: " + solution.length); 
+        System.out.println("Optimal sequence of the movements to solution:");    
+        System.out.println(Arrays.toString(solution)+"\n\n");
+        
+        System.out.println(p);
+        
         Astar aStar = new Astar(p);
-        aStar.findSolution();
+        byte[] aStarSolution = aStar.findSolution();
         
-        
+        System.out.println("moves "+aStarSolution.length);
+        System.out.println(Arrays.toString(aStarSolution));
 //        System.out.println("\nPermutation at the beginning of search:\n");
 //        System.out.println(p);   
 //        System.out.println("running...   in the worst case this might take some time");
 //        
 //        // Finds optimal solusotion for permutation.
-//        IdaStar idaStar = new IdaStar(p);   
-//        byte[] solution = idaStar.findSolution();
+
 //        
 //        // Prints results
 //        System.out.println("");

@@ -1,7 +1,7 @@
 
 package fifteenpuzzle.efficiencyTests;
 
-import fifteenpuzzle.datastructure.Heap;
+import fifteenpuzzle.datastructure.MyMinHeap;
 import fifteenpuzzle.datastructure.Node;
 import fifteenpuzzle.datastructure.NodeComparator;
 import fifteenpuzzle.Puzzle;
@@ -35,7 +35,7 @@ public class HeapComparison {
     }
 
     private long heapTime(int size, int[] num, Puzzle p) {
-        Heap h = new Heap(size+1);
+        MyMinHeap h = new MyMinHeap(size+1);
         long start = System.currentTimeMillis();
         for (int i = 0; i < num.length; i++) {
             h.insert(new Node(p, num[i]));

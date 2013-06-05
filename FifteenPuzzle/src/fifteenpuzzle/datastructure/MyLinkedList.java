@@ -1,11 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fifteenpuzzle.datastructure;
 
 /**
- *
+ * MyLinkedList Class
+ * 
  * @author termanty
  */
 public class MyLinkedList {
@@ -20,7 +18,10 @@ public class MyLinkedList {
     public Node getNode() {
         return node;
     }
-    
-    
+
+    public MyLinkedList getNext() {
+        return next;
+    }
+
 
 }
