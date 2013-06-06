@@ -1,3 +1,5 @@
+package searchalgorithmtests;
+
 
 import fifteenpuzzle.searchalgorithm.IdaStar;
 import fifteenpuzzle.Puzzle;

@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * MyHashSet Class.
- * Hash table implementation
+ * This is very light Hash table implementation for A* use.
  * 
  * @author termanty
  */
@@ -15,8 +15,8 @@ public class MyHashSet {
     private int counter;
 
     /**
-     * Description of constructor
-     * Constructor creates hash table for nodes which are in linked list.
+     * Description of constructor.
+     * Constructor creates hash table for nodes which are in linked.
      */
     public MyHashSet() {
         hashTable = new Node[SIZE];

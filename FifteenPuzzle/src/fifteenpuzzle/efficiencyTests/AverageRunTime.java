@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 /**
  * AverageRunTime
+ * 
  * @author termanty
  */
 public class AverageRunTime {
