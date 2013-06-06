@@ -43,6 +43,7 @@ public class Astar {
     
     /**
      * Description of findSolution().
+     * This is main structure of A*-algorithm.
      * 
      * @return          byte[] array containing sequence to solve puzzle
      */
