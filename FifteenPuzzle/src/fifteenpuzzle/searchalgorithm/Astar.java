@@ -12,30 +12,30 @@ import java.util.PriorityQueue;
 
 /**
  * Astar Class
- * Class uses A* algorithm to find the least amount of movements to solve a puzzle.
+ * Class uses A* algorithm to find the least amount of movements to solve the puzzle.
  * 
  * @author Tero Mäntylä
  */
-
 public class Astar {
     
-//        Astar(G,w,a,b)
-    
     private Puzzle starOrder;
+    private Node u;
     private MyMinHeap heap;
     private MyHashSet visited = new MyHashSet();
     private final int ROWS;
     private final int COLUMNS;
     
     long runningTime;
+
     
-    private Node ready = new Node(new Puzzle(), 0);
-    private Node u;
-    
-    
+    /**
+     * Constructor
+     *
+     * @param puzzle   for this we are trying to find solution.
+     */ 
     public Astar(Puzzle puzzle) {
         this.starOrder = puzzle;
-        this.heap = new MyMinHeap(2000000);
+        this.heap = new MyMinHeap(500000);
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
     }
@@ -52,11 +52,9 @@ public class Astar {
         u = new Node(starOrder, manDist());
         heap.insert(u); 
         
-        
         while (true) { 
             u = heap.removeMin();
             visited.insert(u);      
-//            System.out.println(u.getCost()); 
             if (u.getPuzzle().isReady()) {
                 break;
             }
@@ -68,14 +66,14 @@ public class Astar {
             u.getPuzzle().lastMove = lastMove;
         }
         
-        System.out.println("visit "+visited.getCounter());
-        
-        runningTime = System.currentTimeMillis() - start;
-        
+        runningTime = System.currentTimeMillis() - start;    
         return solution();
     }
     
     
+    /**
+     * Description of emptyUp().
+     */
     private void emptyUp() {
         if (u.getPuzzle().up()) {
             addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), -1, 0));
@@ -84,6 +82,9 @@ public class Astar {
     }
     
     
+    /**
+     * Description of emptyDown().
+     */
     private void emptyDown() {
         if (u.getPuzzle().down()) {
             addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), +1, 0));
@@ -92,6 +93,9 @@ public class Astar {
     }
     
     
+    /**
+     * Description of emptyLeft().
+     */
     private void emptyLeft() {
         if (u.getPuzzle().left()) {
             addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), 0, -1));
@@ -100,6 +104,9 @@ public class Astar {
     }
     
     
+    /**
+     * Description of emptyRight().
+     */
     private void emptyRight() {
         if (u.getPuzzle().right()) {
             addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), 0, +1));
@@ -108,6 +115,11 @@ public class Astar {
     }
     
     
+    /**
+     * Description of addToHeap(int cost).
+     * 
+     * @param cost  = heuristics + moves done since start
+     */
     private void addToHeap(int cost) {
         Puzzle pv = copy(u.getPuzzle());
         pv.setLastMove(u.getPuzzle().getLastMove());
@@ -119,13 +131,17 @@ public class Astar {
     }
     
     
+    /**
+     * Description of copy(Puzzle old).
+     * 
+     * @param old   puzzle which will be copied
+     */
     private Puzzle copy(Puzzle old) {
         Puzzle copy = new Puzzle();
         copy.setPuzzle(old.getPuzzle());
         return copy;
     }
 
-    
     
     /**
      * Description of manDist().
@@ -168,26 +184,47 @@ public class Astar {
             return Math.abs(p.getEmptyCol() - dColumn - colTargetPos) - Math.abs(p.getEmptyCol() - colTargetPos);
         }
     }
-
+    
+    
+    /**
+     * Description of solution.
+     * Every node knows from where to arrive this node. 
+     * That will be decoded path-array.
+     * 
+     * @return   moves to solution in byte[] array.
+     */
     private byte[] solution() {
         int index = 0;
-        byte[] tmp = new byte[100];
+        byte[] path = new byte[80];  // 80 is the maxim number of the movements for minimum solution
         while(u.getPath() != null) {
             Node next = u.getPath();
             int row = u.getPuzzle().getEmptyRow();
             int col = u.getPuzzle().getEmptyCol();
             if (next != null) {
-                tmp[index] = next.getPuzzle().getNumberInCell(row, col);
+                path[index] = next.getPuzzle().getNumberInCell(row, col);
                 u = next;
                 index++;
             } else {
                 break;
             }
         }
+        path = reverse(index, path);
+        return path;
+    }
+    
+    
+    /**
+     * Description of reverse(int index, byte[] tmp).
+     * 
+     * @param index     amount of the moves
+     * @param solution  solution in reversed order
+     * @return          moves to solution in byte[] array in right order.
+     */
+    private byte[] reverse(int index, byte[] solution) {
         byte[] path = new byte[index];
         int j = index;
         for (int i = 0; i < path.length; i++) {
-            path[i] = tmp[--index]; 
+            path[i] = solution[--index]; 
         }
         return path;
     }

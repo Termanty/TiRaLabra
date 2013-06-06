@@ -10,6 +10,7 @@ package fifteenpuzzle.datastructure;
  * @author Tero Mäntylä
  */
 public class MyMinHeap {
+    
     private Node[] heap;
     private int MAX;
     private int size;
@@ -82,7 +83,7 @@ public class MyMinHeap {
     public void insert(Node node) {
         size++;
         if (size == MAX) {
-            size /= 2;
+            size -= MAX/100;
         }
         int index = size;
         while (index > 1 && heap[parent(index)].getCost() > node.getCost()) {
@@ -99,12 +100,13 @@ public class MyMinHeap {
      * @return         node with smallest cost.
      */
     public Node removeMin() {
+        if (size == 0) {
+            return null;
+        }
         Node min = heap[1];     
         heap[1] = heap[size];
         size--;
-        if (size != 0) {
             heapify(1);
-        }
         return min;
     }
     

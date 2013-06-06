@@ -6,12 +6,11 @@ import java.util.Arrays;
 
 /**
  * 15-Puzzle program. 
- * This program can create random shuffle of 15-Puzzle 
- * and find minimal sequence to solve it.
+ * This program creates random shuffle of 15-Puzzle 
+ * and finds minimal sequence to solve it.
  * 
  * @author Tero Mäntylä
  */
-
 
 public class FifteenPuzzle {  
     
@@ -19,8 +18,7 @@ public class FifteenPuzzle {
         Puzzle p = new Puzzle(4,4);                           
          
         p.shuffle(); 
-        System.out.println(p);
-        
+        System.out.println(p);        
 //        p.setPuzzle(esim5);
         
         
@@ -42,6 +40,8 @@ public class FifteenPuzzle {
         
         System.out.println("moves "+aStarSolution.length);
         System.out.println(Arrays.toString(aStarSolution));
+        
+        
 //        System.out.println("\nPermutation at the beginning of search:\n");
 //        System.out.println(p);   
 //        System.out.println("running...   in the worst case this might take some time");

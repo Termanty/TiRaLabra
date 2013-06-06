@@ -68,7 +68,6 @@ public class Puzzle {
      *
     * @return           number of columns in puzzle
      */
-
     public int getNumberOfColumns() {
         return COLUMNS;
     }
@@ -79,7 +78,6 @@ public class Puzzle {
      *
      * @return          number of rows in puzzle
      */
-
     public int getNumberOfRows() {
         return ROWS;
     }
@@ -90,7 +88,6 @@ public class Puzzle {
      *
      * @return          gives puzzle in byte[][] form
      */
-
     public byte[][] getPuzzle() {
         return puzzle;
     }
@@ -101,7 +98,6 @@ public class Puzzle {
      *
     * @return           gives number which present empty place in puzzle
      */
-
     public byte getEmpty() {
         return EMPTY;
     }
@@ -112,7 +108,6 @@ public class Puzzle {
      *
      * @return          gives vertical position of empty place in puzzle 
      */
-
     public int getEmptyCol() {
         return emptyInCol;
     }
@@ -123,7 +118,6 @@ public class Puzzle {
      *
      * @return          gives horizontal position of empty place in puzzle 
      */
-
     public int getEmptyRow() {
         return emptyInRow;
     }
@@ -134,7 +128,6 @@ public class Puzzle {
      *
      * @return          gives number which has been most recently moved
      */
-
     public byte getLastMove() {
         return lastMove;
     }
@@ -146,8 +139,7 @@ public class Puzzle {
      * @param row       
      * @param col
      * @return          gives number which is positioned to asked row and column
-     */
-    
+     */ 
     public byte getNumberInCell(int row, int col) {
         return puzzle[row][col];
     }
@@ -158,8 +150,7 @@ public class Puzzle {
      *
      * @param num       
      * @return          gives array which contains row and column cordinate of search number
-     */
-    
+     */ 
     public int[] getCordinates(int num) {
         int cordinates[] = new int[2];
         for (int row = 0; row < ROWS; row++) {
@@ -230,8 +221,7 @@ public class Puzzle {
      * method 'slides' number above empty place down.
      *
      * @return              true if movement was done otherwise false
-     */
-    
+     */   
     public boolean up() {
         if (emptyInRow > 0) {
             slide(-1, 0);
@@ -262,8 +252,7 @@ public class Puzzle {
      * method 'slides' number above empty place right.
      *
      * @return              true if movement was done otherwise false
-     */
-    
+     */ 
     public boolean left() {
         if (emptyInCol > 0) {
             slide(0, -1);
@@ -278,8 +267,7 @@ public class Puzzle {
      * method 'slides' number above empty place left.
      *
      * @return              true if movement was done otherwise false
-     */
-    
+     */   
     public boolean right() {
         if (emptyInCol < COLUMNS - 1) {
             slide(0, +1);
@@ -297,8 +285,7 @@ public class Puzzle {
      *
      * @param dRow
      * @param dCol
-     */
-    
+     */  
     private void slide(int dRow, int dCol) {
         lastMove = puzzle[emptyInRow + dRow][emptyInCol + dCol];               
         puzzle[emptyInRow][emptyInCol] = lastMove;
@@ -314,8 +301,7 @@ public class Puzzle {
      * It will be do either 1000 or 1001 moves. 
      * This because with only even or odd amount of the moves you can't get
      * all the permutations of the shuffle. 
-     */    
-    
+     */       
     public void shuffle() {
         int amountOfRandomMoves = 1000;
         if (Math.random() < 0.5) {
@@ -330,8 +316,7 @@ public class Puzzle {
      * Shuffle method does given amount of random moves to shuffle the puzzle. 
      * 
      * @param numberOfMoves
-     */
-    
+     */   
     public void shuffle(int numberOfMoves) {
         for (int i = 0; i < numberOfMoves; i++) {
             moveRandomDirection();
@@ -343,8 +328,7 @@ public class Puzzle {
      * Description of moveRandomDirection().
      * This assisting method try as long as accepted 
      * random move is found and done
-     */
-    
+     */   
     private void moveRandomDirection() {
         while (true) {
             int move = (int) (Math.random() * 4);
@@ -380,7 +364,6 @@ public class Puzzle {
      * 
      * @return      true if puzzle is solved otherwise false
      */
-    
     public boolean isReady() {
         byte numberInCell = 1;
         for (int row = 0; row < ROWS; row++) {
@@ -425,14 +408,20 @@ public class Puzzle {
     /**
      * Description of hashCode().  
      * 
-     * @return      string presentation of the puzzle
+     * @return      hash of byte[][] arrays
      */
-    
     @Override
     public int hashCode() {
             return Arrays.deepHashCode(this.puzzle);
     }
-
+    
+    
+    /**
+     * Description of equals(Object obj).  
+     * 
+     * @param obj   compared puzzle      
+     * @return      hash of byte[][] arrays
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

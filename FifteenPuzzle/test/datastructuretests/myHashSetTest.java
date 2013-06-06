@@ -16,12 +16,18 @@ import static org.junit.Assert.*;
  * @author Tero Mäntylä
  */
 public class myHashSetTest {
+    
     MyHashSet set;   
     
+    
+    /**
+     * Description of setUp() 
+     */
     @Before
     public void setUp() {
         set = new MyHashSet();
     }
+    
     
     /**
      * Description of constructorIntializesCounter() 

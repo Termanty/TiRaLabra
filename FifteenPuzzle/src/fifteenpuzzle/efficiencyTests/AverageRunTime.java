@@ -17,7 +17,7 @@ public class AverageRunTime {
          
         p.shuffle(); 
         System.out.println("\nAVERAGE RUNNING TIME TEST:\n");  
-        System.out.println("running...   in WILL take some time\n");
+        System.out.println("running...   this WILL take some time\n");
         
         IdaStar idaStar = new IdaStar(p);
         

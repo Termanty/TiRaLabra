@@ -37,7 +37,7 @@ public class Node {
     /**
      * Description of getPuzzle() 
      * 
-     * @return      cost = heuristics + distance from start 
+     * @return      permutation of the puzzle in this node 
      */
     public Puzzle getPuzzle() {
         return puzzle;

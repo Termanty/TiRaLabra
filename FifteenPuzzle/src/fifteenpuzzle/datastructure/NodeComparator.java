@@ -9,7 +9,6 @@ import java.util.Comparator;
  *
  * @author termanty
  */
-
 public class NodeComparator implements Comparator<Node> {
    
     /**
@@ -20,9 +19,10 @@ public class NodeComparator implements Comparator<Node> {
      * @return      0 if nodes have equal manhattan distance, positive if
      *               node o1 is bigger and negative if it's smaller. 
      */
-    
     @Override
     public int compare(Node o1, Node o2) {
         return o1.getCost() - o2.getCost();
-    }  
+    } 
+    
+    
 }

@@ -10,6 +10,7 @@ import java.util.Arrays;
  * @author termanty
  */
 public class MyHashSet {
+    
     private final int SIZE = 1500007;
     private Node[] hashTable;
     private int counter;
@@ -22,6 +23,7 @@ public class MyHashSet {
         hashTable = new Node[SIZE];
         counter = 0;
     }
+    
     
     /**
      * Description of getCounter() 
@@ -55,7 +57,7 @@ public class MyHashSet {
      * Description of contains(Node node) 
      * 
      * @param node      node contains one unique permutation of puzzle.
-     * @return          true if this permutation is already in hash tabla and false if not.
+     * @return          true if this permutation is already in hash table and false if not.
      */
     public boolean contains(Node node) {
         int key = Math.abs(Arrays.deepHashCode(node.getPuzzle().getPuzzle()) % SIZE);
