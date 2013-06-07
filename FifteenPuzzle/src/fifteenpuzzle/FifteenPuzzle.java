@@ -40,6 +40,7 @@ public class FifteenPuzzle {
         
         System.out.println("moves "+aStarSolution.length);
         System.out.println(Arrays.toString(aStarSolution));
+        System.out.println("Running time was " + aStar.getRunningTime() + " ms");
         
         
 //        System.out.println("\nPermutation at the beginning of search:\n");

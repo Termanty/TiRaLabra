@@ -24,14 +24,19 @@ public class HeapComparison {
         Puzzle p = new Puzzle(4, 4);
         p.shuffle();
         
-        int size = 1000000;
-        int[] num = new int[size];
-        for (int i = 0; i < num.length; i++) {
-            num[i] = (int)(Math.random()*1000);  
-        }
+        System.out.println("\nHEAP EFFICIENCY TEST");
         
-        System.out.println(heapTime(size, num, p));
-        System.out.println(priotityQueTime(size, num, p));       
+        int size = 1000;
+        for (int i = 0; i < 4; i++) {
+            size = size * 10;
+            int[] num = new int[size];
+            for (int j = 0; j < num.length; j++) {
+                num[j] = (int) (Math.random() * 100);
+            }
+            System.out.println("\n"+size+" nodes to heap");
+            System.out.println("MyMinHeap \t"+heapTime(size, num, p)+" ms");
+            System.out.println("PriorityQueue \t"+priotityQueTime(size, num, p)+" ms");
+        }      
     }
 
     private long heapTime(int size, int[] num, Puzzle p) {

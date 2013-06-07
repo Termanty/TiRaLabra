@@ -35,11 +35,21 @@ public class Astar {
      */ 
     public Astar(Puzzle puzzle) {
         this.starOrder = puzzle;
-        this.heap = new MyMinHeap(500000);
+        this.heap = new MyMinHeap(1000000);
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
     }
-
+    
+    
+    /**
+     * Description of getRunningTime().
+     * 
+     * @return          time to find movement sequence to solution
+     */
+    public long getRunningTime() {
+        return runningTime;
+    }
+    
     
     /**
      * Description of findSolution().
