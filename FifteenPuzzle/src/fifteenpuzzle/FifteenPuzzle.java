@@ -23,24 +23,24 @@ public class FifteenPuzzle {
         
         
 //        new HeapComparison().run();
-//        new AverageRunTime().run();
+        new AverageRunTime().run();
         
-        IdaStar idaStar = new IdaStar(p);   
-        byte[] solution = idaStar.findSolution();
-        
-        System.out.println("Running time was " + idaStar.getRunningTime() + " ms");
-        System.out.println("Movement needed for solution: " + solution.length); 
-        System.out.println("Optimal sequence of the movements to solution:");    
-        System.out.println(Arrays.toString(solution)+"\n\n");
-        
-        System.out.println(p);
-        
-        Astar aStar = new Astar(p);
-        byte[] aStarSolution = aStar.findSolution();
-        
-        System.out.println("moves "+aStarSolution.length);
-        System.out.println(Arrays.toString(aStarSolution));
-        System.out.println("Running time was " + aStar.getRunningTime() + " ms");
+//        IdaStar idaStar = new IdaStar(p);   
+//        byte[] solution = idaStar.findSolution();
+//        
+//        System.out.println("Running time was " + idaStar.getRunningTime() + " ms");
+//        System.out.println("Movement needed for solution: " + solution.length); 
+//        System.out.println("Optimal sequence of the movements to solution:");    
+//        System.out.println(Arrays.toString(solution)+"\n\n");
+//        
+//        System.out.println(p);
+//        
+//        Astar aStar = new Astar(p);
+//        byte[] aStarSolution = aStar.findSolution();
+//        
+//        System.out.println("moves "+aStarSolution.length);
+//        System.out.println(Arrays.toString(aStarSolution));
+//        System.out.println("Running time was " + aStar.getRunningTime() + " ms");
         
         
 //        System.out.println("\nPermutation at the beginning of search:\n");

@@ -192,9 +192,26 @@ public class IdaStar {
     private int linearConflict() {
         int linearConflict = 0;
         for (int row = 0; row < ROWS; row++) {
-            int max = -1;
-            for (int column = 0; column < COLUMNS; column++) {
-                int num = puzzle.getNumberInCell(row, column);
+            linearConflict += calCol(row);
+        }
+        for (int col = 0; col < COLUMNS; col++) {
+            linearConflict += calRow(col);
+        }    
+        return linearConflict;
+    }
+    
+    
+    /**
+     * Description of calCol(int row).
+     * 
+     * @param row
+     * @return          amount of conflicts * 2
+     */
+    private int calCol(int row) {
+        int linearConflict = 0;
+        int max = -1;
+            for (int col = 0; col < COLUMNS; col++) {
+                int num = puzzle.getNumberInCell(row, col);
                 if (num != puzzle.getEmpty() && (num - 1) / ROWS == row) {
                     if (num > max) {
                         max = num;
@@ -202,21 +219,30 @@ public class IdaStar {
                         linearConflict += 2;
                     }
                 }
-            }
         }
-        for (int collumn = 0; collumn < COLUMNS; collumn++) {
-            int max = -1;
-            for (int row = 0; row < ROWS; row++) {
-                int num = puzzle.getNumberInCell(row, collumn);
-                if (num != puzzle.getEmpty() && (num - 1) % COLUMNS == collumn) {
-                    if (num > max) {
-                        max = num;
-                    } else {
-                        linearConflict += 2;
-                    }
+        return linearConflict;
+    }
+    
+    
+    /**
+     * Description of calRow(int col).
+     * 
+     * @param col
+     * @return          amount of conflicts * 2
+     */
+    private int calRow(int col) {
+        int linearConflict = 0;
+        int max = -1;
+        for (int row = 0; row < ROWS; row++) {
+            int num = puzzle.getNumberInCell(row, col);
+            if (num != puzzle.getEmpty() && (num - 1) % COLUMNS == col) {
+                if (num > max) {
+                    max = num;
+                } else {
+                    linearConflict += 2;
                 }
             }
-        }    
+        }
         return linearConflict;
     }
     
@@ -230,11 +256,12 @@ public class IdaStar {
      * @param lastMove
      * @return
      */
-    private int updateLinearConflict(int lastMove) {      
+    private int updateLinearConflict(int lastMove) {
+        int change = 0;
         if (lastMove < 2) {
             int numOwnRow = (puzzle.lastMove - 1) / 4;
             if (puzzle.getEmptyRow() == numOwnRow) {
-                                
+                change += calCol(numOwnRow);
             } else {
                 if (lastMove == 0) {
                     if (puzzle.getEmptyRow() + 1 == numOwnRow) {
