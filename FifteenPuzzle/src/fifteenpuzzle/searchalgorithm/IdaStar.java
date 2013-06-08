@@ -73,67 +73,90 @@ public class IdaStar {
      * @return          byte[] array containing sequence to solve puzzle
      */   
     public byte[] findSolution() {
-        found = false;
-        
+        found = false;      
         md = manhattanDistance();
-        lc = linearConflict();
+        lc = linearConflict();    
+        int h = md + lc;
+        limit = h + evenOrOddsolutionExtra();
         
-        limit = md + evenOrOddsolutionExtra();
-        
-        long timeAtStar = System.currentTimeMillis();
-        
+        long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
 //            System.out.print("limit " + limit + " ... ");
-            search(0, new byte[100], -1, md);
+            stack = 0;
+            DFS(0, new byte[100], -1, h);
             limit += 2;
 //            System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
-        }
-        
-        runningTime = System.currentTimeMillis() - timeAtStar;
-        
+            System.out.println("stack " + stack);
+        }       
+        runningTime = System.currentTimeMillis() - timeAtStar; 
         return optimalSolution;
     }
     
+    private int stack = 0;
+    private int cut = 2;
     
     /**
-     * Description of search(int depth, byte[] path, int lastMove, int md).    
-     * method search minimum solution for the puzzle.
+     * Description of DFS(int depth, byte[] path, int lastMove, int md).    
+     * This method is basicly Depth First Search with heuristic to cut branches.
      * 
      * @param depth     recursion depth of search method
      * @param path      movements done so far
      * @param lastMove  variable remembers last done movement
-     * @param md        Manhattan distance to solution
+     * @param h         evalueted distance to solution
      */   
-    private void search(int depth, byte[] path, int lastMove, int md) {
+    private void DFS(int depth, byte[] path, int lastMove, int h) {  
         
-        if (depth + md > limit) {
+        if (depth > cut) {
+            cut = depth;
+        }
+        
+        if (depth + h > limit) {
+            if (depth == cut - 1) {
+                stack++;
+            }
+
             return;
         }
-
-        path[depth] = puzzle.lastMove;
-
-        if (puzzle.isReady()) {
+        path[depth] = puzzle.lastMove;  
+        if (h == 0) {
             optimalSolution = Arrays.copyOfRange(path, 1, depth + 1);
             found = true;
             return;
-        }
-        
+        }     
         if (!found && lastMove != 1 && puzzle.up()) {
-            search(depth + 1, path, 0, md + changeMD(-1, 0));
+            DFS(depth + 1, path, 0, h + changeMD(-1, 0) + updateLC(0));
             puzzle.down();
         }      
         if (!found && lastMove != 0 && puzzle.down()) {
-            search(depth + 1, path, 1, md + changeMD(1, 0));
+            DFS(depth + 1, path, 1, h + changeMD(1, 0)+ updateLC(1));
             puzzle.up();
         }        
         if (!found && lastMove != 3 && puzzle.left()) {
-            search(depth + 1, path, 2, md + changeMD(0, -1));
+            DFS(depth + 1, path, 2, h + changeMD(0, -1)+ updateLC(2));
             puzzle.right();
         }        
         if (!found && lastMove != 2 && puzzle.right()) {
-            search(depth + 1, path, 3, md + changeMD(0, 1));
+            DFS(depth + 1, path, 3, h + changeMD(0, 1)+ updateLC(3));
             puzzle.left();
         }
+//        
+//        
+//        if (!found && lastMove != 1 && puzzle.up()) {
+//            DFS(depth + 1, path, 0, h + changeMD(-1, 0));
+//            puzzle.down();
+//        }      
+//        if (!found && lastMove != 0 && puzzle.down()) {
+//            DFS(depth + 1, path, 1, h + changeMD(1, 0));
+//            puzzle.up();
+//        }        
+//        if (!found && lastMove != 3 && puzzle.left()) {
+//            DFS(depth + 1, path, 2, h + changeMD(0, -1));
+//            puzzle.right();
+//        }        
+//        if (!found && lastMove != 2 && puzzle.right()) {
+//            DFS(depth + 1, path, 3, h + changeMD(0, 1));
+//            puzzle.left();
+//        }
     }
     
     
@@ -192,22 +215,22 @@ public class IdaStar {
     private int linearConflict() {
         int linearConflict = 0;
         for (int row = 0; row < ROWS; row++) {
-            linearConflict += calCol(row);
+            linearConflict += calHorizontal(row);
         }
         for (int col = 0; col < COLUMNS; col++) {
-            linearConflict += calRow(col);
+            linearConflict += calVertical(col);
         }    
         return linearConflict;
     }
     
     
     /**
-     * Description of calCol(int row).
+     * Description of calHorizontal(int row).
      * 
      * @param row
      * @return          amount of conflicts * 2
      */
-    private int calCol(int row) {
+    private int calHorizontal(int row) {
         int linearConflict = 0;
         int max = -1;
             for (int col = 0; col < COLUMNS; col++) {
@@ -217,6 +240,7 @@ public class IdaStar {
                         max = num;
                     } else {
                         linearConflict += 2;
+//                        System.out.println("LC change in row " + row);
                     }
                 }
         }
@@ -225,12 +249,12 @@ public class IdaStar {
     
     
     /**
-     * Description of calRow(int col).
+     * Description of calVertical(int col).
      * 
      * @param col
      * @return          amount of conflicts * 2
      */
-    private int calRow(int col) {
+    private int calVertical(int col) {
         int linearConflict = 0;
         int max = -1;
         for (int row = 0; row < ROWS; row++) {
@@ -240,6 +264,7 @@ public class IdaStar {
                     max = num;
                 } else {
                     linearConflict += 2;
+//                    System.out.println("LC change in col " + col);
                 }
             }
         }
@@ -248,7 +273,7 @@ public class IdaStar {
     
     
     /**
-     * Description of updateLinearConflict(int lastMove).
+     * Description of updateLC(int lastMove).
      * method 
      * 
      * NOT READY YET!!!!
@@ -256,42 +281,59 @@ public class IdaStar {
      * @param lastMove
      * @return
      */
-    private int updateLinearConflict(int lastMove) {
-        int change = 0;
+    private int updateLC(int lastMove) {
+        int old = 0;
+        int now = 0;
         if (lastMove < 2) {
             int numOwnRow = (puzzle.lastMove - 1) / 4;
             if (puzzle.getEmptyRow() == numOwnRow) {
-                change += calCol(numOwnRow);
+                now = calHorizontal(numOwnRow);
+                puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
+                old = calHorizontal(numOwnRow);
+                puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
             } else {
                 if (lastMove == 0) {
                     if (puzzle.getEmptyRow() + 1 == numOwnRow) {
-                        
+                        now = calHorizontal(numOwnRow);
+                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
+                        old = calHorizontal(numOwnRow);
+                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
                     }
                 } else {
-                    if (puzzle.getEmptyRow() - 1== numOwnRow) {
-                        
+                    if (puzzle.getEmptyRow() - 1 == numOwnRow) {
+                        now = calHorizontal(numOwnRow);
+                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
+                        old = calHorizontal(numOwnRow);
+                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
                     }
                 }
-            }
-               
+            }       
         } else {
             int numOwnCol = (puzzle.lastMove - 1) % 4;
             if (puzzle.getEmptyCol() == numOwnCol) {
-                
+                now = calVertical(numOwnCol);
+                puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
+                old = calVertical(numOwnCol);
+                puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
             } else {
                 if (lastMove == 2) {
                     if (puzzle.getEmptyCol() + 1 == numOwnCol) {
-                        
+                        now = calVertical(numOwnCol);
+                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
+                        old = calVertical(numOwnCol);
+                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
                     }
                 } else {
-                    if (puzzle.getEmptyCol() - 1== numOwnCol) {
-                        
+                    if (puzzle.getEmptyCol() - 1 == numOwnCol) {
+                        now = calVertical(numOwnCol);
+                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
+                        old = calVertical(numOwnCol);
+                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
                     }
                 }
             }
-            
         }
-        return 0;
+        return now - old;
     }
     
     

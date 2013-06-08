@@ -207,6 +207,18 @@ public class Puzzle {
     
     
     /**
+     * Description of setCell(int row, int col)
+     * This is for Linear Conflict calculation.
+     *
+     * @param row       row in the puzzle
+     * @param col       column in the puzzle
+     */
+    public void setCell(int row, int col, byte value) {
+        puzzle[row][col] = value;
+    }
+    
+    
+    /**
      * Description of setLastMove(byte lastMove)
      *
      * @param lastMove       number which has most recent move.

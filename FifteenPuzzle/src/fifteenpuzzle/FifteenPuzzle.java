@@ -17,21 +17,21 @@ public class FifteenPuzzle {
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4,4);                           
          
-        p.shuffle(); 
-        System.out.println(p);        
-//        p.setPuzzle(esim5);
+        p.shuffle();      
+        p.setPuzzle(esim5);
         
+        System.out.println(p);
         
 //        new HeapComparison().run();
-        new AverageRunTime().run();
-        
-//        IdaStar idaStar = new IdaStar(p);   
-//        byte[] solution = idaStar.findSolution();
+//        new AverageRunTime().run();
 //        
-//        System.out.println("Running time was " + idaStar.getRunningTime() + " ms");
-//        System.out.println("Movement needed for solution: " + solution.length); 
-//        System.out.println("Optimal sequence of the movements to solution:");    
-//        System.out.println(Arrays.toString(solution)+"\n\n");
+        IdaStar idaStar = new IdaStar(p);   
+        byte[] solution = idaStar.findSolution();
+        
+        System.out.println("Running time was " + idaStar.getRunningTime() + " ms");
+        System.out.println("Movement needed for solution: " + solution.length); 
+        System.out.println("Optimal sequence of the movements to solution:");    
+        System.out.println(Arrays.toString(solution)+"\n\n");
 //        
 //        System.out.println(p);
 //        
