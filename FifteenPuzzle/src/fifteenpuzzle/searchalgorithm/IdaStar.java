@@ -83,7 +83,7 @@ public class IdaStar {
         while (!found) { 
 //            System.out.print("limit " + limit + " ... ");
             stack = 0;
-            DFS(0, new byte[100], -1, h);
+            DFS(0, new byte[80], -1, h);
             limit += 2;
 //            System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
             System.out.println("stack " + stack);
@@ -93,6 +93,9 @@ public class IdaStar {
     }
     
     private int stack = 0;
+    private Puzzle[] pstack = new Puzzle[100];
+    private int[] movestack = new int[100];
+
     private int cut = 2;
     
     /**
