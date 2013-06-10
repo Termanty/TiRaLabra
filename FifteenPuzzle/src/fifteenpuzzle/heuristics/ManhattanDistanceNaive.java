@@ -7,12 +7,12 @@ import fifteenpuzzle.Puzzle;
  *
  * @author Tero Mäntylä
  */
-public class MDLC implements HeuristicInterface {
+public class ManhattanDistanceNaive implements HeuristicInterface {
     private Puzzle puzzle;
     private final int ROWS;
     private final int COLUMNS;
 
-    public MDLC(Puzzle puzzle) {
+    public ManhattanDistanceNaive(Puzzle puzzle) {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();

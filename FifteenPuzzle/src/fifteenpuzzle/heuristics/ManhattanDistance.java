@@ -8,14 +8,14 @@ import fifteenpuzzle.Puzzle;
  * 
  * @author Tero Mäntylä
  */
-public class ManhattaDistance implements HeuristicInterface {
+public class ManhattanDistance implements HeuristicInterface {
     
     private Puzzle puzzle;
     private final int ROWS;
     private final int COLUMNS;
     
     
-    public ManhattaDistance(Puzzle puzzle) {
+    public ManhattanDistance(Puzzle puzzle) {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();

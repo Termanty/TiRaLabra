@@ -8,16 +8,17 @@ import fifteenpuzzle.Puzzle;
  * 
  * @author Tero Mäntylä
  */
-public class LinearConflict implements HeuristicInterface {
-    
+public class ManDist_LinearConflict implements HeuristicInterface {
+    private ManhattanDistance MD;
     private Puzzle puzzle;
     private final int ROWS;
     private final int COLUMNS;
 
-    public LinearConflict(Puzzle puzzle) {
+    public ManDist_LinearConflict(Puzzle puzzle) {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
+        this.MD = new ManhattanDistance(puzzle);
     }
     
     
@@ -32,14 +33,15 @@ public class LinearConflict implements HeuristicInterface {
      */
     @Override
     public int calculate() {
-        byte linearConflict = 0;
+        int md = MD.calculate();
+        int lc = 0;
         for (int row = 0; row < ROWS; row++) {
-            linearConflict += calHorizontal(row);
+            lc += calHorizontal(row);
         }
         for (int col = 0; col < COLUMNS; col++) {
-            linearConflict += calVertical(col);
+            lc += calVertical(col);
         }    
-        return linearConflict;
+        return md + lc;
     }
     
     
@@ -51,6 +53,7 @@ public class LinearConflict implements HeuristicInterface {
      */
     @Override
     public int update(int lastMove) {
+        int mdUpdate = MD.update(lastMove);
         int old = 0;
         int now = 0;
         if (lastMove < 2) {
@@ -102,7 +105,7 @@ public class LinearConflict implements HeuristicInterface {
                 }
             }
         }
-        return now - old;
+        return mdUpdate + now - old;
     }
     
     
