@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package heuristicTests;
 
 import org.junit.After;
@@ -12,6 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
+ * ManDist_LinearConflictTest Class
  *
  * @author termanty
  */

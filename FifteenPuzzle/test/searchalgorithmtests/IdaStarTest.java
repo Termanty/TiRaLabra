@@ -39,7 +39,7 @@ public class IdaStarTest {
         Puzzle p = new Puzzle();
         for (int i = 0; i < tests.length; i++) {
             p.setPuzzle(tests[i]);
-            IdaStar idaStar = new IdaStar(p, new ManDist_LinearConflict(p));
+            IdaStar idaStar = new IdaStar(p, new ManDist_LinearConflict());
             byte[] solution = idaStar.findSolution();
             for (int j = 0; j < solution.length; j++) {
                 int[] numPos = p.getCordinates(solution[j]);

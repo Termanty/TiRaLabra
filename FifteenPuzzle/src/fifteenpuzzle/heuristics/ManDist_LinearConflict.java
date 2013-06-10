@@ -9,36 +9,30 @@ import fifteenpuzzle.Puzzle;
  * @author Tero Mäntylä
  */
 public class ManDist_LinearConflict implements HeuristicInterface {
-    private ManhattanDistance MD;
+    private ManhattanDistance MD = new ManhattanDistance();;
     private Puzzle puzzle;
-    private final int ROWS;
-    private final int COLUMNS;
-
-    public ManDist_LinearConflict(Puzzle puzzle) {
-        this.puzzle = puzzle;
-        this.ROWS = puzzle.getNumberOfRows();
-        this.COLUMNS = puzzle.getNumberOfColumns();
-        this.MD = new ManhattanDistance(puzzle);
-    }
+    private int rows;
+    private int columns;
     
     
     /**
      * Description of linearConflict().
-     * method finds conflicting numbers which are 
-     * they own row or column but reversed order.
-     * Every conflict adds +2 to counter.
-     * Why? Every conflict needs two extra movements to solution.
+     * method finds conflicting numbers which are they own row or column but reversed order.
+     * Every conflict adds +2 to counter. Why? Every conflict needs two extra movements to solution.
      * 
-     * @return          amount of conflicts * 2
+     * @return     amount of conflicts * 2
      */
     @Override
-    public int calculate() {
-        int md = MD.calculate();
+    public int calculate(Puzzle puzzle) {
+        this.puzzle = puzzle;
+        rows = puzzle.getNumberOfRows();
+        columns = puzzle.getNumberOfColumns();
+        int md = MD.calculate(puzzle);
         int lc = 0;
-        for (int row = 0; row < ROWS; row++) {
+        for (int row = 0; row < rows; row++) {
             lc += calHorizontal(row);
         }
-        for (int col = 0; col < COLUMNS; col++) {
+        for (int col = 0; col < columns; col++) {
             lc += calVertical(col);
         }    
         return md + lc;
@@ -47,15 +41,16 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     
     /**
      * Description of update(int lastMove).
+     * method calculates change in Manhattan distance and Linear Conflict.
      * 
-     * @param lastMove
-     * @return
+     * @param lastMove  most recent move (0 - up, 1 - down, 2 - left, 3 - right)
+     * @return    change in estimation value compared previous situation
      */
     @Override
     public int update(int lastMove) {
-        int mdUpdate = MD.update(lastMove);
-        int old = 0;
+        int mdUpdate = MD.update(lastMove);       
         int now = 0;
+        int old = 0;
         if (lastMove < 2) {
             int numOwnRow = (puzzle.lastMove - 1) / 4;
             if (puzzle.getEmptyRow() == numOwnRow) {
@@ -105,30 +100,30 @@ public class ManDist_LinearConflict implements HeuristicInterface {
                 }
             }
         }
-        return mdUpdate + now - old;
+        return mdUpdate + now - old;      
     }
     
     
     /**
      * Description of calCol(int row).
      * 
-     * @param row
+     * @param row       
      * @return          amount of conflicts * 2
      */
     private int calHorizontal(int row) {
-        int linearConflict = 0;
+        int lc = 0;
         int max = -1;
-            for (int col = 0; col < COLUMNS; col++) {
+            for (int col = 0; col < columns; col++) {
                 int num = puzzle.getNumberInCell(row, col);
-                if (num != puzzle.getEmpty() && (num - 1) / ROWS == row) {
+                if (num != puzzle.getEmpty() && (num - 1) / rows == row) {
                     if (num > max) {
                         max = num;
                     } else {
-                        linearConflict += 2;
+                        lc += 2;
                     }
                 }
         }
-        return linearConflict;
+        return lc;
     }
     
     
@@ -139,19 +134,19 @@ public class ManDist_LinearConflict implements HeuristicInterface {
      * @return          amount of conflicts * 2
      */
     private int calVertical(int col) {
-        int linearConflict = 0;
+        int lc = 0;
         int max = -1;
-        for (int row = 0; row < ROWS; row++) {
+        for (int row = 0; row < rows; row++) {
             int num = puzzle.getNumberInCell(row, col);
-            if (num != puzzle.getEmpty() && (num - 1) % COLUMNS == col) {
+            if (num != puzzle.getEmpty() && (num - 1) % columns == col) {
                 if (num > max) {
                     max = num;
                 } else {
-                    linearConflict += 2;
+                    lc += 2;
                 }
             }
         }
-        return linearConflict;
+        return lc;
     }
 
 }

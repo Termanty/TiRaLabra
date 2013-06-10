@@ -25,9 +25,10 @@ public class IdaStar {
     
     
     /**
-     * Description of constructor IdaStar(Puzzle puzzle).
+     * Description of constructor IdaStar(Puzzle puzzle, HeuristicInterface heuristic).
      * 
-     * @param puzzle  
+     * @param puzzle
+     * @param puzzle
      */   
     public IdaStar(Puzzle puzzle, HeuristicInterface heuristic) {
         this.puzzle = puzzle;
@@ -55,13 +56,16 @@ public class IdaStar {
      */   
     public byte[] findSolution() {
         found = false;      
-        int h = heuristicFuction.calculate();
+        int h = heuristicFuction.calculate(puzzle);
         limit = h + evenOrOddsolutionExtra(h);
+        
+        System.out.println("h "+h);
         
         long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
             DFS(0, new byte[80], -1, h);
             limit += 2;
+            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 
         return optimalSolution;
@@ -70,12 +74,12 @@ public class IdaStar {
     
     /**
      * Description of DFS(int depth, byte[] path, int lastMove, int md).    
-     * This method is basicly Depth First Search with heuristic to cut branches.
+     * This method is Depth First Search with heuristic to cut branches.
      * 
      * @param depth     recursion depth of search method
      * @param path      movements done so far
      * @param lastMove  variable remembers last done movement
-     * @param h         evalueted distance to solution
+     * @param h         estimated distance to solution
      */   
     private void DFS(int depth, byte[] path, int lastMove, int h) {         
         if (depth + h > limit) {
@@ -87,7 +91,6 @@ public class IdaStar {
             found = true;
             return;
         }   
- 
         if (!found && lastMove != 1 && puzzle.up()) {
             DFS(depth + 1, path, 0, h + heuristicFuction.update(0));
             puzzle.down();
@@ -117,7 +120,7 @@ public class IdaStar {
      * Manhattan distance is odd and solution will be even or vise versa.
      * Method finds this out.
      * 
-     * @param h     heuristic fuction value for puzzle
+     * @param h     estimated distance to solution
      * @return      +1 if MD and solution are not not both even or odd
      */    
     private int evenOrOddsolutionExtra(int h) {
