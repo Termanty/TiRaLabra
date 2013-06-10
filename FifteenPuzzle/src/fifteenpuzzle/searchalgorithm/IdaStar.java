@@ -1,6 +1,7 @@
 package fifteenpuzzle.searchalgorithm;
 
 import fifteenpuzzle.Puzzle;
+import fifteenpuzzle.heuristics.HeuristicInterface;
 import java.util.Arrays;
 
 /**
@@ -18,9 +19,8 @@ public class IdaStar {
     private boolean found;
     private byte[] optimalSolution;
     private int limit;
+    private HeuristicInterface heuristicFuction;
     
-    private int md;
-    private int lc;
     private long runningTime;
     
     
@@ -29,30 +29,11 @@ public class IdaStar {
      * 
      * @param puzzle  
      */   
-    public IdaStar(Puzzle puzzle) {
+    public IdaStar(Puzzle puzzle, HeuristicInterface heuristic) {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
-    }
-    
-    
-    /**
-     * Description of getManhattanDistance().
-     * 
-     * @return      sum of distances of every number to their own place
-     */
-    public int getManhattanDistance() {
-        return md;
-    }
-    
-    
-    /**
-     * Description of getLinearConflict().
-     * 
-     * @return      amount of conflicts times two in puzzle
-     */
-    public int getLinearConflict() {
-        return lc;
+        this.heuristicFuction = heuristic;
     }
     
     
@@ -74,29 +55,18 @@ public class IdaStar {
      */   
     public byte[] findSolution() {
         found = false;      
-        md = manhattanDistance();
-        lc = linearConflict();    
-        int h = md + lc;
-        limit = h + evenOrOddsolutionExtra();
+        int h = heuristicFuction.calculate();
+        limit = h + evenOrOddsolutionExtra(h);
         
         long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
-//            System.out.print("limit " + limit + " ... ");
-            stack = 0;
             DFS(0, new byte[80], -1, h);
             limit += 2;
-//            System.out.println(System.currentTimeMillis() - timeAtStar + " ms");
-            System.out.println("stack " + stack);
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 
         return optimalSolution;
     }
-    
-    private int stack = 0;
-    private Puzzle[] pstack = new Puzzle[100];
-    private int[] movestack = new int[100];
 
-    private int cut = 2;
     
     /**
      * Description of DFS(int depth, byte[] path, int lastMove, int md).    
@@ -107,17 +77,8 @@ public class IdaStar {
      * @param lastMove  variable remembers last done movement
      * @param h         evalueted distance to solution
      */   
-    private void DFS(int depth, byte[] path, int lastMove, int h) {  
-        
-        if (depth > cut) {
-            cut = depth;
-        }
-        
+    private void DFS(int depth, byte[] path, int lastMove, int h) {         
         if (depth + h > limit) {
-            if (depth == cut - 1) {
-                stack++;
-            }
-
             return;
         }
         path[depth] = puzzle.lastMove;  
@@ -125,223 +86,29 @@ public class IdaStar {
             optimalSolution = Arrays.copyOfRange(path, 1, depth + 1);
             found = true;
             return;
-        }     
+        }   
+ 
         if (!found && lastMove != 1 && puzzle.up()) {
-            DFS(depth + 1, path, 0, h + changeMD(-1, 0) + updateLC(0));
+            DFS(depth + 1, path, 0, h + heuristicFuction.update(0));
             puzzle.down();
         }      
         if (!found && lastMove != 0 && puzzle.down()) {
-            DFS(depth + 1, path, 1, h + changeMD(1, 0)+ updateLC(1));
+            DFS(depth + 1, path, 1, h + heuristicFuction.update(1));
             puzzle.up();
         }        
         if (!found && lastMove != 3 && puzzle.left()) {
-            DFS(depth + 1, path, 2, h + changeMD(0, -1)+ updateLC(2));
+            DFS(depth + 1, path, 2, h + heuristicFuction.update(2));
             puzzle.right();
         }        
         if (!found && lastMove != 2 && puzzle.right()) {
-            DFS(depth + 1, path, 3, h + changeMD(0, 1)+ updateLC(3));
+            DFS(depth + 1, path, 3, h + heuristicFuction.update(3));
             puzzle.left();
-        }
-//        
-//        
-//        if (!found && lastMove != 1 && puzzle.up()) {
-//            DFS(depth + 1, path, 0, h + changeMD(-1, 0));
-//            puzzle.down();
-//        }      
-//        if (!found && lastMove != 0 && puzzle.down()) {
-//            DFS(depth + 1, path, 1, h + changeMD(1, 0));
-//            puzzle.up();
-//        }        
-//        if (!found && lastMove != 3 && puzzle.left()) {
-//            DFS(depth + 1, path, 2, h + changeMD(0, -1));
-//            puzzle.right();
-//        }        
-//        if (!found && lastMove != 2 && puzzle.right()) {
-//            DFS(depth + 1, path, 3, h + changeMD(0, 1));
-//            puzzle.left();
-//        }
-    }
-    
-    
-    /**
-     * Description of manhattanDistance().
-     * method calculates sum of Manhattan distances of the every
-     * number in the puzzle to their own place.
-     * 
-     * @return          sum of Manhattan distances
-     */    
-    private int manhattanDistance() {
-        int sumOfMDs = 0;
-        for (int row = 0; row < ROWS; row++) {
-            for (int column = 0; column < COLUMNS; column++) {
-                int num = puzzle.getNumberInCell(row, column);
-                if (num == puzzle.getEmpty()) {
-                    continue;
-                }
-                int[] cordinates = puzzle.getCordinates(num);
-                sumOfMDs += Math.abs(cordinates[0] - (num - 1) / ROWS);
-                sumOfMDs += Math.abs(cordinates[1] - (num - 1) % COLUMNS);
-            }
-        }
-        return sumOfMDs;
-    }
-    
-    
-    /**
-     * Description of changeMD(int dRow, int dColumn).
-     * method calculates change in  Manhattan distance .
-     * 
-     * @param dRow
-     * @param dColumn 
-     * @return          change
-     */   
-    private int changeMD(int dRow, int dColumn) {
-        if (dColumn == 0) {
-            int rowTargetPos = (puzzle.lastMove - 1) / ROWS;
-            return Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);
-        } else {
-            int colTargetPos = (puzzle.lastMove - 1) % COLUMNS;
-            return Math.abs(puzzle.getEmptyCol() - dColumn - colTargetPos) - Math.abs(puzzle.getEmptyCol() - colTargetPos);
-        }
-    }
-    
-    
-    /**
-     * Description of linearConflict().
-     * method finds conflicting numbers which are 
-     * they own row or column but reversed order.
-     * Every conflict adds +2 to counter.
-     * Why? Every conflict needs two extra movements to solution.
-     * 
-     * @return          amount of conflicts * 2
-     */
-    private int linearConflict() {
-        int linearConflict = 0;
-        for (int row = 0; row < ROWS; row++) {
-            linearConflict += calHorizontal(row);
-        }
-        for (int col = 0; col < COLUMNS; col++) {
-            linearConflict += calVertical(col);
         }    
-        return linearConflict;
     }
-    
+  
     
     /**
-     * Description of calHorizontal(int row).
-     * 
-     * @param row
-     * @return          amount of conflicts * 2
-     */
-    private int calHorizontal(int row) {
-        int linearConflict = 0;
-        int max = -1;
-            for (int col = 0; col < COLUMNS; col++) {
-                int num = puzzle.getNumberInCell(row, col);
-                if (num != puzzle.getEmpty() && (num - 1) / ROWS == row) {
-                    if (num > max) {
-                        max = num;
-                    } else {
-                        linearConflict += 2;
-//                        System.out.println("LC change in row " + row);
-                    }
-                }
-        }
-        return linearConflict;
-    }
-    
-    
-    /**
-     * Description of calVertical(int col).
-     * 
-     * @param col
-     * @return          amount of conflicts * 2
-     */
-    private int calVertical(int col) {
-        int linearConflict = 0;
-        int max = -1;
-        for (int row = 0; row < ROWS; row++) {
-            int num = puzzle.getNumberInCell(row, col);
-            if (num != puzzle.getEmpty() && (num - 1) % COLUMNS == col) {
-                if (num > max) {
-                    max = num;
-                } else {
-                    linearConflict += 2;
-//                    System.out.println("LC change in col " + col);
-                }
-            }
-        }
-        return linearConflict;
-    }
-    
-    
-    /**
-     * Description of updateLC(int lastMove).
-     * method 
-     * 
-     * NOT READY YET!!!!
-     * 
-     * @param lastMove
-     * @return
-     */
-    private int updateLC(int lastMove) {
-        int old = 0;
-        int now = 0;
-        if (lastMove < 2) {
-            int numOwnRow = (puzzle.lastMove - 1) / 4;
-            if (puzzle.getEmptyRow() == numOwnRow) {
-                now = calHorizontal(numOwnRow);
-                puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
-                old = calHorizontal(numOwnRow);
-                puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
-            } else {
-                if (lastMove == 0) {
-                    if (puzzle.getEmptyRow() + 1 == numOwnRow) {
-                        now = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
-                        old = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
-                    }
-                } else {
-                    if (puzzle.getEmptyRow() - 1 == numOwnRow) {
-                        now = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
-                        old = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
-                    }
-                }
-            }       
-        } else {
-            int numOwnCol = (puzzle.lastMove - 1) % 4;
-            if (puzzle.getEmptyCol() == numOwnCol) {
-                now = calVertical(numOwnCol);
-                puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
-                old = calVertical(numOwnCol);
-                puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
-            } else {
-                if (lastMove == 2) {
-                    if (puzzle.getEmptyCol() + 1 == numOwnCol) {
-                        now = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
-                        old = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
-                    }
-                } else {
-                    if (puzzle.getEmptyCol() - 1 == numOwnCol) {
-                        now = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
-                        old = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
-                    }
-                }
-            }
-        }
-        return now - old;
-    }
-    
-    
-    /**
-     * Description of evenOrOddsolutionExtra().
+     * Description of evenOrOddsolutionExtra(int h).
      * Amount of the movements to solution is either even or odd.
      * It can be seen from the placement of the empty place in puzzle
      * are the amount of the movements to solution is either even or odd.
@@ -350,16 +117,17 @@ public class IdaStar {
      * Manhattan distance is odd and solution will be even or vise versa.
      * Method finds this out.
      * 
+     * @param h     heuristic fuction value for puzzle
      * @return      +1 if MD and solution are not not both even or odd
      */    
-    private int evenOrOddsolutionExtra() {
+    private int evenOrOddsolutionExtra(int h) {
         int extra = 0;
         if (evenSolution()) {
-            if (md % 2 != 0) {
+            if (h % 2 != 0) {
                 extra++;
             }
         } else {
-            if (md % 2 == 0) {
+            if (h % 2 == 0) {
                 extra++;
             }
         }

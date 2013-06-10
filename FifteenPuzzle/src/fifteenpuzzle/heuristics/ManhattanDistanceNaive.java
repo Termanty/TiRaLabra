@@ -8,24 +8,20 @@ import fifteenpuzzle.Puzzle;
  * @author Tero Mäntylä
  */
 public class ManhattanDistanceNaive implements HeuristicInterface {
-    private Puzzle puzzle;
-    private final int ROWS;
-    private final int COLUMNS;
+    private HeuristicInterface MD;
 
     public ManhattanDistanceNaive(Puzzle puzzle) {
-        this.puzzle = puzzle;
-        this.ROWS = puzzle.getNumberOfRows();
-        this.COLUMNS = puzzle.getNumberOfColumns();
+        this.MD = new ManhattanDistance(puzzle);
     }
 
     @Override
     public int calculate() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return MD.calculate();
     }
 
     @Override
     public int update(int lastMove) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return MD.calculate();
     }
     
 }

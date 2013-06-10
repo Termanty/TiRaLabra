@@ -2,6 +2,7 @@ package fifteenpuzzle;
 
 import fifteenpuzzle.searchalgorithm.*;
 import fifteenpuzzle.efficiencyTests.*;
+import fifteenpuzzle.heuristics.*;
 import java.util.Arrays;
 
 /**
@@ -18,14 +19,14 @@ public class FifteenPuzzle {
         Puzzle p = new Puzzle(4,4);                           
          
         p.shuffle();      
-        p.setPuzzle(esim5);
+        p.setPuzzle(esim1);
         
         System.out.println(p);
         
 //        new HeapComparison().run();
 //        new AverageRunTime().run();
 //        
-        IdaStar idaStar = new IdaStar(p);   
+        IdaStar idaStar = new IdaStar(p, new ManDist_LinearConflict(p));   
         byte[] solution = idaStar.findSolution();
         
         System.out.println("Running time was " + idaStar.getRunningTime() + " ms");

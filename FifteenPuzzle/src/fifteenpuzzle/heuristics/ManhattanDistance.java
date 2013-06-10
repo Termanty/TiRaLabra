@@ -19,10 +19,7 @@ public class ManhattanDistance implements HeuristicInterface {
         this.puzzle = puzzle;
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
-    }
-
-
-    
+    }    
     
     
     /**

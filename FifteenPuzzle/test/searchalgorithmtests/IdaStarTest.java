@@ -3,6 +3,7 @@ package searchalgorithmtests;
 
 import fifteenpuzzle.searchalgorithm.IdaStar;
 import fifteenpuzzle.Puzzle;
+import fifteenpuzzle.heuristics.ManDist_LinearConflict;
 import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,7 +39,7 @@ public class IdaStarTest {
         Puzzle p = new Puzzle();
         for (int i = 0; i < tests.length; i++) {
             p.setPuzzle(tests[i]);
-            IdaStar idaStar = new IdaStar(p);
+            IdaStar idaStar = new IdaStar(p, new ManDist_LinearConflict(p));
             byte[] solution = idaStar.findSolution();
             for (int j = 0; j < solution.length; j++) {
                 int[] numPos = p.getCordinates(solution[j]);
@@ -58,24 +59,5 @@ public class IdaStarTest {
             }            
             assertEquals("Solution was wrong: test case " + (i+1), true, p.isReady());
         }
-    }
-    
-    
- /**
-  * Test for getManhattanDistance() method 
-  * Tests checks that method returns right distance to solution.
-  */ 
-    @Test 
-    public void getManhattanDistance_mehtodReturnsRightValue() {
-        byte[][] tests = {test1, test2, test3};
-        int[] results = {4, 18, 8};
-        Puzzle p = new Puzzle();
-        for (int i = 0; i < tests.length; i++) {
-            p.setPuzzle(tests[i]);
-            IdaStar idaStar = new IdaStar(p);
-            byte[] solution = idaStar.findSolution();
-            assertEquals("", results[i], idaStar.getManhattanDistance());
-        }
-    }
-    
+    } 
 }

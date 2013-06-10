@@ -3,6 +3,7 @@ package fifteenpuzzle.efficiencyTests;
 
 import fifteenpuzzle.searchalgorithm.IdaStar;
 import fifteenpuzzle.Puzzle;
+import fifteenpuzzle.heuristics.ManDist_LinearConflict;
 import java.util.Arrays;
 
 /**
@@ -19,7 +20,7 @@ public class AverageRunTime {
         System.out.println("\nAVERAGE RUNNING TIME TEST:\n");  
         System.out.println("running...   this WILL take some time\n");
         
-        IdaStar idaStar = new IdaStar(p);
+        IdaStar idaStar = new IdaStar(p , new ManDist_LinearConflict(p));
         
         int sumOfMoves = 0;
         long start = System.currentTimeMillis();
