@@ -23,6 +23,8 @@ public class IdaStar {
     
     private long runningTime;
     
+    int counter = 0;
+    
     
     /**
      * Description of constructor IdaStar(Puzzle puzzle, HeuristicInterface heuristic).
@@ -65,9 +67,10 @@ public class IdaStar {
         while (!found) { 
             DFS(0, new byte[80], -1, h);
             limit += 2;
-            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
+//            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 
+        System.out.println(counter);
         return optimalSolution;
     }
 
@@ -85,7 +88,14 @@ public class IdaStar {
         if (depth + h > limit) {
             return;
         }
-        path[depth] = puzzle.lastMove;  
+        path[depth] = puzzle.lastMove; 
+        
+//        if (depth >= 7 && cycle(path, depth)) {
+//            counter++;
+//            return;
+//        }
+
+        
         if (h == 0) {
             optimalSolution = Arrays.copyOfRange(path, 1, depth + 1);
             found = true;
@@ -159,5 +169,14 @@ public class IdaStar {
                 return true;
             }
         }
+    }
+
+    private boolean cycle(byte[] path, int depth) {
+        for (int i = 0; i < 4; i++) {
+            if (path[depth-i] != path[depth-i-3]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
