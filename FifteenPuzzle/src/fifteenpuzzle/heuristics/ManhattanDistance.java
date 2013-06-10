@@ -35,8 +35,8 @@ public class ManhattanDistance implements HeuristicInterface {
                     continue;
                 }
                 int[] cordinates = puzzle.getCordinates(num);
-                sumOfMDs += Math.abs(cordinates[0] - (num - 1) / rows);
-                sumOfMDs += Math.abs(cordinates[1] - (num - 1) % columns);
+                sumOfMDs += Math.abs(cordinates[0] - (num) / rows);
+                sumOfMDs += Math.abs(cordinates[1] - (num) % columns);
             }
         }
         return sumOfMDs;
@@ -54,11 +54,11 @@ public class ManhattanDistance implements HeuristicInterface {
     public int update(int lastMove) {
         if (lastMove < 2) {
             int dRow = lastMove == 0 ? -1 : +1;
-            int rowTargetPos = (puzzle.lastMove - 1) / rows;
+            int rowTargetPos = (puzzle.lastMove) / rows;
             return Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);
         } else {
             int dColumn = lastMove == 2 ? -1 : +1;
-            int colTargetPos = (puzzle.lastMove - 1) % columns;
+            int colTargetPos = (puzzle.lastMove) % columns;
             return Math.abs(puzzle.getEmptyCol() - dColumn - colTargetPos) - Math.abs(puzzle.getEmptyCol() - colTargetPos);
         }
     }

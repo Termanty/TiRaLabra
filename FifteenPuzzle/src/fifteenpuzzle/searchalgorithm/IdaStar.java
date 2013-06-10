@@ -23,8 +23,6 @@ public class IdaStar {
     
     private long runningTime;
     
-    int counter = 0;
-    
     
     /**
      * Description of constructor IdaStar(Puzzle puzzle, HeuristicInterface heuristic).
@@ -70,7 +68,6 @@ public class IdaStar {
 //            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 
-        System.out.println(counter);
         return optimalSolution;
     }
 
@@ -89,36 +86,30 @@ public class IdaStar {
             return;
         }
         path[depth] = puzzle.lastMove; 
-        
-//        if (depth >= 7 && cycle(path, depth)) {
-//            counter++;
-//            return;
-//        }
-
-        
         if (h == 0) {
             optimalSolution = Arrays.copyOfRange(path, 1, depth + 1);
             found = true;
             return;
-        }   
+        }
+        depth++;
         if (!found && lastMove != 1 && puzzle.up()) {
-            DFS(depth + 1, path, 0, h + heuristicFuction.update(0));
+            DFS(depth, path, 0, h + heuristicFuction.update(0));
             puzzle.down();
         }      
         if (!found && lastMove != 0 && puzzle.down()) {
-            DFS(depth + 1, path, 1, h + heuristicFuction.update(1));
+            DFS(depth, path, 1, h + heuristicFuction.update(1));
             puzzle.up();
         }        
         if (!found && lastMove != 3 && puzzle.left()) {
-            DFS(depth + 1, path, 2, h + heuristicFuction.update(2));
+            DFS(depth, path, 2, h + heuristicFuction.update(2));
             puzzle.right();
         }        
         if (!found && lastMove != 2 && puzzle.right()) {
-            DFS(depth + 1, path, 3, h + heuristicFuction.update(3));
+            DFS(depth, path, 3, h + heuristicFuction.update(3));
             puzzle.left();
-        }    
-    }
-  
+        } 
+
+    } 
     
     /**
      * Description of evenOrOddsolutionExtra(int h).

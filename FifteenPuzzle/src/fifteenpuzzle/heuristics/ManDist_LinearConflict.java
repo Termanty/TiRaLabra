@@ -52,7 +52,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
         int now = 0;
         int old = 0;
         if (lastMove < 2) {
-            int numOwnRow = (puzzle.lastMove - 1) / 4;
+            int numOwnRow = (puzzle.lastMove) / 4;
             if (puzzle.getEmptyRow() == numOwnRow) {
                 now = calHorizontal(numOwnRow);
                 puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
@@ -76,7 +76,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
                 }
             }       
         } else {
-            int numOwnCol = (puzzle.lastMove - 1) % 4;
+            int numOwnCol = (puzzle.lastMove) % 4;
             if (puzzle.getEmptyCol() == numOwnCol) {
                 now = calVertical(numOwnCol);
                 puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
@@ -115,7 +115,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
         int max = -1;
             for (int col = 0; col < columns; col++) {
                 int num = puzzle.getNumberInCell(row, col);
-                if (num != puzzle.getEmpty() && (num - 1) / rows == row) {
+                if (num != puzzle.getEmpty() && num / rows == row) {
                     if (num > max) {
                         max = num;
                     } else {
@@ -138,7 +138,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
         int max = -1;
         for (int row = 0; row < rows; row++) {
             int num = puzzle.getNumberInCell(row, col);
-            if (num != puzzle.getEmpty() && (num - 1) % columns == col) {
+            if (num != puzzle.getEmpty() && num % columns == col) {
                 if (num > max) {
                     max = num;
                 } else {

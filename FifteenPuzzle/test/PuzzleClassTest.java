@@ -51,7 +51,7 @@ public class PuzzleClassTest {
             int emptyCol = p1.getEmptyCol();
             assertEquals("Class variable ROW has wrong value:", testWithRows, rows);
             assertEquals("Class variable COL has wrong value:", testWithColums, columns);
-            assertEquals("Class variable empty has wrong value:", rows * columns, empty);
+            assertEquals("Class variable empty has wrong value:", rows * columns - 1, empty);
             assertEquals("Class variable emptyRow has wrong value:", rows - 1, emptyRow);
             assertEquals("Class variable emptyCol has wrong value:", columns - 1, emptyCol);
             testWithRows = (int)(Math.random()*10+2);
@@ -66,7 +66,7 @@ public class PuzzleClassTest {
         for (int i = 0; i < 10; i++) {
             int rows = puzzle.length;
             int cols = puzzle[0].length;
-            byte numberInCell = 1;
+            byte numberInCell = 0;
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
                     assertEquals("Problem: "+rows+"*"+cols+"-Puzzle is not in right order:", numberInCell, puzzle[row][col]);
@@ -89,12 +89,12 @@ public class PuzzleClassTest {
     
     @Test
     public void getNumberInCell_methodReturnsRightValue() {
-        assertArrayEquals("Method returned wrong cordinate for number 12: ", new int[]{2,3}, p.getCordinates(12));
+        assertArrayEquals("Method returned wrong cordinate for number 12: ", new int[]{2,3}, p.getCordinates(12 - 1));
     }
     
     @Test
     public void getCordinates_methodReturnsRightValues() {
-        assertEquals("Method returned wrong value from the cell[1][3]:", 8, p.getNumberInCell(1, 3));
+        assertEquals("Method returned wrong value from the cell[1][3]:", 7, p.getNumberInCell(1, 3));
     }
     
     @Test
@@ -105,7 +105,7 @@ public class PuzzleClassTest {
         int index = 0;
         for (int row = 0; row < p1.getNumberOfRows(); row++) {
             for (int col = 0; col < p1.getNumberOfColumns(); col++) {
-                assertEquals("Puzzle has wrong value in row "+row+" col "+col, test1[index], p1.getNumberInCell(row, col));
+                assertEquals("Puzzle has wrong value in row "+row+" col "+col, test1[index] - 1, p1.getNumberInCell(row, col));
                 index++;
             }  
         }   
@@ -254,6 +254,6 @@ public class PuzzleClassTest {
     private void movementTest(Puzzle p1, int emptyRow, int emptyCol, int num, int numRow, int numCol) {
         assertEquals("emptyRow has wrong value! "+test2.toString(), emptyRow, p1.getEmptyRow());
         assertEquals("emptyCol has wrong value! "+test2.toString(), emptyCol, p1.getEmptyCol());
-        assertEquals("Puzzle has wrong value in row 2 col 3: ",num , p1.getNumberInCell(numRow, numCol));  
+        assertEquals("Puzzle has wrong value in row 2 col 3: ",num - 1, p1.getNumberInCell(numRow, numCol));  
     }
 }

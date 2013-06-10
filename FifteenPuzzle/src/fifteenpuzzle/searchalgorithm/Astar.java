@@ -170,8 +170,8 @@ public class Astar {
                     continue;
                 }
                 int[] cordinates = starOrder.getCordinates(num);
-                sumOfMDs += Math.abs(cordinates[0] - (num - 1) / ROWS);
-                sumOfMDs += Math.abs(cordinates[1] - (num - 1) % COLUMNS);
+                sumOfMDs += Math.abs(cordinates[0] - num / ROWS);
+                sumOfMDs += Math.abs(cordinates[1] - num % COLUMNS);
             }
         }
         return sumOfMDs;
@@ -188,10 +188,10 @@ public class Astar {
      */   
     private int changeMD(Puzzle p, int dRow, int dColumn) {
         if (dColumn == 0) {
-            int rowTargetPos = (p.lastMove - 1) / ROWS;
+            int rowTargetPos = p.lastMove / ROWS;
             return Math.abs(p.getEmptyRow() - dRow - rowTargetPos) - Math.abs(p.getEmptyRow() - rowTargetPos);
         } else {
-            int colTargetPos = (p.lastMove - 1) % COLUMNS;
+            int colTargetPos = p.lastMove % COLUMNS;
             return Math.abs(p.getEmptyCol() - dColumn - colTargetPos) - Math.abs(p.getEmptyCol() - colTargetPos);
         }
     }

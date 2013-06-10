@@ -40,7 +40,7 @@ public class Puzzle {
     public Puzzle(int rows, int columns) {
         this.COLUMNS = columns;
         this.ROWS = rows;
-        this.EMPTY = (byte)(ROWS*COLUMNS);
+        this.EMPTY = (byte)(ROWS*COLUMNS - 1);
         initializePuzzle();
     }
     
@@ -50,7 +50,7 @@ public class Puzzle {
      * Method creates table with numbers 1 to size of puzzle.
      */   
     private void initializePuzzle() {
-        byte numberInCell = 1;
+        byte numberInCell = 0;
         puzzle = new byte[ROWS][COLUMNS];
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
@@ -175,8 +175,8 @@ public class Puzzle {
         int index = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                puzzle[row][col] = newSequence[index];
-                if (newSequence[index] == EMPTY) {
+                puzzle[row][col] = (byte)(newSequence[index] - 1);
+                if (newSequence[index] - 1 == EMPTY) {
                     emptyInCol = col;
                     emptyInRow = row;
                 }
@@ -377,7 +377,7 @@ public class Puzzle {
      * @return      true if puzzle is solved otherwise false
      */
     public boolean isReady() {
-        byte numberInCell = 1;
+        byte numberInCell = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 if (puzzle[row][col] != numberInCell) {
@@ -402,13 +402,13 @@ public class Puzzle {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 sb.append(" ");
-                if (puzzle[row][col] < 10) {
+                if (puzzle[row][col] + 1 < 10) {
                     sb.append(" ");
                 }
                 if (puzzle[row][col] == EMPTY) {
                     sb.append("..");
                 } else {
-                    sb.append(puzzle[row][col]);
+                    sb.append(puzzle[row][col] + 1);
                 }
             }
             sb.append("\n");

@@ -19,7 +19,7 @@ public class FifteenPuzzle {
         Puzzle p = new Puzzle(4,4);                           
          
         p.shuffle();      
-        p.setPuzzle(esim5);
+//        p.setPuzzle(esim1);
         
         System.out.println(p);
         
@@ -36,12 +36,12 @@ public class FifteenPuzzle {
       
 //        System.out.println(p);
 //        
-//        Astar aStar = new Astar(p);
-//        byte[] aStarSolution = aStar.findSolution();
-//        
-//        System.out.println("moves "+aStarSolution.length);
-//        System.out.println(Arrays.toString(aStarSolution));
-//        System.out.println("Running time was " + aStar.getRunningTime() + " ms");
+        Astar aStar = new Astar(p);
+        byte[] aStarSolution = aStar.findSolution();
+        
+        System.out.println("moves "+aStarSolution.length);
+        System.out.println(Arrays.toString(aStarSolution));
+        System.out.println("Running time was " + aStar.getRunningTime() + " ms");
         
         
 //        System.out.println("\nPermutation at the beginning of search:\n");
