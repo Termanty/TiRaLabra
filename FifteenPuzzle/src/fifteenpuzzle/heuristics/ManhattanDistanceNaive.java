@@ -4,7 +4,12 @@ package fifteenpuzzle.heuristics;
 import fifteenpuzzle.Puzzle;
 
 /**
- *
+ * ManhattanDistanceNaive Class.
+ * This class is called naive because is dum enough to calculate 
+ * Manhattan Distanceevery for hole puzzle every time when movement is done.
+ * This heuristic is admissable so it never over estimate distance. 
+ * Alone this is little weak function but it can make IDA* to solve average
+ * random puzzle mostly in a minute.
  * @author Tero Mäntylä
  */
 public class ManhattanDistanceNaive implements HeuristicInterface {
@@ -13,6 +18,8 @@ public class ManhattanDistanceNaive implements HeuristicInterface {
   
     /**
      * Description of calculate().
+     * This method calculates sum of Manhattan distances of the every
+     * number in the puzzle to their own place.
      * 
      * @return  estimated distance to solution by Manhattan Distance heuristic
      */ 

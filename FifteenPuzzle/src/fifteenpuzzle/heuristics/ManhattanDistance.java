@@ -4,7 +4,11 @@ package fifteenpuzzle.heuristics;
 import fifteenpuzzle.Puzzle;
 
 /**
- * ManhattanDistance
+ * ManhattanDistance Class.
+ * This class uses Manhattan Distance to evaluate distance of puzzle to solution.
+ * This heuristic is admissable so it never over estimate distance. 
+ * Alone this is little weak function but it can make IDA* to solve average
+ * random puzzle mostly under one minute.
  * 
  * @author Tero Mäntylä
  */
@@ -16,8 +20,8 @@ public class ManhattanDistance implements HeuristicInterface {
     
     
     /**
-     * Description of calculate().
-     * method calculates sum of Manhattan distances of the every
+     * Description of calculate(Puzzle puzzle).
+     * This method calculates sum of Manhattan distances of the every
      * number in the puzzle to their own place.
      * 
      * @return          estimated amount of movements to solution
@@ -45,7 +49,7 @@ public class ManhattanDistance implements HeuristicInterface {
     
     /**
      * Description of update(int lastMove).
-     * method calculates change in  Manhattan distance .
+     * This method calculates change in  Manhattan distance .
      * 
      * @param lastMove  most recent move (0 - up, 1 - down, 2 - left, 3 - right)
      * @return    change in estimation value compared previous situation

@@ -5,7 +5,9 @@ package fifteenpuzzle.datastructure;
  * MyMinHeap Class.
  * Implementation of minimum heap for nodes which contains information of 
  * certain permutation of puzzle and cost evaluation to solution.
- * Cost evaluation is used to make comparison. 
+ * Cost evaluation is used to make comparison.
+ * This class is used in A*-algorith to select least cost node to continue search.
+ * Heap size has to be big enough to get correct answer. 1.000.000 works fine.
  *
  * @author Tero Mäntylä
  */
@@ -17,7 +19,9 @@ public class MyMinHeap {
   
     
     /**
-     * Constructor
+     * Description of Constructor
+     * This constructor sets the maximum size for the heap and creates
+     * Node[]-array where to put the inserted values.
      *
      * @param maxSize  the maximum size of the heap.
      */   
@@ -29,7 +33,8 @@ public class MyMinHeap {
    
     
     /**
-     * Description of Left.
+     * Description of left(int index).
+     * This method return left child of the given node (index).
      *
      * @param index     position of node in the heap
      * @return          position of left child in the heap
@@ -40,8 +45,9 @@ public class MyMinHeap {
     
 
     /**
-     * Description of Right.
-     *
+     * Description of right(int index).
+     * This method return left child of the given node (index).
+     * 
      * @param index     position of node in the heap
      * @return          position of right child in the heap
      */  
@@ -51,7 +57,8 @@ public class MyMinHeap {
     
 
     /**
-     * Description of Parent.
+     * Description of parent(int index).
+     * This method return parent of the given node (index).
      *
      * @param index     position of node in the heap
      * @return          parents position in the heap
@@ -62,8 +69,8 @@ public class MyMinHeap {
 
 
     /**
-     * Description of swap.
-     * Method changes places of two nodes in the heap.
+     * Description of swap(int index1, int index2).
+     * This method changes places of two nodes in the heap.
      *
      * @param index1    position of node in the heap
      * @param index2    position of node in the heap
@@ -76,7 +83,10 @@ public class MyMinHeap {
 
     
     /**
-     * Description of insert
+     * Description of insert(Node node).
+     * This method adds given node to heap. If heap is full, one hundred parth of
+     * the end of the heap is trashed by moving size-variable. This is little bit
+     * risky bisness but with big enough heap it works.
      *
      * @param node      node for added to the heap
      */  
@@ -95,7 +105,8 @@ public class MyMinHeap {
     
 
     /**
-     * Description of removeMin
+     * Description of removeMin().
+     * This method return head of the heap. That is node which has lowest cost value.
      *
      * @return         node with smallest cost.
      */
@@ -112,7 +123,9 @@ public class MyMinHeap {
     
 
     /**
-     * Description of heapify
+     * Description of heapify(int index).
+     * This method makes sure that heap stays as a heap after 
+     * removal the head of the heap and moving last to the first.
      *
      * @param index     node which position is checked in the heap
      */   
@@ -135,5 +148,4 @@ public class MyMinHeap {
             swap(index, left);
         }
     }
-  
 }

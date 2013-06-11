@@ -4,7 +4,11 @@ package fifteenpuzzle.heuristics;
 import fifteenpuzzle.Puzzle;
 
 /**
- * LinearConflict Class
+ * ManDist_LinearConflict Class.
+ * This class uses both Manhattan Distance and Linear Conflict method to evaluate
+ * distance of puzzle to solution. Both heuristics are admissable so they never
+ * over estimate distance. Together they are reasonable good so that average
+ * random puzzle can be solved by IDA* in seconds.
  * 
  * @author Tero Mäntylä
  */
@@ -16,18 +20,18 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     
     
     /**
-     * Description of linearConflict().
-     * method finds conflicting numbers which are they own row or column but reversed order.
+     * Description of calculate(Puzzle puzzle).
+     * This method finds conflicting numbers which are they own row or column but reversed order.
      * Every conflict adds +2 to counter. Why? Every conflict needs two extra movements to solution.
+     * Manhattan Distance value is added to Linear Conflict value at before it is returned.
      * 
-     * @return     amount of conflicts * 2
+     * @return     amount of conflicts * 2 + Manhattan Distance
      */
     @Override
     public int calculate(Puzzle puzzle) {
         this.puzzle = puzzle;
         rows = puzzle.getNumberOfRows();
         columns = puzzle.getNumberOfColumns();
-        int md = MD.calculate(puzzle);
         int lc = 0;
         for (int row = 0; row < rows; row++) {
             lc += calHorizontal(row);
@@ -35,13 +39,15 @@ public class ManDist_LinearConflict implements HeuristicInterface {
         for (int col = 0; col < columns; col++) {
             lc += calVertical(col);
         }    
-        return md + lc;
+        return lc + MD.calculate(puzzle);
     }
     
     
     /**
      * Description of update(int lastMove).
-     * method calculates change in Manhattan distance and Linear Conflict.
+     * This method calculates change in Manhattan distance and Linear Conflict.
+     * 
+     * THIS METHOD IS TOO LONG IN CLEAN CODE SENSE. FOR EFFICIENCY REASONS I HAVE NOT SPLIT IT. SORRY!!!
      * 
      * @param lastMove  most recent move (0 - up, 1 - down, 2 - left, 3 - right)
      * @return    change in estimation value compared previous situation
@@ -105,9 +111,10 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     
     
     /**
-     * Description of calCol(int row).
+     * Description of calHorizontal(int row).
+     * This method returns linear conflicts in certain column.
      * 
-     * @param row       
+     * @param row       row which conflicts are checked
      * @return          amount of conflicts * 2
      */
     private int calHorizontal(int row) {
@@ -128,9 +135,10 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     
     
     /**
-     * Description of calRow(int col).
+     * Description of calVertical(int col).
+     * This method returns linear conflicts in certain row.
      * 
-     * @param col
+     * @param col       column which conflict are checked
      * @return          amount of conflicts * 2
      */
     private int calVertical(int col) {

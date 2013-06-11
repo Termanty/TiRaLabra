@@ -11,8 +11,11 @@ import java.util.PriorityQueue;
 
 
 /**
- * Astar Class
- * Class uses A* algorithm to find the least amount of movements to solve the puzzle.
+ * Astar Class.
+ * this class uses A* algorithm to find the least amount of movements 
+ * to solve the puzzle. It's like Dijkstra but it uses heuristic to 
+ * go towards solutions. Here is used Manhattan Distance as heuristic
+ * to evaluate direction.
  * 
  * @author Tero Mäntylä
  */
@@ -29,7 +32,9 @@ public class Astar {
 
     
     /**
-     * Constructor
+     * Description of Constructor.
+     * This constructor creates instance of MyMinHeap and set values
+     * for some class variables.
      *
      * @param puzzle   for this we are trying to find solution.
      */ 
@@ -43,6 +48,7 @@ public class Astar {
     
     /**
      * Description of getRunningTime().
+     * This method return time to find minimum solution.
      * 
      * @return          time to find movement sequence to solution
      */
@@ -53,7 +59,7 @@ public class Astar {
     
     /**
      * Description of findSolution().
-     * This is main structure of A*-algorithm.
+     * This method is main structure of A*-algorithm. 
      * 
      * @return          byte[] array containing sequence to solve puzzle
      */
@@ -84,6 +90,8 @@ public class Astar {
     
     /**
      * Description of emptyUp().
+     * This method moves empty place up if it's possible and
+     * adds this new state of puzzle to heap.
      */
     private void emptyUp() {
         if (u.getPuzzle().up()) {
@@ -95,6 +103,8 @@ public class Astar {
     
     /**
      * Description of emptyDown().
+     * This method moves empty place down if it's possible and
+     * adds this new state of puzzle to heap.
      */
     private void emptyDown() {
         if (u.getPuzzle().down()) {
@@ -106,6 +116,8 @@ public class Astar {
     
     /**
      * Description of emptyLeft().
+     * This method moves empty place left if it's possible and
+     * adds this new state of puzzle to heap.
      */
     private void emptyLeft() {
         if (u.getPuzzle().left()) {
@@ -117,6 +129,8 @@ public class Astar {
     
     /**
      * Description of emptyRight().
+     * This method moves empty place right if it's possible and
+     * adds this new state of puzzle to heap.
      */
     private void emptyRight() {
         if (u.getPuzzle().right()) {
@@ -128,6 +142,9 @@ public class Astar {
     
     /**
      * Description of addToHeap(int cost).
+     * This method puts this new node to Heap if it's not already there.
+     * Method also sets path-variable to know from which node was arrived 
+     * to this node.
      * 
      * @param cost  = heuristics + moves done since start
      */
@@ -199,7 +216,8 @@ public class Astar {
     
     /**
      * Description of solution.
-     * Every node knows from where to arrive this node. 
+     * This method return path from solution node to start node.
+     * Every node knows from where it was arrived except start node. 
      * That will be decoded path-array.
      * 
      * @return   moves to solution in byte[] array.
@@ -226,6 +244,9 @@ public class Astar {
     
     /**
      * Description of reverse(int index, byte[] tmp).
+     * This method reverses content of the array. Reason for this is
+     * because we want to know path from start to solution. Not from
+     * solution to start.
      * 
      * @param index     amount of the moves
      * @param solution  solution in reversed order
@@ -239,7 +260,5 @@ public class Astar {
         }
         return path;
     }
-    
-    
     
 }

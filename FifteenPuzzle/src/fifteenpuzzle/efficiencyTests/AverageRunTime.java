@@ -7,7 +7,14 @@ import fifteenpuzzle.heuristics.*;
 import java.util.Arrays;
 
 /**
- * AverageRunTime
+ * AverageRunTime Class.
+ * This class runs 100 times IDA* with random puzzle. 
+ * As a result we can get rough idea of average time to solve puzzle and
+ * also we get average amount of movements to solve puzzle. More you can
+ * read Test Document.
+ * 
+ * THIS CLASS IS NOT DOCUMENTIED BECAUSE ITS CREATED FOR TEST PURPOSES.
+ * ALSO NO JUNIT TEST ARE DONE FOR THIS CLASS.
  * 
  * @author termanty
  */
@@ -19,8 +26,6 @@ public class AverageRunTime {
         p = new Puzzle(4,4);
         this.h = h;
     }
-    
-    
 
     public void run() {       
         System.out.println("\nAVERAGE RUNNING TIME TEST:\n");  

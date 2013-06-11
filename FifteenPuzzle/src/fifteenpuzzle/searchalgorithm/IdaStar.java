@@ -6,7 +6,14 @@ import java.util.Arrays;
 
 /**
  * IdaStar Class
- * Class uses IDA* algorithm to find the least amount of movements to solve a puzzle.
+ * Class uses IDA* algorithm to find the least amount of movements 
+ * to solve a puzzle. It's combination of iterative deepening and depth first
+ * search with heuristic to cut branches. Iterative deepening makes sure that
+ * what we find is minimum solution and heuristic makes algorithm much faster.
+ * This class can use different heuristic function to find solution.
+ * Some special features are that in iteration limit is increased in steps of two.
+ * This is done because it's realy trivial to find out if the amount of the moves
+ * to solution is even or odd.
  * 
  * @author Tero Mäntylä
  */
@@ -40,6 +47,7 @@ public class IdaStar {
     
     /**
      * Description of getRunningTime().
+     * This method return time to find minimum solution.
      * 
      * @return      execution time of findSolution method
      */
@@ -50,17 +58,18 @@ public class IdaStar {
     
     /**
      * Description of findSolution().
-     * 
+     * This method does iterative deepening part of IDA*-algorithm.
+     * At first is find intial limit to start. It's find in two steps 
+     * by estimating amount of movements to solution and figuring out if
+     * the amount of the movements is even or odd.
      * 
      * @return          byte[] array containing sequence to solve puzzle
      */   
     public byte[] findSolution() {
         found = false;      
         int h = heuristicFuction.calculate(puzzle);
-        limit = h + evenOrOddsolutionExtra(h);
-        
-        System.out.println("h "+h);
-        
+        int e = evenOrOddsolutionExtra(h);
+        limit = h + e;       
         long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
             DFS(0, new byte[80], -1, h);
@@ -108,7 +117,6 @@ public class IdaStar {
             DFS(depth, path, 3, h + heuristicFuction.update(3));
             puzzle.left();
         } 
-
     } 
     
     /**
@@ -162,12 +170,4 @@ public class IdaStar {
         }
     }
 
-    private boolean cycle(byte[] path, int depth) {
-        for (int i = 0; i < 4; i++) {
-            if (path[depth-i] != path[depth-i-3]) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

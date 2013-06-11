@@ -6,10 +6,12 @@ import java.util.Objects;
 
 /**
  * Node Class.
- * Every unique permutation of the puzzle is a node. Although only nodes which
- * are met during running A*-algorithm are created. This because puzzle has
- * 10 trillion nodes. There is already problem to run out of memory 
- * with tough puzzles in A*.
+ * This class is datastructure to store neccessary information of the node in
+ * network of unique permutations of the puzzle. Although only nodes which
+ * are encountered during running A*-algorithm are created. This because puzzle 
+ * network has 10 trillion nodes. Still there is problem to run out of memory 
+ * with tough puzzles. Memory usage could be more efficient. Needeed information
+ * is possible to pack less than a half what is used now.
  * 
  * @author termanty
  */
@@ -21,7 +23,8 @@ public class Node {
 
     
     /**
-     * Description of constructor
+     * Description of constructor.
+     * This constructor creates instance of Node class. 
      * 
      * @param puzzle    unique permutation of the puzzle
      * @param cost      = heuristics + distance from start
@@ -35,7 +38,8 @@ public class Node {
     
     
     /**
-     * Description of getPuzzle() 
+     * Description of getPuzzle().
+     * This method return link to puzzle class instance.
      * 
      * @return      permutation of the puzzle in this node 
      */
@@ -44,7 +48,9 @@ public class Node {
     }
 
     /**
-     * Description of getCost() 
+     * Description of getCost().
+     * This method return cost which is sum of the amount of movements done
+     * so far and value of heuristic function for this permutation.
      * 
      * @return      cost = heuristics + distance from start 
      */
@@ -54,7 +60,8 @@ public class Node {
     
 
     /**
-     * Description of getPath() 
+     * Description of getPath().
+     * This method return node that was used to arrive this node.
      * 
      * @return      node to arrive this node
      */
@@ -64,7 +71,9 @@ public class Node {
     
 
     /**
-     * Description of getNext() 
+     * Description of getNext().
+     * This method return node which will be next in linked list.
+     * It will be used by MyHashSet class when collision happens.
      * 
      * @return      next node in linked list in MyHashSet Class
      */
@@ -74,7 +83,9 @@ public class Node {
     
     
     /**
-     * Description of setPath(Node path) 
+     * Description of setPath(Node path).
+     * This method set path-variable on value that tells from which node
+     * to arrive this node.
      * 
      * @param path      previous node to arrive this node
      */
@@ -84,7 +95,10 @@ public class Node {
     
     
     /**
-     * Description of setNext(Node next)
+     * Description of setNext(Node next).
+     * This method set next-variable on value that tells which is next
+     * node in linked list. If it's value is null, then this node is
+     * the last node in the list.
      * 
      * @param next      next node in linked list in MyHashSet Class
      */
@@ -94,7 +108,9 @@ public class Node {
     
     
     /**
-     * Description of equals(Object obj)
+     * Description of equals(Object obj).
+     * This method return true if compared nodes have same permutation which 
+     * means that in byte[][]-arrays numbers are in same order.
      * 
      * @param obj      object to compare this node
      */

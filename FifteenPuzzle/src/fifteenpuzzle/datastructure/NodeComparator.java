@@ -5,14 +5,20 @@ import fifteenpuzzle.datastructure.Node;
 import java.util.Comparator;
 
 /**
- * NodeComparator class
+ * NodeComparator class.
+ * This class is for test purposes. So that Java's PriorityQueue class works
+ * as minimun heap. In test document is done comparison of efficiences of 
+ * Java's PriorityQueue class and MyMinHeap class. More you can read from
+ * test document.
  *
  * @author termanty
  */
 public class NodeComparator implements Comparator<Node> {
    
     /**
-     * Description of compare
+     * Description of compare.
+     * This method compares two nodes or actualy their costs by subtracting
+     * second nodes cost value from first nodes cost value.
      *
      * @param o1    node 
      * @param o2    node
@@ -23,6 +29,4 @@ public class NodeComparator implements Comparator<Node> {
     public int compare(Node o1, Node o2) {
         return o1.getCost() - o2.getCost();
     } 
-    
-    
 }

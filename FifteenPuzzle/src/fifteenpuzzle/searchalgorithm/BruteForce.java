@@ -1,14 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fifteenpuzzle.searchalgorithm;
 
 import fifteenpuzzle.Puzzle;
 import java.util.Arrays;
 
 /**
- *
+ * BruteForce Class.
+ * This class does BruteForce search to find minimun amount of the movements
+ * to solve puzzle. It needs iterative deepening to do so.
+ * This class is here only for testing and comparing it agains more state of art
+ * algorithms like IDA* and A*. More you can read from Test Document.
+ * 
+ * THIS CLASS IS NOT DOCUMENTIED BECAUSE ITS CREATED FOR TEST PURPOSES.
+ * ALSO NO JUNIT TEST ARE DONE FOR THIS CLASS.
+ * 
  * @author Tero Mäntylä
  */
 public class BruteForce {
@@ -17,7 +22,7 @@ public class BruteForce {
     private Puzzle puzzle;
     private byte[] answer;
     private boolean found;
-    private int limit = 8;
+    private int limit = 0;
    
 
     public BruteForce(Puzzle p) {
@@ -32,17 +37,17 @@ public class BruteForce {
     
     public byte[] solve() {       
         found = false;
-        search(0, new byte[100], -1);    
+        while(!found) {
+            search(0, new byte[80], -1);
+        }    
         return answer;
     }
     
     public void search(int depth, byte[] path, int lastMove) {
         if (depth > limit) {
             return;
-        }
-        
+        } 
         path[depth] = puzzle.lastMove;
-
         if (puzzle.isReady()) {
             System.out.println(limit);
             System.out.println(depth);
@@ -52,7 +57,6 @@ public class BruteForce {
             found = true;
             return;
         }    
-        
         if (!found && lastMove != 1 && puzzle.up()) {
             search(depth + 1, path, 0);
             puzzle.down();

@@ -21,7 +21,8 @@ public class myHashSetTest {
     
     
     /**
-     * Description of setUp() 
+     * Description of setUp().
+     * This method sets value for set-variable by creating instance of MyHashSet class
      */
     @Before
     public void setUp() {
@@ -30,7 +31,9 @@ public class myHashSetTest {
     
     
     /**
-     * Description of constructorIntializesCounter() 
+     * Description of constructorIntializesCounter().
+     * This test method is quite useless because counter is 
+     * not really used any real purpose in this program.
      */
     @Test
     public void constructorIntializesCounter() { 
@@ -39,7 +42,9 @@ public class myHashSetTest {
     
     
     /**
-     * Description of counterIncreasesCorrectly() 
+     * Description of counterIncreasesCorrectly().
+     * This test method is quite useless because counter is 
+     * not really used any real purpose in this program.
      */
     @Test
     public void counterIncreasesCorrectly() {
@@ -51,7 +56,9 @@ public class myHashSetTest {
     
     
     /**
-     * Description of contains_methodReturnsRightBooleanValue() 
+     * Description of contains_methodReturnsRightBooleanValue().
+     * This test method finds out if contain()-method really
+     * finds searched node from the HashTable or not.
      */
     @Test
     public void contains_methodReturnsRightBooleanValue() {
@@ -66,9 +73,11 @@ public class myHashSetTest {
     
     
     /**
-     * Description of putStaffToHashTable(int amount)
+     * Description of putStaffToHashTable(int amount).
+     * This method creates nodes with rundos state of puzzle and puts
+     * them in to the Hash Table.
      * 
-     * @param amount        number of nodes in Hash Table
+     * @param amount        number of nodes put in to the Hash Table
      */
     private void putStaffToHashTable(int amount) {
         for (int i = 0; i < amount; i++) {
@@ -76,7 +85,5 @@ public class myHashSetTest {
             n.getPuzzle().shuffle();
             set.insert(n);
         }
-    }
-    
-    
+    } 
 }

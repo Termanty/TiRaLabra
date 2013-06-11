@@ -4,7 +4,9 @@ package fifteenpuzzle.heuristics;
 import fifteenpuzzle.Puzzle;
 
 /**
- * HeuristicInterface Class
+ * HeuristicInterface Class.
+ * This interface makes possible to use different heuristic fuctions in
+ * IDA*-algorithm.
  * 
  * @author Tero Mäntylä
  */

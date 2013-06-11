@@ -9,17 +9,17 @@ import java.util.PriorityQueue;
 
 
 /**
- * HeapComparison class
+ * HeapComparison class.
+ * This class compares efficiency of Java's PriorityQueue class and Heap class
+ * More you can read from Test Document.
+ * 
+ * THIS CLASS IS NOT DOCUMENTIED BECAUSE ITS CREATED FOR TEST PURPOSES.
+ * ALSO NO JUNIT TEST ARE DONE FOR THIS CLASS.
  * 
  * @author termanty
  */
 public class HeapComparison {
     
-    
-    /**
-     * Description of run().
-     * method compares efficiency of Java's PriorityQueue class and Heap class.
-     */
     public void run() {
         Puzzle p = new Puzzle(4, 4);
         p.shuffle();

@@ -13,7 +13,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * MyMinHeapTest Class
+ * MyMinHeapTest Class.
+ * This class has tests to make sure that minheap implementation
+ * works correctly in different situations.
  *
  * @author termanty
  */
@@ -24,7 +26,9 @@ public class MyMInHeapTest {
     
     
     /**
-     * Description of setUp() 
+     * Description of setUp().
+     * This method sets value for heap-variable by creating instance of MyMinHeap class.
+     * It also creates instance of Node class.
      */
     @Before
     public void setUp() {
@@ -35,6 +39,8 @@ public class MyMInHeapTest {
     
     /**
      * Description of contructorIntializesVariables(). 
+     * This test method checks that removing node from empty heap
+     * returns null.
      */
     @Test
     public void removeMin_methodReturnsNullWhenEmpty() {
@@ -44,6 +50,8 @@ public class MyMInHeapTest {
     
     /**
      * Description of afterOneInsertHeapIsNotEmpty(). 
+     * This test method checks that heap is not empty after insert of
+     * one node to empty heap.
      */
     @Test
     public void afterOneInsertHeapIsNotEmpty() {
@@ -54,6 +62,8 @@ public class MyMInHeapTest {
     
     /**
      * Description of heapCanTakeLotMoreStuffThanInitialSizeWithoutBreak(). 
+     * This test method makes sure that heap does not break even if
+     * more nodes is added to heap than it can take.
      */
     @Test
     public void heapCanTakeLotMoreStuffThanInitialSizeWithoutBreak() {
@@ -66,7 +76,7 @@ public class MyMInHeapTest {
     
     /**
      * Description of removeMin_methodReturnsMinimunOfHeap(). 
-     * This tests that minimum heap really works with random values. 
+     * This test method makes sure that minimum heap really works with random values. 
      */
     @Test
     public void removeMin_methodReturnsMinimunOfHeap() {

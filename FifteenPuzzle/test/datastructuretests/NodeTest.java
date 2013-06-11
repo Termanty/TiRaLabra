@@ -11,7 +11,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * NodeTest Class
+ * NodeTest Class.
+ * This class does tests to make sure that all methods are doing
+ * as planed.
  * 
  * @author termanty
  */
@@ -22,7 +24,8 @@ public class NodeTest {
     
     
     /**
-     * Description of setUp() 
+     * Description of setUp().
+     * This method creates instances of Puzzle and Node classes.
      */
     @Before
     public void setUp() {
@@ -32,7 +35,9 @@ public class NodeTest {
     
     
     /**
-     * Description of contructorIntializesVariables(). 
+     * Description of contructorIntializesVariables().
+     * This test method checks that consructor initializes class variables
+     * with correct values.
      */
     @Test
     public void contructorIntializesVariablesAndGettersReturnsRightValues() {
@@ -45,6 +50,7 @@ public class NodeTest {
     
     /**
      * Description of getPuzzle_methodReturnsPuzzle(). 
+     * This test method check return values correctness.
      */
     @Test
     public void getPuzzle_methodReturnsPuzzle() {
@@ -54,6 +60,8 @@ public class NodeTest {
     
     /**
      * Description of setPath_methodSetRightValue(). 
+     * This test method makes sure that correct value is set for class
+     * variable path.
      */
     @Test
     public void setPath_methodSetRightValue() {
@@ -64,7 +72,9 @@ public class NodeTest {
     
     
     /**
-     * Description of getPuzzle_methodReturnsPuzzle(). 
+     * Description of setNext_methodSetRightValue(). 
+     * This test method makes sure that correct value is set for class
+     * variable next.
      */
     @Test
     public void setNext_methodSetRightValue() {
@@ -76,7 +86,8 @@ public class NodeTest {
     
     /**
      * Description of equals_methodReturnFalseIfNodesNotEqual().
-     * Nodes are not equal if byte[][] arrays are different
+     * This test method makes sure that false is returned
+     * if nodes are not equal which means that byte[][]-arrays are different.
      */
     @Test
     public void equals_methodReturnFalseIfNodesNotEqual() {
@@ -89,7 +100,8 @@ public class NodeTest {
     
     /**
      * Description of equals_methodReturnFalseIfNodesNotEqual().
-     * Nodes are equal if byte[][] arrays are equal
+     * This test method makes sure that true is returned
+     * if nodes are equal which means that byte[][]-arrays are same.
      */
     @Test
     public void equals_methodReturnTrueIfNodesEqual() {
