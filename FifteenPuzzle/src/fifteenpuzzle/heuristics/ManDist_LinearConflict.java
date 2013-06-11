@@ -13,7 +13,7 @@ import fifteenpuzzle.Puzzle;
  * @author Tero Mäntylä
  */
 public class ManDist_LinearConflict implements HeuristicInterface {
-    private ManhattanDistance MD = new ManhattanDistance();;
+    private ManhattanDistance md = new ManhattanDistance();;
     private Puzzle puzzle;
     private int rows;
     private int columns;
@@ -39,7 +39,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
         for (int col = 0; col < columns; col++) {
             lc += calVertical(col);
         }    
-        return lc + MD.calculate(puzzle);
+        return lc + md.calculate(puzzle);
     }
     
     
@@ -49,64 +49,46 @@ public class ManDist_LinearConflict implements HeuristicInterface {
      * 
      * THIS METHOD IS TOO LONG IN CLEAN CODE SENSE. FOR EFFICIENCY REASONS I HAVE NOT SPLIT IT. SORRY!!!
      * 
-     * @param lastMove  most recent move (0 - up, 1 - down, 2 - left, 3 - right)
-     * @return    change in estimation value compared previous situation
+     * @param dRow  change in row
+     * @param dCol  change in col
+     * @return      change in estimation value compared previous situation
      */
     @Override
-    public int update(int lastMove) {
-        int mdUpdate = MD.update(lastMove);       
+    public int update(int dRow, int dCol) {    
         int now = 0;
         int old = 0;
-        if (lastMove < 2) {
-            int numOwnRow = (puzzle.lastMove) / 4;
+        if (dCol == 0) {
+            int numOwnRow = puzzle.lastMove / 4;
             if (puzzle.getEmptyRow() == numOwnRow) {
                 now = calHorizontal(numOwnRow);
                 puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
                 old = calHorizontal(numOwnRow);
                 puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
             } else {
-                if (lastMove == 0) {
-                    if (puzzle.getEmptyRow() + 1 == numOwnRow) {
-                        now = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
-                        old = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
-                    }
-                } else {
-                    if (puzzle.getEmptyRow() - 1 == numOwnRow) {
-                        now = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
-                        old = calHorizontal(numOwnRow);
-                        puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
-                    }
+                if (puzzle.getEmptyRow() - dRow == numOwnRow) {
+                    now = calHorizontal(numOwnRow);
+                    puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getEmpty());
+                    old = calHorizontal(numOwnRow);
+                    puzzle.setCell(numOwnRow, puzzle.getEmptyCol(), puzzle.getLastMove());
                 }
             }       
         } else {
-            int numOwnCol = (puzzle.lastMove) % 4;
+            int numOwnCol = puzzle.lastMove % 4;
             if (puzzle.getEmptyCol() == numOwnCol) {
                 now = calVertical(numOwnCol);
                 puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
                 old = calVertical(numOwnCol);
                 puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
             } else {
-                if (lastMove == 2) {
-                    if (puzzle.getEmptyCol() + 1 == numOwnCol) {
-                        now = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
-                        old = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
-                    }
-                } else {
-                    if (puzzle.getEmptyCol() - 1 == numOwnCol) {
-                        now = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
-                        old = calVertical(numOwnCol);
-                        puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
-                    }
+                if (puzzle.getEmptyCol() - dCol == numOwnCol) {
+                    now = calVertical(numOwnCol);
+                    puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getEmpty());
+                    old = calVertical(numOwnCol);
+                    puzzle.setCell(puzzle.getEmptyRow(), numOwnCol, puzzle.getLastMove());
                 }
             }
         }
-        return mdUpdate + now - old;      
+        return md.update(dRow, dCol) + now - old;      
     }
     
     
@@ -120,15 +102,15 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     private int calHorizontal(int row) {
         int lc = 0;
         int max = -1;
-            for (int col = 0; col < columns; col++) {
-                int num = puzzle.getNumberInCell(row, col);
-                if (num != puzzle.getEmpty() && num / rows == row) {
-                    if (num > max) {
-                        max = num;
-                    } else {
-                        lc += 2;
-                    }
+        for (int col = 0; col < columns; col++) {
+            int num = puzzle.getNumberInCell(row, col);
+            if (num != puzzle.getEmpty() && num / rows == row) {
+                if (num > max) {
+                    max = num;
+                } else {
+                    lc += 2;
                 }
+            }
         }
         return lc;
     }
@@ -168,7 +150,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     @Override
     public void setPuzzle(Puzzle puzzle) {
         this.puzzle = puzzle;
-        MD.setPuzzle(puzzle);
+        md.setPuzzle(puzzle);
     }
 
 }

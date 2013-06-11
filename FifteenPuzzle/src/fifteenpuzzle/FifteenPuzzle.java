@@ -17,9 +17,9 @@ public class FifteenPuzzle {
     
     public static void main(String[] args) {
         Puzzle p = new Puzzle(4,4);                           
-         
+        
         p.shuffle();      
-//        p.setPuzzle(esim7);
+        p.setPuzzle(esim1);
         
         System.out.println(p);
         
@@ -35,7 +35,7 @@ public class FifteenPuzzle {
         System.out.println(Arrays.toString(solution)+"\n\n");
       
 //        System.out.println(p);
-//        
+        
         Astar aStar = new Astar(p, new ManDist_LinearConflict());
         byte[] aStarSolution = aStar.findSolution();
         

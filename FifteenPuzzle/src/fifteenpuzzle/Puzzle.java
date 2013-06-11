@@ -19,12 +19,12 @@ import java.util.Random;
 public class Puzzle {
     
     private byte[][] puzzle;
-    private final int ROWS;
-    private final int COLUMNS;
+    private final byte ROWS;
+    private final byte COLUMNS;
     
     private final byte EMPTY;
-    private int emptyInRow;
-    private int emptyInCol;
+    private byte emptyInRow;
+    private byte emptyInCol;
     
     public byte lastMove;
 
@@ -51,8 +51,8 @@ public class Puzzle {
      * @param columns number of columns in puzzle
      */
     public Puzzle(int rows, int columns) {
-        this.COLUMNS = columns;
-        this.ROWS = rows;
+        this.COLUMNS = (byte)(columns);
+        this.ROWS = (byte)(rows);
         this.EMPTY = (byte)(ROWS*COLUMNS - 1);
         initializePuzzle();
     }
@@ -74,8 +74,8 @@ public class Puzzle {
             }
         }
         lastMove = -1;
-        emptyInCol = COLUMNS - 1;
-        emptyInRow = ROWS - 1;
+        emptyInCol = (byte)(COLUMNS - 1);
+        emptyInRow = (byte)(ROWS - 1);
     }
     
     
@@ -210,8 +210,8 @@ public class Puzzle {
      */
     public void setPuzzle(byte[] newSequence) {
         int index = 0;
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (byte row = 0; row < ROWS; row++) {
+            for (byte col = 0; col < COLUMNS; col++) {
                 puzzle[row][col] = (byte)(newSequence[index] - 1);
                 if (newSequence[index] - 1 == EMPTY) {
                     emptyInCol = col;
@@ -231,8 +231,8 @@ public class Puzzle {
      * @param newSequence       puzzle permutation in byte[][] form
      */
     public void setPuzzle(byte[][] newSequence) {
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
+        for (byte row = 0; row < ROWS; row++) {
+            for (byte col = 0; col < COLUMNS; col++) {
                 puzzle[row][col] = newSequence[row][col];
                 if (newSequence[row][col] == EMPTY) {
                     emptyInCol = col;
@@ -338,8 +338,8 @@ public class Puzzle {
      * Arguments gives the direction of the number from empty place.
      * example: dCol = 0, dRow = +1 means number under the empty place.
      *
-     * @param dRow
-     * @param dCol
+     * @param dRow   change of empty place
+     * @param dCol   change of empty place   
      */  
     private void slide(int dRow, int dCol) {
         lastMove = puzzle[emptyInRow + dRow][emptyInCol + dCol];               

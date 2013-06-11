@@ -24,7 +24,8 @@ public class IdaStar {
     private final int COLUMNS;
     
     private boolean found;
-    private byte[] optimalSolution;
+    private byte[] path = new byte[80];
+    private byte[] solution;
     private int limit;
     private HeuristicInterface heuristicFuction;
     
@@ -72,12 +73,12 @@ public class IdaStar {
         limit = h + e;       
         long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
-            DFS(0, new byte[80], -1, h);
+            DFS(0, -1, h);
             limit += 2;
 //            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 
-        return optimalSolution;
+        return solution;
     }
 
     
@@ -86,38 +87,38 @@ public class IdaStar {
      * This method is Depth First Search with heuristic to cut branches.
      * 
      * @param depth     recursion depth of search method
-     * @param path      movements done so far
-     * @param lastMove  variable remembers last done movement
+     * @param move      variable remembers last done movement
      * @param h         estimated distance to solution
      */   
-    private void DFS(int depth, byte[] path, int lastMove, int h) {         
+    private void DFS(int depth, int move, int h) {         
         if (depth + h > limit) {
             return;
         }
         path[depth] = puzzle.lastMove; 
-        if (h == 0) {
-            optimalSolution = Arrays.copyOfRange(path, 1, depth + 1);
+        if (h == 0) {     
+            solution = Arrays.copyOfRange(path, 1, depth + 1);
             found = true;
             return;
         }
         depth++;
-        if (!found && lastMove != 1 && puzzle.up()) {
-            DFS(depth, path, 0, h + heuristicFuction.update(0));
+        if (!found && move != 1 && puzzle.up()) {
+            DFS(depth, 0, h + heuristicFuction.update(-1, 0));
             puzzle.down();
         }      
-        if (!found && lastMove != 0 && puzzle.down()) {
-            DFS(depth, path, 1, h + heuristicFuction.update(1));
+        if (!found && move != 0 && puzzle.down()) {
+            DFS(depth, 1, h + heuristicFuction.update(+1, 0));
             puzzle.up();
         }        
-        if (!found && lastMove != 3 && puzzle.left()) {
-            DFS(depth, path, 2, h + heuristicFuction.update(2));
+        if (!found && move != 3 && puzzle.left()) {
+            DFS(depth, 2, h + heuristicFuction.update(0, -1));
             puzzle.right();
         }        
-        if (!found && lastMove != 2 && puzzle.right()) {
-            DFS(depth, path, 3, h + heuristicFuction.update(3));
+        if (!found && move != 2 && puzzle.right()) {
+            DFS(depth, 3, h + heuristicFuction.update(0, +1));
             puzzle.left();
         } 
-    } 
+    }
+    
     
     /**
      * Description of evenOrOddsolutionExtra(int h).

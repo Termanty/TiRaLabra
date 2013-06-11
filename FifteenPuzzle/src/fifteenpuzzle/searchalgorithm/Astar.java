@@ -38,7 +38,7 @@ public class Astar {
     public Astar(Puzzle puzzle, HeuristicInterface h) {
         this.h = h;
         this.starOrder = puzzle;
-        this.heap = new MyMinHeap(1000000);
+        this.heap = new MyMinHeap(500000);
         this.ROWS = puzzle.getNumberOfRows();
         this.COLUMNS = puzzle.getNumberOfColumns();
     }
@@ -94,7 +94,7 @@ public class Astar {
     private void emptyUp() {
         if (u.getPuzzle().up()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(0));
+            addToHeap(u.getCost() + 1 + h.update(-1, 0));
             u.getPuzzle().down();
         }
     }
@@ -108,7 +108,7 @@ public class Astar {
     private void emptyDown() {
         if (u.getPuzzle().down()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(1));
+            addToHeap(u.getCost() + 1 + h.update(+1, 0));
             u.getPuzzle().up();
         }
     }
@@ -122,7 +122,7 @@ public class Astar {
     private void emptyLeft() {
         if (u.getPuzzle().left()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(2));
+            addToHeap(u.getCost() + 1 + h.update(0, -1));
             u.getPuzzle().right();
         }
     }
@@ -136,7 +136,7 @@ public class Astar {
     private void emptyRight() {
         if (u.getPuzzle().right()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(3));
+            addToHeap(u.getCost() + 1 + h.update(0, +1));
             u.getPuzzle().left();
         }  
     }
@@ -173,47 +173,6 @@ public class Astar {
     }
 
     
-    /**
-     * Description of manDist().
-     * method calculates sum of Manhattan distances of the every
-     * number in the puzzle to their own place.
-     * 
-     * @return          sum of Manhattan distances
-     */
-    private int manDist() {
-        int sumOfMDs = 0;
-        for (int row = 0; row < ROWS; row++) {
-            for (int column = 0; column < COLUMNS; column++) {
-                int num = starOrder.getNumberInCell(row, column);
-                if (num == starOrder.getEmpty()) {
-                    continue;
-                }
-                int[] cordinates = starOrder.getCordinates(num);
-                sumOfMDs += Math.abs(cordinates[0] - num / ROWS);
-                sumOfMDs += Math.abs(cordinates[1] - num % COLUMNS);
-            }
-        }
-        return sumOfMDs;
-    }
-    
-    
-    /**
-     * Description of changeMD(int dRow, int dColumn).
-     * method calculates change in  Manhattan distance .
-     * 
-     * @param dRow      empty places difference of row position to previous one.
-     * @param dColumn   empty places difference of column position to previous one.
-     * @return          change
-     */   
-    private int changeMD(Puzzle p, int dRow, int dColumn) {
-        if (dColumn == 0) {
-            int rowTargetPos = p.lastMove / ROWS;
-            return Math.abs(p.getEmptyRow() - dRow - rowTargetPos) - Math.abs(p.getEmptyRow() - rowTargetPos);
-        } else {
-            int colTargetPos = p.lastMove % COLUMNS;
-            return Math.abs(p.getEmptyCol() - dColumn - colTargetPos) - Math.abs(p.getEmptyCol() - colTargetPos);
-        }
-    }
     
     
     /**
