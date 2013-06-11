@@ -2,6 +2,7 @@
 package searchalgorithmtests;
 
 import fifteenpuzzle.Puzzle;
+import fifteenpuzzle.heuristics.*;
 import fifteenpuzzle.searchalgorithm.Astar;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -32,11 +33,12 @@ public class AstarTest {
      */   
     @Test
     public void findSolution_methodFindsOptimalSequence() {
+        HeuristicInterface h = new ManhattanDistance();
         byte[][] tests = {test1, test2, test3, test4};
         Puzzle p = new Puzzle();
         for (int i = 0; i < tests.length; i++) {
             p.setPuzzle(tests[i]);
-            Astar idaStar = new Astar(p);
+            Astar idaStar = new Astar(p, h);
             byte[] solution = idaStar.findSolution();
             for (int j = 0; j < solution.length; j++) {
                 int[] numPos = p.getCordinates(solution[j]);

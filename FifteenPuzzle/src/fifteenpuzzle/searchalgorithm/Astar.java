@@ -1,13 +1,9 @@
 
 package fifteenpuzzle.searchalgorithm;
 
-import fifteenpuzzle.datastructure.Node;
-import fifteenpuzzle.datastructure.NodeComparator;
 import fifteenpuzzle.Puzzle;
 import fifteenpuzzle.datastructure.*;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+import fifteenpuzzle.heuristics.*;
 
 
 /**
@@ -27,6 +23,7 @@ public class Astar {
     private MyHashSet visited = new MyHashSet();
     private final int ROWS;
     private final int COLUMNS;
+    private HeuristicInterface h;
     
     long runningTime;
 
@@ -38,7 +35,8 @@ public class Astar {
      *
      * @param puzzle   for this we are trying to find solution.
      */ 
-    public Astar(Puzzle puzzle) {
+    public Astar(Puzzle puzzle, HeuristicInterface h) {
+        this.h = h;
         this.starOrder = puzzle;
         this.heap = new MyMinHeap(1000000);
         this.ROWS = puzzle.getNumberOfRows();
@@ -66,7 +64,7 @@ public class Astar {
     public byte[] findSolution() {    
         long start = System.currentTimeMillis();
         
-        u = new Node(starOrder, manDist());
+        u = new Node(starOrder, h.calculate(starOrder));
         heap.insert(u); 
         
         while (true) { 
@@ -95,7 +93,8 @@ public class Astar {
      */
     private void emptyUp() {
         if (u.getPuzzle().up()) {
-            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), -1, 0));
+            h.setPuzzle(u.getPuzzle());
+            addToHeap(u.getCost() + 1 + h.update(0));
             u.getPuzzle().down();
         }
     }
@@ -108,7 +107,8 @@ public class Astar {
      */
     private void emptyDown() {
         if (u.getPuzzle().down()) {
-            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), +1, 0));
+            h.setPuzzle(u.getPuzzle());
+            addToHeap(u.getCost() + 1 + h.update(1));
             u.getPuzzle().up();
         }
     }
@@ -121,7 +121,8 @@ public class Astar {
      */
     private void emptyLeft() {
         if (u.getPuzzle().left()) {
-            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), 0, -1));
+            h.setPuzzle(u.getPuzzle());
+            addToHeap(u.getCost() + 1 + h.update(2));
             u.getPuzzle().right();
         }
     }
@@ -134,7 +135,8 @@ public class Astar {
      */
     private void emptyRight() {
         if (u.getPuzzle().right()) {
-            addToHeap(u.getCost() + 1 + changeMD(u.getPuzzle(), 0, +1));
+            h.setPuzzle(u.getPuzzle());
+            addToHeap(u.getCost() + 1 + h.update(3));
             u.getPuzzle().left();
         }  
     }

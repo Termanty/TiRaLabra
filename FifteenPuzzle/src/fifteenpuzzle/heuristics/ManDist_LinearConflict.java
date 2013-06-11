@@ -157,4 +157,18 @@ public class ManDist_LinearConflict implements HeuristicInterface {
         return lc;
     }
 
+    
+    /**
+     * Description of setPuzzle(Puzzle puzzle).
+     * This method gives puzzle class variable link to new puzzle.
+     * Method is used only in A*-algorithm.
+     * 
+     * @param puzzle
+     */   
+    @Override
+    public void setPuzzle(Puzzle puzzle) {
+        this.puzzle = puzzle;
+        MD.setPuzzle(puzzle);
+    }
+
 }

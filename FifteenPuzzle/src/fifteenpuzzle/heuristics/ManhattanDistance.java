@@ -17,6 +17,19 @@ public class ManhattanDistance implements HeuristicInterface {
     private Puzzle puzzle;
     private int rows;
     private int columns;
+
+    
+    /**
+     * Description of setPuzzle(Puzzle puzzle).
+     * This method gives puzzle class variable link to new puzzle.
+     * Method is used only in A*-algorithm.
+     * 
+     * @param puzzle
+     */   
+    public void setPuzzle(Puzzle puzzle) {
+        this.puzzle = puzzle;
+    }
+    
     
     
     /**

@@ -12,6 +12,7 @@ import fifteenpuzzle.Puzzle;
  */
 public interface HeuristicInterface {
     
+    public void setPuzzle(Puzzle puzzle);
     public int calculate(Puzzle puzzle);
     public int update(int lastMove);
 }

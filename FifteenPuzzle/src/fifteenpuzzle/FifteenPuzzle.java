@@ -19,7 +19,7 @@ public class FifteenPuzzle {
         Puzzle p = new Puzzle(4,4);                           
          
         p.shuffle();      
-//        p.setPuzzle(esim1);
+//        p.setPuzzle(esim7);
         
         System.out.println(p);
         
@@ -36,7 +36,7 @@ public class FifteenPuzzle {
       
 //        System.out.println(p);
 //        
-        Astar aStar = new Astar(p);
+        Astar aStar = new Astar(p, new ManDist_LinearConflict());
         byte[] aStarSolution = aStar.findSolution();
         
         System.out.println("moves "+aStarSolution.length);
@@ -70,5 +70,6 @@ public class FifteenPuzzle {
     static byte[] esim5 = {13,10,16,14,1,9,15,8,2,7,6,11,4,12,3,5}; // 62 siirtoa ja paha
     
     static byte[] esim6 = {16,12,9,13,15,11,10,14,3,7,2,5,4,8,6,1}; // 80 siirtoa
+    static byte[] esim7 = {5,2,16,3,7,1,15,4,9,6,10,11,13,8,14,12}; // 28 siirtoa
     
 }

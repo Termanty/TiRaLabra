@@ -42,4 +42,16 @@ public class ManhattanDistanceNaive implements HeuristicInterface {
         return MD.calculate(puzzle);
     }
     
+    
+    /**
+     * Description of setPuzzle(Puzzle puzzle).
+     * This method gives puzzle class variable link to new puzzle.
+     * Method is used only in A*-algorithm.
+     * 
+     * @param puzzle
+     */   
+    public void setPuzzle(Puzzle puzzle) {
+        this.puzzle = puzzle;
+    }
+    
 }
