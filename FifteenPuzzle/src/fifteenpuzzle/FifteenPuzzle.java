@@ -19,7 +19,7 @@ public class FifteenPuzzle {
         Puzzle p = new Puzzle(4,4);                           
         
         p.shuffle();      
-        p.setPuzzle(esim1);
+//        p.setPuzzle(esim1);
         
         System.out.println(p);
         
