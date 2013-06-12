@@ -190,6 +190,7 @@ public class Puzzle {
                 if (num == puzzle[row][col]) {
                     cordinates[0] = row;
                     cordinates[1] = col;
+                    return cordinates;
                 }  
             }
         }

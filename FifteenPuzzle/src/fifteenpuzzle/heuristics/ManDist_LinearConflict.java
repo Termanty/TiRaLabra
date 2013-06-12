@@ -44,7 +44,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
     
     
     /**
-     * Description of update(int lastMove).
+     * Description of update(int h, int dRow, int dCol).
      * This method calculates change in Manhattan distance and Linear Conflict.
      * 
      * THIS METHOD IS TOO LONG IN CLEAN CODE SENSE. FOR EFFICIENCY REASONS I HAVE NOT SPLIT IT. SORRY!!!
@@ -54,7 +54,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
      * @return      change in estimation value compared previous situation
      */
     @Override
-    public int update(int dRow, int dCol) {    
+    public int update(int h, int dRow, int dCol) {    
         int now = 0;
         int old = 0;
         if (dCol == 0) {
@@ -88,7 +88,7 @@ public class ManDist_LinearConflict implements HeuristicInterface {
                 }
             }
         }
-        return md.update(dRow, dCol) + now - old;      
+        return h + md.update(0, dRow, dCol) + now - old;      
     }
     
     

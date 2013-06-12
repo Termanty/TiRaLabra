@@ -68,13 +68,13 @@ public class ManhattanDistance implements HeuristicInterface {
      * @return      change in estimation value compared previous situation
      */
     @Override
-    public int update(int dRow, int dCol) {
+    public int update(int h, int dRow, int dCol) {
         if (dCol == 0) {
             int rowTargetPos = puzzle.lastMove / rows;
-            return Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);
+            return h + Math.abs(puzzle.getEmptyRow() - dRow - rowTargetPos) - Math.abs(puzzle.getEmptyRow() - rowTargetPos);
         } else {
             int colTargetPos = puzzle.lastMove % columns;
-            return Math.abs(puzzle.getEmptyCol() - dCol - colTargetPos) - Math.abs(puzzle.getEmptyCol() - colTargetPos);
+            return h + Math.abs(puzzle.getEmptyCol() - dCol - colTargetPos) - Math.abs(puzzle.getEmptyCol() - colTargetPos);
         }
     }
 }

@@ -25,7 +25,7 @@ public class ManhattanDistanceNaive implements HeuristicInterface {
      */ 
     @Override
     public int calculate(Puzzle puzzle) {
-        this.puzzle = puzzle; 
+        this.puzzle = puzzle;
         return md.calculate(puzzle);
     }
 
@@ -39,7 +39,7 @@ public class ManhattanDistanceNaive implements HeuristicInterface {
      * @return  estimated distance to solution by Manhattan Distance heuristic
      */
     @Override
-    public int update(int dRow, int dCol) {
+    public int update(int h, int dRow, int dCol) {
         return md.calculate(puzzle);
     }
     

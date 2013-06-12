@@ -102,19 +102,19 @@ public class IdaStar {
         }
         depth++;
         if (!found && move != 1 && puzzle.up()) {
-            DFS(depth, 0, h + heuristicFuction.update(-1, 0));
+            DFS(depth, 0, heuristicFuction.update(h, -1, 0));
             puzzle.down();
         }      
         if (!found && move != 0 && puzzle.down()) {
-            DFS(depth, 1, h + heuristicFuction.update(+1, 0));
+            DFS(depth, 1, heuristicFuction.update(h, +1, 0));
             puzzle.up();
         }        
         if (!found && move != 3 && puzzle.left()) {
-            DFS(depth, 2, h + heuristicFuction.update(0, -1));
+            DFS(depth, 2, heuristicFuction.update(h, 0, -1));
             puzzle.right();
         }        
         if (!found && move != 2 && puzzle.right()) {
-            DFS(depth, 3, h + heuristicFuction.update(0, +1));
+            DFS(depth, 3, heuristicFuction.update(h, 0, +1));
             puzzle.left();
         } 
     }

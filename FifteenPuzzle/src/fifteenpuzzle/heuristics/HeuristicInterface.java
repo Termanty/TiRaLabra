@@ -14,5 +14,5 @@ public interface HeuristicInterface {
     
     public void setPuzzle(Puzzle puzzle);
     public int calculate(Puzzle puzzle);
-    public int update(int dRow, int dCol);
+    public int update(int h, int dRow, int dCol);
 }

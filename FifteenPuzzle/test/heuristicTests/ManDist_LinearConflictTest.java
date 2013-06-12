@@ -57,13 +57,13 @@ public class ManDist_LinearConflictTest {
             ManDist_LinearConflict lc = new ManDist_LinearConflict();
             lc.calculate(p);
             p.up();
-            assertEquals("Move up created wrong change in test"+(i+1), results[i][0], lc.update(-1, 0));
+            assertEquals("Move up created wrong change in test"+(i+1), results[i][0], lc.update(0, -1, 0));
             p.down();
-            assertEquals("Move down created wrong change in test"+(i+1), results[i][1], lc.update(1, 0));
+            assertEquals("Move down created wrong change in test"+(i+1), results[i][1], lc.update(0, 1, 0));
             p.left();
-            assertEquals("Move left created wrong change in test"+(i+1), results[i][2], lc.update(0, -1));
+            assertEquals("Move left created wrong change in test"+(i+1), results[i][2], lc.update(0, 0, -1));
             p.right();
-            assertEquals("Move right created wrong change in test"+(i+1), results[i][3], lc.update(0, 1));
+            assertEquals("Move right created wrong change in test"+(i+1), results[i][3], lc.update(0, 0, 1));
         }
     }
     

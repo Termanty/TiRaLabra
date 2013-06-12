@@ -94,7 +94,7 @@ public class Astar {
     private void emptyUp() {
         if (u.getPuzzle().up()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(-1, 0));
+            addToHeap(1 + h.update(u.getCost(), -1, 0));
             u.getPuzzle().down();
         }
     }
@@ -108,7 +108,7 @@ public class Astar {
     private void emptyDown() {
         if (u.getPuzzle().down()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(+1, 0));
+            addToHeap(1 + h.update(u.getCost(), +1, 0));
             u.getPuzzle().up();
         }
     }
@@ -122,7 +122,7 @@ public class Astar {
     private void emptyLeft() {
         if (u.getPuzzle().left()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(0, -1));
+            addToHeap(1 + h.update(u.getCost(), 0, -1));
             u.getPuzzle().right();
         }
     }
@@ -136,7 +136,7 @@ public class Astar {
     private void emptyRight() {
         if (u.getPuzzle().right()) {
             h.setPuzzle(u.getPuzzle());
-            addToHeap(u.getCost() + 1 + h.update(0, +1));
+            addToHeap(1 + h.update(u.getCost(), 0, +1));
             u.getPuzzle().left();
         }  
     }

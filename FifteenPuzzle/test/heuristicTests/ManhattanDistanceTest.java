@@ -51,13 +51,13 @@ public class ManhattanDistanceTest {
             ManhattanDistance md = new ManhattanDistance();
             md.calculate(p);
             p.up();
-            assertEquals("Move up created wrong change in Manhattan distance in test"+(i+1), results[i][0], md.update(-1, 0));
+            assertEquals("Move up created wrong change in Manhattan distance in test"+(i+1), results[i][0], md.update(0, -1, 0));
             p.down();
-            assertEquals("Move down created wrong change in Manhattan distance in test"+(i+1), results[i][1], md.update(1, 0));
+            assertEquals("Move down created wrong change in Manhattan distance in test"+(i+1), results[i][1], md.update(0, 1, 0));
             p.left();
-            assertEquals("Move left created wrong change in Manhattan distance in test"+(i+1), results[i][2], md.update(0, -1));
+            assertEquals("Move left created wrong change in Manhattan distance in test"+(i+1), results[i][2], md.update(0, 0, -1));
             p.right();
-            assertEquals("Move right created wrong change in Manhattan distance in test"+(i+1), results[i][3], md.update(0, 1));
+            assertEquals("Move right created wrong change in Manhattan distance in test"+(i+1), results[i][3], md.update(0, 0, 1));
         }
     }
 }

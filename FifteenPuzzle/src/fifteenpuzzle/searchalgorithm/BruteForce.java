@@ -10,9 +10,14 @@ import java.util.Arrays;
  * to solve puzzle. It needs iterative deepening to do so.
  * This class is here only for testing and comparing it agains more state of art
  * algorithms like IDA* and A*. More you can read from Test Document.
+ *
  * 
- * THIS CLASS IS NOT DOCUMENTIED BECAUSE ITS CREATED FOR TEST PURPOSES.
- * ALSO NO JUNIT TEST ARE DONE FOR THIS CLASS.
+ * 
+ *  !!!    THIS CLASS IS NOT DOCUMENTIED BECAUSE ITS CREATED FOR TEST PURPOSES.   !!!
+ *  !!!    ALSO NO JUNIT TEST ARE DONE FOR THIS CLASS.                            !!!
+ * 
+ * 
+ * 
  * 
  * @author Tero Mäntylä
  */
