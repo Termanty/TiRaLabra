@@ -12,6 +12,8 @@ import static org.junit.Assert.*;
 
 /**
  * myHashSetTest Class
+ * This class does series of JUNIT tests for makeing sure propers
+ * functionality of the MyHashSet class.
  * 
  * @author Tero Mäntylä
  */

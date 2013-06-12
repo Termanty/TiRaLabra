@@ -9,7 +9,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test Puzzle class
+ * Test Puzzle class.
+ * This class run tests for Puzzle class to make sure that
+ * all methods works properly.
  * 
  * @author Tero Mäntylä
  */
@@ -22,22 +24,29 @@ public class PuzzleClassTest {
     private byte[] test3 = {5,1,3,4,9,2,7,8,16,6,10,12,13,14,11,15};
     private byte[] test4 = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
     private byte[] test5 = {5,2,16,3,7,1,15,4,9,6,10,11,13,8,14,12};
-        
+    
+    /**
+     * Description of constructor.
+     * this constructor creates instance of Puzzle class.
+     */
     public PuzzleClassTest() {
         p = new Puzzle();
     }
     
-    
- /**
- * Tests for Constructor checks that all class variables have right values.
- * First will be test default case 4*4, and then random size puzzles.
- */
-    
+    /**
+     * Description of constructorCreatesPuzzle().
+     * this method tests that puzzle-variable is not null.
+     */
     @Test
     public void constructorCreatesPuzzle() {
         assertNotNull("byte[][] array is null:", p.getPuzzle());
     }
     
+    /**
+     * Description of constructorIntializesVariablesWithRightValues().
+     * this test method makes sure that most of the class variables 
+     * gets right values.
+     */
     @Test
     public void constructorIntializesVariablesWithRightValues() {
         int testWithRows = 4;
@@ -60,6 +69,11 @@ public class PuzzleClassTest {
         }
     }
     
+    /**
+     * Description of CreatedPuzzleIsInRigthOrder().
+     * this test method makes sure that in byte[][]-array
+     * numbers are in right order.
+     */
     @Test
     public void CreatedPuzzleIsInRigthOrder() { 
         byte[][] puzzle = p.getPuzzle();
@@ -79,24 +93,28 @@ public class PuzzleClassTest {
         }
     }
     
-    
- /**
- * Tests for Getters and Setter.
- * Functionality of getters getPuzzle(), getNumberOfRows(), getNumberOfColumns(), 
- * getEmpty(), getEmptyRow() and getEmptyCol() was already tested in constructor test.
- * So they are not included here.
- */
-    
+    /**
+     * Description of getNumberInCell_methodReturnsRightValue().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void getNumberInCell_methodReturnsRightValue() {
         assertArrayEquals("Method returned wrong cordinate for number 12: ", new int[]{2,3}, p.getCordinates(12 - 1));
     }
     
+    /**
+     * Description of getCordinates_methodReturnsRightValues().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void getCordinates_methodReturnsRightValues() {
         assertEquals("Method returned wrong value from the cell[1][3]:", 7, p.getNumberInCell(1, 3));
     }
     
+    /**
+     * Description of setPuzzle_methodChangesPuzzleAndEmptyRowColVariables().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void setPuzzle_methodChangesPuzzleAndEmptyRowColVariables() {
         Puzzle p1 = testCase(test1); 
@@ -111,15 +129,10 @@ public class PuzzleClassTest {
         }   
     }
     
-    
- /**
- * Test for the movements in puzzle.
- * Checks are done for the right boolean return value and for the movement by testing 
- * that swap between empty-place and number really happened.
- * Last random test creates 100 random size puzzle and with each of them makes 
- * 1000 random movements to be sure that no illegal moves are allowed.
- */
-    
+    /**
+     * Description of up_methodSwapBetweenEmptyAndNumber_ReturnsTrue().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void up_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
@@ -127,12 +140,20 @@ public class PuzzleClassTest {
         movementTest(p1, 1, 2, 6, 2, 2);
     }
     
+    /**
+     * Description of up_methodReturnsFalseWhenSwapIsUndoable().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void up_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test1);
         assertFalse("Returns true but should return false", p1.up());
     }
     
+    /**
+     * Description of down_methodSwapBetweenEmptyAndNumber_ReturnsTrue().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void down_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
@@ -140,11 +161,19 @@ public class PuzzleClassTest {
         movementTest(p1, 3, 2, 9, 2, 2);
     }
     
+    /**
+     * Description of down_methodReturnsFalseWhenSwapIsUndoable().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void down_methodReturnsFalseWhenSwapIsUndoable() {
         assertFalse("Returns true but should return false", p.down());
     }
     
+    /**
+     * Description of left_methodSwapBetweenEmptyAndNumber_ReturnsTrue().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void left_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
@@ -152,12 +181,20 @@ public class PuzzleClassTest {
         movementTest(p1, 2, 1, 5, 2, 2);        
     }
     
+    /**
+     * Description of left_methodReturnsFalseWhenSwapIsUndoable().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void left_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test3);
         assertFalse("Returns true but should return false", p1.left());
     }
     
+    /**
+     * Description of right_methodSwapBetweenEmptyAndNumber_ReturnsTrue().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void right_methodSwapBetweenEmptyAndNumber_ReturnsTrue() {
         Puzzle p1 = testCase(test2);
@@ -165,12 +202,21 @@ public class PuzzleClassTest {
         movementTest(p1, 2, 3, 4, 2, 2);
     }
     
+    /**
+     * Description of right_methodReturnsFalseWhenSwapIsUndoable().
+     * this test method makes sure that right value is returned.
+     */
     @Test
     public void right_methodReturnsFalseWhenSwapIsUndoable() {
         Puzzle p1 = testCase(test1);
         assertFalse("Returns true but should return false", p1.right());
     }
     
+    /**
+     * Description of randomMovesForRandomSizePuzzles().
+     * this test method creates 100 random size puzzle and with each of them makes 
+     * 1000 random movements to be sure that no illegal moves are allowed.
+     */
     @Test
     public void randomMovesForRandomSizePuzzles() {
         for (int i = 0; i < 100; i++) {
@@ -198,13 +244,11 @@ public class PuzzleClassTest {
         Puzzle p1 = testCase(test1);
         assertFalse("Returns true but should return false.", p1.right());
     }
-    
-
- /**
- * Test for isReady() method.
- * Test checks boolean return values for different test puzzles.
- */    
-    
+      
+    /**
+     * Description of isReady_returnsRightBoolean().
+     * this test method checks boolean return values for different test puzzles.
+     */
     @Test
     public void isReady_returnsRightBoolean() {
        byte[][] tests = {test1, test2, test3, test4, test5};
@@ -215,14 +259,12 @@ public class PuzzleClassTest {
         }
     }
     
-    
- /**
- * Test for creation of random puzzle permutation.
- * These test checks the randomness of the result of the shuffle() method.
- * 10.000 shuffles are created and the positions of empty-place is recorded.
- * the distribution of the positions are compared to average.
- */ 
-    
+    /**
+     * Description of shuffle_emptyPlaceChangesRandomPosition().
+     * this test method checks the randomness of the result of the shuffle() method.
+     * 10.000 shuffles are created and the positions of empty-place is recorded.
+     * the distribution of the positions are compared to average.
+     */
     @Test
     public void shuffle_emptyPlaceChangesRandomPosition() {
         int[] emptyPosition = new int[16];
@@ -237,20 +279,21 @@ public class PuzzleClassTest {
             assertEquals("Values are not random enough: ", average, emptyPosition[i], 100);           
         }
     }
- 
-    
- /**
- * Assisting methods.
- * testCase() initializes Puzzle class with the test permutation of the puzzle.
- * movementTest() checks that right swap happened.
- */ 
-    
+
+    /**
+     * Description of testCase(byte[] test).
+     * this method initializes Puzzle class with the test permutation of the puzzle.
+     */
     private Puzzle testCase(byte[] test) {
         Puzzle p1 = new Puzzle();
         p1.setPuzzle(test);
         return p1;
     }
     
+    /**
+     * Description of movementTest(Puzzle p1, int emptyRow, int emptyCol, int num, int numRow, int numCol).
+     * this method checks that right swap happened.
+     */
     private void movementTest(Puzzle p1, int emptyRow, int emptyCol, int num, int numRow, int numCol) {
         assertEquals("emptyRow has wrong value! "+test2.toString(), emptyRow, p1.getEmptyRow());
         assertEquals("emptyCol has wrong value! "+test2.toString(), emptyCol, p1.getEmptyCol());

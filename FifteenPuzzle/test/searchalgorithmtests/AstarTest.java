@@ -12,7 +12,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * AstarTest Class
+ * AstarTest Class.
+ * This class tests that Astar finds right solution for the puzzle.
  *
  * @author termanty
  */

@@ -13,7 +13,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests for IdaStar class
+ * Tests for IdaStar class.
+ * This class tests that IdaStar find right solution for puzzle.
  * 
  * @author Tero Mäntylä
  */
