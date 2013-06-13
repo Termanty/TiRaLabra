@@ -74,8 +74,8 @@ public class IdaStar {
         long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
             DFS(0, -1, h);
-            limit += 2;
 //            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
+            limit += 2;      
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 
         return solution;
@@ -101,22 +101,24 @@ public class IdaStar {
             return;
         }
         depth++;
-        if (!found && move != 1 && puzzle.up()) {
-            DFS(depth, 0, heuristicFuction.update(h, -1, 0));
-            puzzle.down();
-        }      
         if (!found && move != 0 && puzzle.down()) {
             DFS(depth, 1, heuristicFuction.update(h, +1, 0));
             puzzle.up();
-        }        
-        if (!found && move != 3 && puzzle.left()) {
-            DFS(depth, 2, heuristicFuction.update(h, 0, -1));
-            puzzle.right();
-        }        
+        }   
         if (!found && move != 2 && puzzle.right()) {
             DFS(depth, 3, heuristicFuction.update(h, 0, +1));
             puzzle.left();
         } 
+        
+        if (!found && move != 1 && puzzle.up()) {
+            DFS(depth, 0, heuristicFuction.update(h, -1, 0));
+            puzzle.down();
+        }      
+        if (!found && move != 3 && puzzle.left()) {
+            DFS(depth, 2, heuristicFuction.update(h, 0, -1));
+            puzzle.right();
+        }        
+        
     }
     
     
