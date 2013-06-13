@@ -17,9 +17,9 @@ public class FifteenPuzzle {
     
     public static void main(String[] args) {
 
-//        solveRandomPuzzle();
+        solveRandomPuzzle();
         
-        new IdaVSAstarComparison().run(esim1);
+//        new IdaVSAstarComparison().run(esim1);
         
 //        new HeuristicComparison().run(esim0);
         
@@ -47,7 +47,7 @@ public class FifteenPuzzle {
         System.out.println("Running time was " + idaStar.getRunningTime() + " ms");
         System.out.println("Movement needed for solution: " + solution.length); 
         System.out.println("Sequence of the movements to solution:");    
-        System.out.println(Arrays.toString(solution)+"\n");
+        System.out.println(idaStar.solution()+"\n");
     }
     
 // example permutations for test purposes

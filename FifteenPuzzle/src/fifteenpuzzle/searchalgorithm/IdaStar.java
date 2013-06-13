@@ -170,5 +170,16 @@ public class IdaStar {
             }
         }
     }
+    
+    
+    public String solution() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < solution.length - 1; i++) {
+            sb.append((solution[i]+1)).append(", ");
+        }
+        sb.append((solution[solution.length - 1]+1)).append("]");
+        return sb.toString();
+    }
 
 }
