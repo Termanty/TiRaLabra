@@ -44,7 +44,7 @@ public class MyHashSet {
     
     /**
      * Description of insert(Node node).
-     * This method puts node to hash table. If there is collition of the hash values,
+     * This method puts node to hash table. If there is collision of the hash values,
      * new node is put to the first place in the list of nodes.
      * 
      * @param node      node contains one unique permutation of puzzle 
