@@ -42,8 +42,11 @@ public class BruteForce {
     
     public byte[] solve() {       
         found = false;
+        limit = 0;
         while(!found) {
             search(0, new byte[80], -1);
+            System.out.println(limit);
+            limit++;
         }    
         return answer;
     }
