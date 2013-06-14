@@ -12,7 +12,7 @@ import java.util.Arrays;
  * what we find is minimum solution and heuristic makes algorithm much faster.
  * This class can use different heuristic function to find solution.
  * Some special features are that in iteration limit is increased in steps of two.
- * This is done because it's realy trivial to find out if the amount of the moves
+ * This is done because it's really trivial to find out if the amount of the moves
  * to solution is even or odd.
  * 
  * @author Tero Mäntylä
@@ -60,7 +60,7 @@ public class IdaStar {
     /**
      * Description of findSolution().
      * This method does iterative deepening part of IDA*-algorithm.
-     * At first is find intial limit to start. It's find in two steps 
+     * At first is find initial limit to start. It's find in two steps 
      * by estimating amount of movements to solution and figuring out if
      * the amount of the movements is even or odd.
      * 
@@ -174,6 +174,14 @@ public class IdaStar {
     }
     
     
+    /**
+     * Description of solution().
+     * This method returns found solution in string presentation.
+     * One is added to every number because puzzle uses numbers starting
+     * from zero.
+     * 
+     * @return      sequence of numbers to solve puzzle
+     */   
     public String solution() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
