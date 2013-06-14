@@ -74,7 +74,7 @@ public class IdaStar {
         long timeAtStar = System.currentTimeMillis(); 
         while (!found) { 
             DFS(0, -1, h);
-//            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
+            System.out.println("limit: " + limit +"\t\t time: "+(System.currentTimeMillis()-timeAtStar));
             limit += 2;      
         }       
         runningTime = System.currentTimeMillis() - timeAtStar; 

@@ -17,11 +17,11 @@ public class FifteenPuzzle {
     
     public static void main(String[] args) {
 
-//        solveRandomPuzzle();
+        solveRandomPuzzle();
         
 //        new IdaVSAstarComparison().run(esim1);
         
-        new HeuristicComparison().run(esim1);
+//        new HeuristicComparison().run(esim1);
         
 //        new HeapComparison().run();
         
