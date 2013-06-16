@@ -13,19 +13,26 @@ import java.util.Arrays;
  * @author Tero Mäntylä
  */
 
-public class FifteenPuzzle {  
+public class FifteenPuzzle {
     
     public static void main(String[] args) {
-
-        solveRandomPuzzle();
         
-//        new IdaVSAstarComparison().run(esim1);
-        
-//        new HeuristicComparison().run(esim1);
-        
-//        new HeapComparison().run();
-        
-//        new AverageRunTime(new ManDist_LinearConflict()).run();
+        if (args == null) {
+            solveRandomPuzzle();
+        } else {
+            if (args[0].equals("a")) {
+                new IdaVSAstarComparison().run(esim1);
+            }
+            if (args[0].equals("b")) {
+                new AverageRunTime(new ManDist_LinearConflict()).run();
+            }
+            if (args[0].equals("c")) {
+                new HeuristicComparison().run(esim1);
+            }
+            if (args[0].equals("d")) {
+                new HeapComparison().run();
+            }
+        }
         
 //        new BruteForceTest().run(esim0);
    
