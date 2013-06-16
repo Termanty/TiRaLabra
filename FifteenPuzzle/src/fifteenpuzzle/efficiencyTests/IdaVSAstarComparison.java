@@ -41,10 +41,11 @@ public class IdaVSAstarComparison {
         System.out.println("Optimal sequence of the movements to solution:");    
         System.out.println(Arrays.toString(solution)+"\n");
         
+        System.out.println("A*-algorithm");
+        System.out.println("running ...");
         Astar aStar = new Astar(p, new ManDist_LinearConflict());
         byte[] aStarSolution = aStar.findSolution();
-        
-        System.out.println("A*-algorithm");
+
         System.out.println("Running time was " + aStar.getRunningTime() + " ms");
         System.out.println("Movement needed for solution: "+aStarSolution.length);
         System.out.println(Arrays.toString(aStarSolution));

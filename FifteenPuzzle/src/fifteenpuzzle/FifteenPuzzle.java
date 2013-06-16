@@ -17,7 +17,7 @@ public class FifteenPuzzle {
     
     public static void main(String[] args) {
         
-        if (args == null) {
+        if (args.length == 0) {
             solveRandomPuzzle();
         } else {
             if (args[0].equals("a")) {
